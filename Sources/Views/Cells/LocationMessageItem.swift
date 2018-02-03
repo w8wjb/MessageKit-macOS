@@ -22,31 +22,48 @@
  SOFTWARE.
  */
 
-import UIKit
+import AppKit
 import MapKit
 
-open class LocationMessageCell: MessageCollectionViewCell {
+open class LocationMessageItem: MessageCollectionViewItem {
 
-    open override class func reuseIdentifier() -> String { return "messagekit.cell.location" }
+    open override class func reuseIdentifier() -> NSUserInterfaceItemIdentifier {
+        return NSUserInterfaceItemIdentifier("messagekit.cell.location")
+    }
 
     // MARK: - Properties
 
-    open var activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-
-    open var imageView = UIImageView()
+    open var activityIndicator: NSProgressIndicator = {
+        let indicator = NSProgressIndicator()
+        indicator.style = .spinning
+        return indicator
+    }()
+    
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        imageView = NSImageView()
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    public override init(nibName nibNameOrNil: NSNib.Name?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
     
     private weak var snapShotter: MKMapSnapshotter?
 
     open override func setupSubviews() {
         super.setupSubviews()
-        imageView.contentMode = .scaleAspectFill
-        messageContainerView.addSubview(imageView)
+        imageView?.imageScaling = .scaleProportionallyUpOrDown
+        messageContainerView.addSubview(imageView!)
         messageContainerView.addSubview(activityIndicator)
         setupConstraints()
     }
 
     open func setupConstraints() {
-        imageView.fillSuperview()
+        imageView?.fillSuperview()
         activityIndicator.centerInSuperview()
     }
     
@@ -66,7 +83,7 @@ open class LocationMessageCell: MessageCollectionViewCell {
 
         guard case let .location(location) = message.data else { fatalError("") }
 
-        activityIndicator.startAnimating()
+        activityIndicator.startAnimation(self)
 
         let snapshotOptions = MKMapSnapshotOptions()
         snapshotOptions.region = MKCoordinateRegion(center: location.coordinate, span: options.span)
@@ -77,7 +94,7 @@ open class LocationMessageCell: MessageCollectionViewCell {
         self.snapShotter = snapShotter
         snapShotter.start { (snapshot, error) in
             defer {
-                self.activityIndicator.stopAnimating()
+                self.activityIndicator.stopAnimation(self)
             }
             guard let snapshot = snapshot, error == nil else {
                 //show an error image?
@@ -85,13 +102,16 @@ open class LocationMessageCell: MessageCollectionViewCell {
             }
 
             guard let annotationView = annotationView else {
-                self.imageView.image = snapshot.image
+                self.imageView?.image = snapshot.image
                 return
             }
 
-            UIGraphicsBeginImageContextWithOptions(snapshotOptions.size, true, 0)
-
-            snapshot.image.draw(at: .zero)
+            let composedImage = NSImage(size: snapshotOptions.size)
+            let imageFrame = NSRect(origin: .zero, size: snapshotOptions.size)
+            
+            composedImage.lockFocus()
+            
+            snapshot.image.draw(at: .zero, from: imageFrame, operation: .overlay, fraction: 1)
 
             var point = snapshot.point(for: location.coordinate)
             //Move point to reflect annotation anchor
@@ -100,12 +120,11 @@ open class LocationMessageCell: MessageCollectionViewCell {
             point.x += annotationView.centerOffset.x
             point.y += annotationView.centerOffset.y
 
-            annotationView.image?.draw(at: point)
-            let composedImage = UIGraphicsGetImageFromCurrentImageContext()
+            annotationView.image?.draw(at: point, from: imageFrame, operation: .overlay, fraction: 1)
+            composedImage.unlockFocus()
 
-            UIGraphicsEndImageContext()
-            self.imageView.image = composedImage
-            animationBlock?(self.imageView)
+            self.imageView?.image = composedImage
+            animationBlock?(self.imageView!)
         }
     }
 }

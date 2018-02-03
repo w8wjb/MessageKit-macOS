@@ -23,6 +23,7 @@
  */
 
 import MapKit
+import AppKit
 
 /// An object grouping the settings used by the `MKMapSnapshotter` through the `LocationMessageDisplayDelegate`.
 public struct LocationMessageSnapshotOptions {
@@ -34,7 +35,7 @@ public struct LocationMessageSnapshotOptions {
     ///   - showsPointsOfInterest: A Boolean value indicating whether the snapshot image should display points of interest.
     ///   - span: The span of the snapshot.
     ///   - scale: The scale of the snapshot.
-    public init(showsBuildings: Bool = false, showsPointsOfInterest: Bool = false, span: MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0, longitudeDelta: 0), scale: CGFloat = UIScreen.main.scale) {
+    public init(showsBuildings: Bool = false, showsPointsOfInterest: Bool = false, span: MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0, longitudeDelta: 0), scale: CGFloat = NSScreen.main!.backingScaleFactor) {
         self.showsBuildings = showsBuildings
         self.showsPointsOfInterest = showsPointsOfInterest
         self.span = span

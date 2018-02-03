@@ -24,7 +24,7 @@
 
 import Quick
 import Nimble
-@testable import MessageKit
+@testable import MessageKit_macOS
 
 //swiftlint:disable todo
 final class MessageLabelSpec: QuickSpec {
@@ -89,29 +89,29 @@ final class MessageLabelSpec: QuickSpec {
             context("when attributedText is set to a non-nil value") {
                 it("updates text with that value") {
                     let expectedText = "Some text"
-                    messageLabel.attributedText = NSAttributedString(string: expectedText)
-                    expect(messageLabel.text).to(equal(expectedText))
+                    messageLabel.attributedStringValue = NSAttributedString(string: expectedText)
+                    expect(messageLabel.stringValue).to(equal(expectedText))
                 }
             }
             context("when attributedText is set to nil") {
                 it("updates text with the nil value") {
-                    messageLabel.text = "Not nil"
-                    messageLabel.attributedText = nil
-                    expect(messageLabel.text).to(beNil())
+                    messageLabel.stringValue = "Not nil"
+                    messageLabel.attributedStringValue = NSAttributedString()
+                    expect(messageLabel.stringValue).to(equal(""))
                 }
             }
             context("when text is set to a non-nil value") {
                 it("updates attributedText with that value") {
                     let expectedText = "Some text"
-                    messageLabel.text = expectedText
-                    expect(messageLabel.attributedText?.string).to(equal(expectedText))
+                    messageLabel.stringValue = expectedText
+                    expect(messageLabel.attributedStringValue.string).to(equal(expectedText))
                 }
             }
             context("when text is set to a nil value") {
                 it("updates attributedText with that value") {
-                    messageLabel.attributedText = NSAttributedString(string: "Not nil")
-                    messageLabel.text = nil
-                    expect(messageLabel.attributedText).to(beNil())
+                    messageLabel.attributedStringValue = NSAttributedString(string: "Not nil")
+                    messageLabel.stringValue = ""
+                    expect(messageLabel.attributedStringValue).to(equal(NSAttributedString()))
                 }
             }
         }
@@ -244,8 +244,8 @@ final class MessageLabelSpec: QuickSpec {
 fileprivate extension MessageLabel {
 
     var textAttributes: [NSAttributedStringKey: Any] {
-        let length = attributedText!.length
+        let length = attributedStringValue.length
         var range = NSRange(location: 0, length: length)
-        return attributedText!.attributes(at: 0, effectiveRange: &range)
+        return attributedStringValue.attributes(at: 0, effectiveRange: &range)
     }
 }

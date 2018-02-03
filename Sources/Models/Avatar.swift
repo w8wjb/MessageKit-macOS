@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-import Foundation
+import AppKit
 
 /// An object used to group the information to be used by an `AvatarView`.
 public struct Avatar {
@@ -30,7 +30,7 @@ public struct Avatar {
     // MARK: - Properties
     
     /// The image to be used for an `AvatarView`.
-    public let image: UIImage?
+    public let image: NSImage?
     
     /// The placeholder initials to be used in the case where no image is provided.
     ///
@@ -39,7 +39,7 @@ public struct Avatar {
     
     // MARK: - Initializer
     
-    public init(image: UIImage? = nil, initials: String = "?") {
+    public init(image: NSImage? = nil, initials: String = "?") {
         self.image = image
         self.initials = initials
     }

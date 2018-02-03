@@ -22,9 +22,9 @@
  SOFTWARE.
  */
 
-import Foundation
+import AppKit
 
-open class AvatarView: UIImageView {
+open class AvatarView: NSImageView {
 
     // MARK: - Properties
     
@@ -34,13 +34,13 @@ open class AvatarView: UIImageView {
         }
     }
 
-    open var placeholderFont: UIFont = UIFont.preferredFont(forTextStyle: .caption1) {
+    open var placeholderFont: NSFont = NSFont.preferredFont(forTextStyle: .caption1) {
         didSet {
             setImageFrom(initials: initials)
         }
     }
 
-    open var placeholderTextColor: UIColor = .white {
+    open var placeholderTextColor: NSColor = NSColor.white {
         didSet {
             setImageFrom(initials: initials)
         }
@@ -84,15 +84,17 @@ open class AvatarView: UIImageView {
         image = getImageFrom(initials: initials)
     }
 
-    private func getImageFrom(initials: String) -> UIImage {
+    private func getImageFrom(initials: String) -> NSImage {
         let width = frame.width
         let height = frame.height
-        if width == 0 || height == 0 {return UIImage()}
+        if width == 0 || height == 0 {return NSImage()}
         var font = placeholderFont
 
-        _ = UIGraphicsBeginImageContextWithOptions(CGSize(width: width, height: height), false, UIScreen.main.scale)
-        defer { UIGraphicsEndImageContext() }
-        let context = UIGraphicsGetCurrentContext()!
+        let renderedImage = NSImage(size: NSSize(width: width, height: height))
+        
+        renderedImage.lockFocus()
+
+        let context = NSGraphicsContext.current!.cgContext
 
         //// Text Drawing
         let textRect = calculateTextRect(outerViewWidth: width, outerViewHeight: height)
@@ -111,14 +113,15 @@ open class AvatarView: UIImageView {
         context.clip(to: textRect)
         initials.draw(in: CGRect(textRect.minX, textRect.minY + (textRect.height - textTextHeight) / 2, textRect.width, textTextHeight), withAttributes: textFontAttributes)
         context.restoreGState()
-        guard let renderedImage = UIGraphicsGetImageFromCurrentImageContext() else { assertionFailure("Could not create image from context"); return UIImage()}
+        
+        renderedImage.unlockFocus()
         return renderedImage
     }
 
     /**
      Recursively find the biggest size to fit the text with a given width and height
      */
-    private func calculateFontSize(text: String, font: UIFont, width: CGFloat, height: CGFloat) -> CGFloat {
+    private func calculateFontSize(text: String, font: NSFont, width: CGFloat, height: CGFloat) -> CGFloat {
         if text.width(considering: height, and: font) > width {
             let newFont = font.withSize(font.pointSize - 1)
             if newFont.pointSize > minimumFontSize {
@@ -157,10 +160,10 @@ open class AvatarView: UIImageView {
     // MARK: - Internal methods
 
     internal func prepareView() {
-        backgroundColor = .gray
-        contentMode = .scaleAspectFill
-        layer.masksToBounds = true
-        clipsToBounds = true
+        wantsLayer = true
+        imageScaling = .scaleProportionallyUpOrDown
+        layer?.backgroundColor = NSColor.gray.cgColor
+        layer?.masksToBounds = true
         setCorner(radius: nil)
     }
 
@@ -178,11 +181,11 @@ open class AvatarView: UIImageView {
         guard let radius = radius else {
             //if corner radius not set default to Circle
             let cornerRadius = min(frame.width, frame.height)
-            layer.cornerRadius = cornerRadius/2
+            layer?.cornerRadius = cornerRadius/2
             return
         }
         self.radius = radius
-        layer.cornerRadius = radius
+        layer?.cornerRadius = radius
     }
 
 }

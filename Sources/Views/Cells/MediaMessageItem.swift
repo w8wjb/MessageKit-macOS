@@ -22,11 +22,26 @@
  SOFTWARE.
  */
 
-import UIKit
+import AppKit
 
-open class MediaMessageCell: MessageCollectionViewCell {
+open class MediaMessageItem: MessageCollectionViewItem {
 
-    open override class func reuseIdentifier() -> String { return "messagekit.cell.mediamessage" }
+    open override class func reuseIdentifier() -> NSUserInterfaceItemIdentifier {
+        return NSUserInterfaceItemIdentifier("messagekit.cell.mediamessage")
+    }
+
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        imageView = NSImageView()
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    public override init(nibName nibNameOrNil: NSNib.Name?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
 
     // MARK: - Properties
 
@@ -35,19 +50,17 @@ open class MediaMessageCell: MessageCollectionViewCell {
         return playButtonView
     }()
 
-    open var imageView = UIImageView()
-
     // MARK: - Methods
 
     open func setupConstraints() {
-        imageView.fillSuperview()
+        imageView?.fillSuperview()
         playButtonView.centerInSuperview()
         playButtonView.constraint(equalTo: CGSize(width: 35, height: 35))
     }
 
     open override func setupSubviews() {
         super.setupSubviews()
-        messageContainerView.addSubview(imageView)
+        messageContainerView.addSubview(imageView!)
         messageContainerView.addSubview(playButtonView)
         setupConstraints()
     }
@@ -56,10 +69,10 @@ open class MediaMessageCell: MessageCollectionViewCell {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
         switch message.data {
         case .photo(let image):
-            imageView.image = image
+            imageView?.image = image
             playButtonView.isHidden = true
         case .video(_, let image):
-            imageView.image = image
+            imageView?.image = image
             playButtonView.isHidden = false
         default:
             break

@@ -23,16 +23,16 @@
  */
 
 import XCTest
-@testable import MessageKit
+@testable import MessageKit_macOS
 
 class MessageCollectionViewCellTests: XCTestCase {
 
-    var cell: MessageCollectionViewCell!
+    var cell: MessageCollectionViewItem!
     let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
 
     override func setUp() {
         super.setUp()
-        cell = MessageCollectionViewCell(frame: frame)
+        cell = MessageCollectionViewItem(frame: frame)
     }
 
     override func tearDown() {
@@ -41,25 +41,24 @@ class MessageCollectionViewCellTests: XCTestCase {
     }
 
     func testInit() {
-        XCTAssertEqual(cell.contentView.autoresizingMask, [.flexibleWidth, .flexibleHeight])
-        XCTAssert(cell.contentView.subviews.contains(cell.cellTopLabel))
-        XCTAssert(cell.contentView.subviews.contains(cell.cellBottomLabel))
-        XCTAssert(cell.contentView.subviews.contains(cell.avatarView))
-        XCTAssert(cell.contentView.subviews.contains(cell.messageContainerView))
+        XCTAssertEqual(cell.view.autoresizingMask, [.width, .height])
+        XCTAssert(cell.view.subviews.contains(cell.cellTopLabel))
+        XCTAssert(cell.view.subviews.contains(cell.cellBottomLabel))
+        XCTAssert(cell.view.subviews.contains(cell.avatarView))
+        XCTAssert(cell.view.subviews.contains(cell.messageContainerView))
 
     }
 
     func testMessageContainerViewPropertiesSetup() {
-        XCTAssertTrue(cell.messageContainerView.clipsToBounds)
-        XCTAssertTrue(cell.messageContainerView.layer.masksToBounds)
+        XCTAssertTrue(cell.messageContainerView.layer!.masksToBounds)
     }
 
     func testPrepareForReuse() {
         cell.prepareForReuse()
-        XCTAssertNil(cell.cellTopLabel.text)
-        XCTAssertNil(cell.cellTopLabel.attributedText)
-        XCTAssertNil(cell.cellBottomLabel.text)
-        XCTAssertNil(cell.cellBottomLabel.attributedText)
+        XCTAssertEqual(cell.cellTopLabel.stringValue, "")
+        XCTAssertEqual(cell.cellTopLabel.attributedStringValue, NSAttributedString())
+        XCTAssertEqual(cell.cellBottomLabel.stringValue, "")
+        XCTAssertEqual(cell.cellBottomLabel.attributedStringValue, NSAttributedString())
     }
 
     func testApplyLayoutAttributes() {

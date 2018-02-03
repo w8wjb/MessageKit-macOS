@@ -22,11 +22,11 @@
  SOFTWARE.
  */
 
-import Foundation
+import AppKit
 
 extension String {
 
-    func height(considering width: CGFloat, and font: UIFont) -> CGFloat {
+    func height(considering width: CGFloat, and font: NSFont) -> CGFloat {
 
         let constraintBox = CGSize(width: width, height: .greatestFiniteMagnitude)
       let rect = self.boundingRect(with: constraintBox, options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font: font], context: nil)
@@ -34,7 +34,7 @@ extension String {
 
     }
 
-    func width(considering height: CGFloat, and font: UIFont) -> CGFloat {
+    func width(considering height: CGFloat, and font: NSFont) -> CGFloat {
 
         let constraintBox = CGSize(width: .greatestFiniteMagnitude, height: height)
       let rect = self.boundingRect(with: constraintBox, options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font: font], context: nil)

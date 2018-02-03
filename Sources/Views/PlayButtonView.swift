@@ -22,13 +22,14 @@
  SOFTWARE.
  */
 
-import UIKit
+import AppKit
 
-open class PlayButtonView: UIView {
+open class PlayButtonView: NSView {
 
     // MARK: - Properties
 
-    open let triangleView = UIView()
+    // TODO - This would provably be more efficient as a CALayer
+    open let triangleView = NSView()
 
     private var triangleCenterXConstraint: NSLayoutConstraint?
     private var cacheFrame: CGRect = .zero
@@ -41,9 +42,9 @@ open class PlayButtonView: UIView {
         setupSubviews()
         setupConstraints()
 
-        triangleView.clipsToBounds = true
-        triangleView.backgroundColor = .black
-        backgroundColor = .playButtonLightGray
+        triangleView.layer?.masksToBounds = true
+        triangleView.layer?.backgroundColor = .black
+        self.layer?.backgroundColor = NSColor.playButtonLightGray.cgColor
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -52,8 +53,8 @@ open class PlayButtonView: UIView {
 
     // MARK: - Methods
     
-    open override func layoutSubviews() {
-        super.layoutSubviews()
+    open override func layout() {
+        super.layout()
         
         guard !cacheFrame.equalTo(frame) else { return }
         cacheFrame = frame
@@ -82,7 +83,7 @@ open class PlayButtonView: UIView {
 
     private func triangleMask(for frame: CGRect) -> CAShapeLayer {
         let shapeLayer = CAShapeLayer()
-        let trianglePath = UIBezierPath()
+        let trianglePath = CGMutablePath()
 
         let point1 = CGPoint(x: frame.minX, y: frame.minY)
         let point2 = CGPoint(x: frame.maxX, y: frame.maxY/2)
@@ -91,9 +92,9 @@ open class PlayButtonView: UIView {
         trianglePath .move(to: point1)
         trianglePath .addLine(to: point2)
         trianglePath .addLine(to: point3)
-        trianglePath .close()
+        trianglePath .closeSubpath()
 
-        shapeLayer.path = trianglePath.cgPath
+        shapeLayer.path = trianglePath
 
         return shapeLayer
     }
@@ -104,11 +105,11 @@ open class PlayButtonView: UIView {
 
     private func applyTriangleMask() {
         let rect = CGRect(origin: .zero, size: triangleView.bounds.size)
-        triangleView.layer.mask = triangleMask(for: rect)
+        triangleView.layer?.mask = triangleMask(for: rect)
     }
 
     private func applyCornerRadius() {
-        layer.cornerRadius = frame.width / 2
+        layer?.cornerRadius = frame.width / 2
     }
     
 }

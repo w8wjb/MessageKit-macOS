@@ -22,10 +22,12 @@
  SOFTWARE.
  */
 
-import UIKit
+import AppKit
 
-open class MessageHeaderView: UICollectionReusableView, CollectionViewReusable {
-    open class func reuseIdentifier() -> String { return "messagekit.header.base" }
+open class MessageHeaderView: NSView, CollectionViewReusable {
+    open class func reuseIdentifier() -> NSUserInterfaceItemIdentifier {
+        return NSUserInterfaceItemIdentifier("messagekit.header.base")
+    }
 
     // MARK: - Properties
 

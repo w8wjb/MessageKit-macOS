@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-import Foundation
+import AppKit
 import class CoreLocation.CLLocation
 
 /// An enum representing the kind of message and its underlying data.
@@ -41,10 +41,10 @@ public enum MessageData {
     case attributedText(NSAttributedString)
 
     /// A photo message.
-    case photo(UIImage)
+    case photo(NSImage)
 
     /// A video message.
-    case video(file: URL, thumbnail: UIImage)
+    case video(file: URL, thumbnail: NSImage)
 
     /// A location message.
     case location(CLLocation)

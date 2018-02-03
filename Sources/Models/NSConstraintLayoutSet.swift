@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-import UIKit
+import AppKit
 
 public class NSLayoutConstraintSet {
     

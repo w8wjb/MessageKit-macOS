@@ -22,19 +22,19 @@
  SOFTWARE.
  */
 
-import UIKit
+import AppKit
 import AVFoundation
 
 /// The layout object used by `MessagesCollectionView` to determine the size of all
 /// framework provided `MessageCollectionViewCell` subclasses.
-open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
+open class MessagesCollectionViewFlowLayout: NSCollectionViewFlowLayout {
 
     // MARK: - Properties [Public]
 
     /// Font to be used by `TextMessageCell` for `MessageData.text(String)` case.
     ///
-    /// The default value of this property is `UIFont.preferredFont(forTextStyle: .body)`
-    open var messageLabelFont: UIFont {
+    /// The default value of this property is `NSFont.preferredFont(forTextStyle: .body)`
+    open var messageLabelFont: NSFont {
         didSet {
             emojiLabelFont = messageLabelFont.withSize(2 * messageLabelFont.pointSize)
         }
@@ -55,7 +55,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     /// Font to be used by `TextMessageCell` for `MessageData.emoji(String)` case.
     ///
     /// The default value of this property is 2x the `messageLabelFont`.
-    private var emojiLabelFont: UIFont
+    private var emojiLabelFont: NSFont
 
     typealias MessageID = String
     
@@ -97,22 +97,17 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     public override init() {
 
-        messageLabelFont = UIFont.preferredFont(forTextStyle: .body)
+        messageLabelFont = NSFont.preferredFont(forTextStyle: .body)
         emojiLabelFont = messageLabelFont.withSize(2 * messageLabelFont.pointSize)
 
         super.init()
 
-        sectionInset = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8)
+        sectionInset = NSEdgeInsets(top: 4, left: 8, bottom: 4, right: 8)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(MessagesCollectionViewFlowLayout.handleOrientationChange(_:)), name: .UIDeviceOrientationDidChange, object: nil)
     }
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    deinit {
-        NotificationCenter.default.removeObserver(self)
     }
 
     /// Invalidates the layout and removes all cached attributes on device orientation change
@@ -154,19 +149,20 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         }
     }
     
-    open override func invalidationContext(forBoundsChange newBounds: CGRect) -> UICollectionViewLayoutInvalidationContext {
+    
+    open override func invalidationContext(forBoundsChange newBounds: CGRect) -> NSCollectionViewLayoutInvalidationContext {
         let context = super.invalidationContext(forBoundsChange: newBounds)
-        guard let flowLayoutContext = context as? UICollectionViewFlowLayoutInvalidationContext else { return context }
+        guard let flowLayoutContext = context as? NSCollectionViewFlowLayoutInvalidationContext else { return context }
         flowLayoutContext.invalidateFlowLayoutDelegateMetrics = shouldInvalidateLayout(forBoundsChange: newBounds)
         return flowLayoutContext
     }
 
-    open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+    open override func layoutAttributesForElements(in rect: CGRect) -> [NSCollectionViewLayoutAttributes] {
 
-        guard let attributesArray = super.layoutAttributesForElements(in: rect) as? [MessagesCollectionViewLayoutAttributes] else { return nil }
+        guard let attributesArray = super.layoutAttributesForElements(in: rect) as? [MessagesCollectionViewLayoutAttributes] else { return [NSCollectionViewLayoutAttributes]() }
 
         attributesArray.forEach { attributes in
-            if attributes.representedElementCategory == UICollectionElementCategory.cell {
+            if attributes.representedElementCategory == NSCollectionElementCategory.item {
                 configure(attributes: attributes)
             }
         }
@@ -174,11 +170,11 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         return attributesArray
     }
 
-    open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+    open override func layoutAttributesForItem(at indexPath: IndexPath) -> NSCollectionViewLayoutAttributes? {
 
         guard let attributes = super.layoutAttributesForItem(at: indexPath) as? MessagesCollectionViewLayoutAttributes else { return nil }
 
-        if attributes.representedElementCategory == UICollectionElementCategory.cell {
+        if attributes.representedElementCategory == NSCollectionElementCategory.item {
             configure(attributes: attributes)
         }
 
@@ -266,7 +262,7 @@ fileprivate extension MessagesCollectionViewFlowLayout {
     ///   - attributes: The `MessageCollectionViewLayoutAttributes` to apply the layout information to.
     private func configure(attributes: MessagesCollectionViewLayoutAttributes) {
         
-        let intermediateAttributes = messageIntermediateLayoutAttributes(for: attributes.indexPath)
+        let intermediateAttributes = messageIntermediateLayoutAttributes(for: attributes.indexPath!)
         
         intermediateAttributes.cellFrame = attributes.frame
         
@@ -282,7 +278,7 @@ fileprivate extension MessagesCollectionViewFlowLayout {
         case .text:
             attributes.messageLabelFont = messageLabelFont
         case .attributedText(let text):
-            guard let font = text.attribute(.font, at: 0, effectiveRange: nil) as? UIFont else { return }
+            guard let font = text.attribute(.font, at: 0, effectiveRange: nil) as? NSFont else { return }
             attributes.messageLabelFont = font
         default:
             break
@@ -294,7 +290,7 @@ fileprivate extension MessagesCollectionViewFlowLayout {
 
 // MARK: - Avatar Calculations [ A - C ]
 
-fileprivate extension MessagesCollectionViewFlowLayout {
+extension MessagesCollectionViewFlowLayout {
     
     // A
     
@@ -352,7 +348,7 @@ private extension MessagesCollectionViewFlowLayout {
     /// - Parameters:
     ///   - text: The `String` used to calculate a size that fits.
     ///   - maxWidth: The max width available for the label.
-    func labelSize(for text: String, considering maxWidth: CGFloat, and font: UIFont) -> CGSize {
+    func labelSize(for text: String, considering maxWidth: CGFloat, and font: NSFont) -> CGSize {
         
         let estimatedHeight = text.height(considering: maxWidth, and: font)
         let estimatedWidth = text.width(considering: estimatedHeight, and: font)
@@ -375,7 +371,7 @@ private extension MessagesCollectionViewFlowLayout {
     ///
     /// - Parameters:
     ///   - attributes: The `MessageIntermediateLayoutAttributes` containing the `MessageType` object.
-    func messageContainerPadding(for attributes: MessageIntermediateLayoutAttributes) -> UIEdgeInsets {
+    func messageContainerPadding(for attributes: MessageIntermediateLayoutAttributes) -> NSEdgeInsets {
         return messagesLayoutDelegate.messagePadding(for: attributes.message, at: attributes.indexPath, in: messagesCollectionView)
     }
     
@@ -385,7 +381,7 @@ private extension MessagesCollectionViewFlowLayout {
     ///
     /// - Parameters:
     ///   - attributes: The `MessageIntermediateLayoutAttributes` containing the `MessageType` object.
-    func messageLabelInsets(for attributes: MessageIntermediateLayoutAttributes) -> UIEdgeInsets {
+    func messageLabelInsets(for attributes: MessageIntermediateLayoutAttributes) -> NSEdgeInsets {
         // Maybe check the message type here since insets only apply to text messages
         return messagesLayoutDelegate.messageLabelInset(for: attributes.message, at: attributes.indexPath, in: messagesCollectionView)
     }

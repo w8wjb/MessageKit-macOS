@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-import UIKit
+import AppKit
 
 public protocol MessagesDataSource: AnyObject {
 
@@ -88,3 +88,4 @@ public extension MessagesDataSource {
     }
 
 }
+

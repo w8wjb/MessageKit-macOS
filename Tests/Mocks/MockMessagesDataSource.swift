@@ -23,6 +23,7 @@
  */
 
 import Foundation
+@testable import MessageKit_macOS
 
 class MockMessagesDataSource: MessagesDataSource {
 

@@ -22,17 +22,19 @@
  SOFTWARE.
  */
 
-import UIKit
+import AppKit
 
-open class TextMessageCell: MessageCollectionViewCell {
+open class TextMessageItem: MessageCollectionViewItem {
 
-    open override class func reuseIdentifier() -> String { return "messagekit.cell.text" }
+    open override class func reuseIdentifier() -> NSUserInterfaceItemIdentifier {
+        return NSUserInterfaceItemIdentifier("messagekit.cell.text")
+    }
 
     // MARK: - Properties
 
     open override weak var delegate: MessageCellDelegate? {
         didSet {
-            messageLabel.delegate = delegate
+            messageLabel.messageLabelDelegate = delegate
         }
     }
 
@@ -40,7 +42,7 @@ open class TextMessageCell: MessageCollectionViewCell {
 
     // MARK: - Methods
 
-    open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+    open override func apply(_ layoutAttributes: NSCollectionViewLayoutAttributes) {
         super.apply(layoutAttributes)
         if let attributes = layoutAttributes as? MessagesCollectionViewLayoutAttributes {
             messageLabel.textInsets = attributes.messageLabelInsets
@@ -51,8 +53,8 @@ open class TextMessageCell: MessageCollectionViewCell {
 
     open override func prepareForReuse() {
         super.prepareForReuse()
-        messageLabel.attributedText = nil
-        messageLabel.text = nil
+        messageLabel.attributedStringValue = NSAttributedString()
+        messageLabel.stringValue = ""
     }
 
     open override func setupSubviews() {
@@ -78,9 +80,9 @@ open class TextMessageCell: MessageCollectionViewCell {
             }
             switch message.data {
             case .text(let text), .emoji(let text):
-                messageLabel.text = text
+                messageLabel.stringValue = text
             case .attributedText(let text):
-                messageLabel.attributedText = text
+                messageLabel.attributedStringValue = text
             default:
                 break
             }
@@ -88,9 +90,5 @@ open class TextMessageCell: MessageCollectionViewCell {
             messageLabel.textColor = textColor
         }
     }
-    
-    /// Handle `ContentView`'s tap gesture, return false when `ContentView` don't needs to handle gesture
-    open override func cellContentView(canHandle touchPoint: CGPoint) -> Bool {
-        return messageLabel.handleGesture(touchPoint)
-    }
+
 }

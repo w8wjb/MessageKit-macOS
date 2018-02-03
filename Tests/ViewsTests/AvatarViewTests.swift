@@ -23,7 +23,7 @@
  */
 
 import XCTest
-@testable import MessageKit
+@testable import MessageKit_macOS
 
 class AvatarViewTests: XCTestCase {
 
@@ -41,16 +41,16 @@ class AvatarViewTests: XCTestCase {
     }
 
     func testNoParams() {
-        XCTAssertEqual(avatarView.layer.cornerRadius, 15.0)
-        XCTAssertEqual(avatarView.backgroundColor, UIColor.gray)
+        XCTAssertEqual(avatarView.layer?.cornerRadius, 15.0)
+        XCTAssertEqual(avatarView.layer?.backgroundColor, NSColor.gray.cgColor)
     }
 
     func testWithImage() {
-        let avatar = Avatar(image: UIImage())
+        let avatar = Avatar(image: NSImage())
         avatarView.set(avatar: avatar)
         XCTAssertEqual(avatar.initials, "?")
-        XCTAssertEqual(avatarView.layer.cornerRadius, 15.0)
-        XCTAssertEqual(avatarView.backgroundColor, UIColor.gray)
+        XCTAssertEqual(avatarView.layer?.cornerRadius, 15.0)
+        XCTAssertEqual(avatarView.layer?.backgroundColor, NSColor.gray.cgColor)
     }
 
     func testInitialsOnly() {
@@ -58,28 +58,28 @@ class AvatarViewTests: XCTestCase {
         avatarView.set(avatar: avatar)
         XCTAssertEqual(avatarView.initials, avatar.initials)
         XCTAssertEqual(avatar.initials, "DL")
-        XCTAssertEqual(avatarView.layer.cornerRadius, 15.0)
-        XCTAssertEqual(avatarView.backgroundColor, UIColor.gray)
+        XCTAssertEqual(avatarView.layer?.cornerRadius, 15.0)
+        XCTAssertEqual(avatarView.layer?.backgroundColor, NSColor.gray.cgColor)
     }
 
     func testSetBackground() {
-        XCTAssertEqual(avatarView.backgroundColor, UIColor.gray)
-        avatarView.backgroundColor = UIColor.red
-        XCTAssertEqual(avatarView.backgroundColor, UIColor.red)
+        XCTAssertEqual(avatarView.layer?.backgroundColor, NSColor.gray.cgColor)
+        avatarView.layer?.backgroundColor = NSColor.red.cgColor
+        XCTAssertEqual(avatarView.layer?.backgroundColor, NSColor.red.cgColor)
     }
 
     func testGetImage() {
-        let image = UIImage()
+        let image = NSImage()
         let avatar = Avatar(image: image)
         avatarView.set(avatar: avatar)
         XCTAssertEqual(avatarView.image, image)
     }
 
     func testRoundedCorners() {
-        let avatar = Avatar(image: UIImage())
+        let avatar = Avatar(image: NSImage())
         avatarView.set(avatar: avatar)
-        XCTAssertEqual(avatarView.layer.cornerRadius, 15.0)
+        XCTAssertEqual(avatarView.layer?.cornerRadius, 15.0)
         avatarView.setCorner(radius: 2)
-        XCTAssertEqual(avatarView.layer.cornerRadius, 2.0)
+        XCTAssertEqual(avatarView.layer?.cornerRadius, 2.0)
     }
 }

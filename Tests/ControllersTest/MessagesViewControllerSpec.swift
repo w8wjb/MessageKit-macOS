@@ -24,7 +24,7 @@
 
 import Quick
 import Nimble
-@testable import MessageKit
+@testable import MessageKit_macOS
 
 //swiftlint:disable function_body_length
 final class MessagesViewControllerSpec: QuickSpec {
@@ -43,14 +43,7 @@ final class MessagesViewControllerSpec: QuickSpec {
                     expect(controller.scrollsToBottomOnKeybordBeginsEditing).to(beFalse())
                 }
                 it("sets canBecomeFirstResponder to true") {
-                    expect(controller.canBecomeFirstResponder).to(beTrue())
-                }
-                it("sets shouldAutorotate to false") {
-                    expect(controller.shouldAutorotate).to(beFalse())
-                }
-                it("sets inputAccessoryView to the messageInputBar") {
-                    expect(controller.inputAccessoryView).toNot(beNil())
-                    expect(controller.inputAccessoryView is MessageInputBar).to(beTrue())
+                    expect(controller.acceptsFirstResponder).to(beTrue())
                 }
                 it("has a MessagesCollectionView") {
                     expect(controller.messagesCollectionView).toNot(beNil())
@@ -58,23 +51,10 @@ final class MessagesViewControllerSpec: QuickSpec {
             }
             context("after viewDidLoad") {
                 beforeEach {
-                    controller.view.layoutIfNeeded()
-                }
-                it("sets automaticallyAdjustsScrollViewInsets to false") {
-                    expect(controller.automaticallyAdjustsScrollViewInsets).to(beFalse())
-                }
-                it("sets extendedLayoutIncludesOpaqueBars to true") {
-                    expect(controller.extendedLayoutIncludesOpaqueBars).to(beTrue())
+                    controller.view.layoutSubtreeIfNeeded()
                 }
                 it("sets the background color to be white") {
-                    expect(controller.view.backgroundColor).to(be(UIColor.white))
-                }
-                it("sets keyboardDismissMode to .interactive") {
-                    let dismissMode = controller.messagesCollectionView.keyboardDismissMode
-                    expect(dismissMode).to(equal(UIScrollViewKeyboardDismissMode.interactive))
-                }
-                it("sets alwaysBounceVertical to true") {
-                    expect(controller.messagesCollectionView.alwaysBounceVertical).to(beTrue())
+                    expect(controller.view.layer?.backgroundColor).to(equal(CGColor.white))
                 }
             }
         }
@@ -89,7 +69,7 @@ final class MessagesViewControllerSpec: QuickSpec {
 
         describe("delegate and datasource setup") {
             beforeEach {
-                controller.view.layoutIfNeeded()
+                controller.view.layoutSubtreeIfNeeded()
             }
             it("should set messagesCollectionView.dataSource") {
                 let delegate = controller.messagesCollectionView.delegate

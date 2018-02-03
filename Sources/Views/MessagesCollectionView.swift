@@ -22,9 +22,9 @@
  SOFTWARE.
  */
 
-import UIKit
+import AppKit
 
-open class MessagesCollectionView: UICollectionView {
+open class MessagesCollectionView: NSCollectionView {
 
     // MARK: - Properties
 
@@ -48,10 +48,11 @@ open class MessagesCollectionView: UICollectionView {
 
     // MARK: - Initializers
 
-    public override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
-        super.init(frame: frame, collectionViewLayout: layout)
-        backgroundColor = .white
-        setupGestureRecognizers()
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        wantsLayer = true
+        layer?.backgroundColor = .white
+        collectionViewLayout = MessagesCollectionViewFlowLayout()
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -59,51 +60,36 @@ open class MessagesCollectionView: UICollectionView {
     }
 
     public convenience init() {
-        self.init(frame: .zero, collectionViewLayout: MessagesCollectionViewFlowLayout())
+        self.init(frame: .zero)
     }
 
     // MARK: - Methods
     
-    func setupGestureRecognizers() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
-        tapGesture.delaysTouchesBegan = true
-        addGestureRecognizer(tapGesture)
-    }
-    
-    @objc
-    open func handleTapGesture(_ gesture: UIGestureRecognizer) {
-        guard gesture.state == .ended else { return }
-        
-        let touchLocation = gesture.location(in: self)
-        guard let indexPath = indexPathForItem(at: touchLocation) else { return }
-        
-        let cell = cellForItem(at: indexPath) as? MessageCollectionViewCell
-        cell?.handleTapGesture(gesture)
-    }
+    // TODO: - Manage NScrollView
 
-    public func scrollToBottom(animated: Bool = false) {
-        let collectionViewContentHeight = collectionViewLayout.collectionViewContentSize.height
-
-        performBatchUpdates(nil) { _ in
-            self.scrollRectToVisible(CGRect(0.0, collectionViewContentHeight - 1.0, 1.0, 1.0), animated: animated)
-        }
-    }
-    
-    public func reloadDataAndKeepOffset() {
-        // stop scrolling
-        setContentOffset(contentOffset, animated: false)
-        
-        // calculate the offset and reloadData
-        let beforeContentSize = contentSize
-        reloadData()
-        layoutIfNeeded()
-        let afterContentSize = contentSize
-        
-        // reset the contentOffset after data is updated
-        let newOffset = CGPoint(
-            x: contentOffset.x + (afterContentSize.width - beforeContentSize.width),
-            y: contentOffset.y + (afterContentSize.height - beforeContentSize.height))
-        setContentOffset(newOffset, animated: false)
-    }
+//    public func scrollToBottom(animated: Bool = false) {
+//        let collectionViewContentHeight = collectionViewLayout.collectionViewContentSize.height
+//
+//        performBatchUpdates(nil) { _ in
+//            self.scrollRectToVisible(CGRect(0.0, collectionViewContentHeight - 1.0, 1.0, 1.0), animated: animated)
+//        }
+//    }
+//
+//    public func reloadDataAndKeepOffset() {
+//        // stop scrolling
+//        setContentOffset(contentOffset, animated: false)
+//
+//        // calculate the offset and reloadData
+//        let beforeContentSize = contentSize
+//        reloadData()
+//        layoutIfNeeded()
+//        let afterContentSize = contentSize
+//
+//        // reset the contentOffset after data is updated
+//        let newOffset = CGPoint(
+//            x: contentOffset.x + (afterContentSize.width - beforeContentSize.width),
+//            y: contentOffset.y + (afterContentSize.height - beforeContentSize.height))
+//        setContentOffset(newOffset, animated: false)
+//    }
 
 }

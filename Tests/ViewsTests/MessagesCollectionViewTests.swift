@@ -33,7 +33,8 @@ class MessagesCollectionViewTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        messagesCollectionView = MessagesCollectionView(frame: rect, collectionViewLayout: layout)
+        messagesCollectionView = MessagesCollectionView(frame: rect)
+        messagesCollectionView.collectionViewLayout = layout
     }
 
     override func tearDown() {
@@ -44,7 +45,7 @@ class MessagesCollectionViewTests: XCTestCase {
     func testInit() {
         XCTAssertEqual(messagesCollectionView.frame, rect)
         XCTAssertEqual(messagesCollectionView.collectionViewLayout, layout)
-        XCTAssertEqual(messagesCollectionView.backgroundColor, .white)
+        XCTAssertEqual(messagesCollectionView.layer?.backgroundColor, .white)
     }
 
 }

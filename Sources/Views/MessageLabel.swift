@@ -22,9 +22,9 @@
  SOFTWARE.
  */
 
-import UIKit
+import AppKit
 
-open class MessageLabel: UILabel {
+open class MessageLabel: NSTextField {
 
     // MARK: - Private Properties
 
@@ -37,7 +37,7 @@ open class MessageLabel: UILabel {
     private lazy var textContainer: NSTextContainer = {
         let textContainer = NSTextContainer()
         textContainer.lineFragmentPadding = 0
-        textContainer.maximumNumberOfLines = self.numberOfLines
+        textContainer.maximumNumberOfLines = self.maximumNumberOfLines
         textContainer.lineBreakMode = self.lineBreakMode
         textContainer.size = self.bounds.size
         return textContainer
@@ -55,59 +55,59 @@ open class MessageLabel: UILabel {
 
     // MARK: - Public Properties
 
-    open weak var delegate: MessageLabelDelegate?
+    open weak var messageLabelDelegate: MessageLabelDelegate?
 
     open var enabledDetectors: [DetectorType] = [] {
         didSet {
-            setTextStorage(attributedText, shouldParse: true)
+            setTextStorage(attributedStringValue, shouldParse: true)
         }
     }
 
-    open override var attributedText: NSAttributedString? {
+    open override var attributedStringValue: NSAttributedString {
         didSet {
-            setTextStorage(attributedText, shouldParse: true)
+            setTextStorage(attributedStringValue, shouldParse: true)
         }
     }
 
-    open override var text: String? {
+    open override var stringValue: String {
         didSet {
-            setTextStorage(attributedText, shouldParse: true)
+            setTextStorage(attributedStringValue, shouldParse: true)
         }
     }
 
-    open override var font: UIFont! {
+    open override var font: NSFont! {
         didSet {
-            setTextStorage(attributedText, shouldParse: false)
+            setTextStorage(attributedStringValue, shouldParse: false)
         }
     }
 
-    open override var textColor: UIColor! {
+    open override var textColor: NSColor! {
         didSet {
-            setTextStorage(attributedText, shouldParse: false)
+            setTextStorage(attributedStringValue, shouldParse: false)
         }
     }
 
-    open override var lineBreakMode: NSLineBreakMode {
+    open override var lineBreakMode: NSParagraphStyle.LineBreakMode {
         didSet {
             textContainer.lineBreakMode = lineBreakMode
             if !isConfiguring { setNeedsDisplay() }
         }
     }
 
-    open override var numberOfLines: Int {
+    open override var maximumNumberOfLines: Int {
         didSet {
-            textContainer.maximumNumberOfLines = numberOfLines
+            textContainer.maximumNumberOfLines = maximumNumberOfLines
             if !isConfiguring { setNeedsDisplay() }
         }
     }
 
-    open override var textAlignment: NSTextAlignment {
+    open override var alignment: NSTextAlignment {
         didSet {
-            setTextStorage(attributedText, shouldParse: false)
+            setTextStorage(attributedStringValue, shouldParse: false)
         }
     }
 
-    open var textInsets: UIEdgeInsets = .zero {
+    open var textInsets: NSEdgeInsets = NSEdgeInsetsZero {
         didSet {
             if !isConfiguring { setNeedsDisplay() }
         }
@@ -117,9 +117,9 @@ open class MessageLabel: UILabel {
 
     public static var defaultAttributes: [NSAttributedStringKey: Any] = {
         return [
-            NSAttributedStringKey.foregroundColor: UIColor.darkText,
+            NSAttributedStringKey.foregroundColor: NSColor.controlDarkShadowColor,
             NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
-            NSAttributedStringKey.underlineColor: UIColor.darkText
+            NSAttributedStringKey.underlineColor: NSColor.controlDarkShadowColor
         ]
     }()
 
@@ -153,7 +153,7 @@ open class MessageLabel: UILabel {
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        self.numberOfLines = 0
+        self.maximumNumberOfLines = 0
         self.lineBreakMode = .byWordWrapping
     }
 
@@ -163,10 +163,15 @@ open class MessageLabel: UILabel {
 
     // MARK: - Open Methods
 
-    open override func drawText(in rect: CGRect) {
+    open override func draw(_ dirtyRect: NSRect) {
+        // TODO - I *think* this might be the right equivalent, but it needs to be tested
+//    open override func drawText(in rect: CGRect) {
 
-        let insetRect = UIEdgeInsetsInsetRect(rect, textInsets)
-        textContainer.size = CGSize(width: insetRect.width, height: rect.height)
+        // TODO - This may not be the right way to inset
+//        let insetRect = UIEdgeInsetsInsetRect(rect, textInsets)
+        let insetRect = dirtyRect.insetBy(dx: textInsets.left, dy: textInsets.top)
+        
+        textContainer.size = CGSize(width: insetRect.width, height: dirtyRect.height)
 
         let origin = insetRect.origin
         let range = layoutManager.glyphRange(for: textContainer)
@@ -234,15 +239,15 @@ open class MessageLabel: UILabel {
         let style = existingStyle ?? NSMutableParagraphStyle()
         
         style.lineBreakMode = lineBreakMode
-        style.alignment = textAlignment
+        style.alignment = alignment
         
         return style
     }
 
     private func updateAttributes(for detectors: [DetectorType]) {
 
-        guard let attributedText = attributedText, attributedText.length > 0 else { return }
-        let mutableAttributedString = NSMutableAttributedString(attributedString: attributedText)
+        guard attributedStringValue.length > 0 else { return }
+        let mutableAttributedString = NSMutableAttributedString(attributedString: attributedStringValue)
 
         for detector in detectors {
             guard let rangeTuples = rangesForDetectors[detector] else { continue }
@@ -395,19 +400,19 @@ open class MessageLabel: UILabel {
     }
     
     private func handleAddress(_ addressComponents: [String: String]) {
-        delegate?.didSelectAddress(addressComponents)
+        messageLabelDelegate?.didSelectAddress(addressComponents)
     }
     
     private func handleDate(_ date: Date) {
-        delegate?.didSelectDate(date)
+        messageLabelDelegate?.didSelectDate(date)
     }
     
     private func handleURL(_ url: URL) {
-        delegate?.didSelectURL(url)
+        messageLabelDelegate?.didSelectURL(url)
     }
     
     private func handlePhoneNumber(_ phoneNumber: String) {
-        delegate?.didSelectPhoneNumber(phoneNumber)
+        messageLabelDelegate?.didSelectPhoneNumber(phoneNumber)
     }
     
 }

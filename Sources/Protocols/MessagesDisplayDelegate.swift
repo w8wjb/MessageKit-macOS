@@ -47,12 +47,12 @@ public protocol MessagesDisplayDelegate: AnyObject {
     ///   - indexPath: The `IndexPath` of the cell.
     ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
     ///
-    /// The default value is `UIColor.clear` for emoji messages. For all other `MessageData` cases, the color depends on the `Sender`:
+    /// The default value is `NSColor.clear` for emoji messages. For all other `MessageData` cases, the color depends on the `Sender`:
     ///
     /// Current Sender: Green
     ///
     /// All other Senders: Gray
-    func backgroundColor(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor
+    func backgroundColor(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> NSColor
 
     /// The section header to use for a given `MessageType`.
     ///
@@ -106,10 +106,10 @@ public protocol MessagesDisplayDelegate: AnyObject {
     ///
     /// The default value returned by this method is determined by the messages `Sender`:
     ///
-    /// Current Sender: UIColor.white
+    /// Current Sender: NSColor.white
     ///
-    /// All other Senders: UIColor.darkText
-    func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor
+    /// All other Senders: NSColor.darkText
+    func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> NSColor
 
     /// Specifies the `DetectorType`s to check for the `MessageType`'s text against.
     ///
@@ -163,7 +163,7 @@ public protocol MessagesDisplayDelegate: AnyObject {
     ///   - indexPath: Message's index path
     ///   - messagesCollectionView: The collection view requesting the information
     /// - Returns: Your customized animation block.
-    func animationBlockForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> ((UIImageView) -> Void)?
+    func animationBlockForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> ((NSImageView) -> Void)?
 }
 
 public extension MessagesDisplayDelegate {
@@ -174,7 +174,7 @@ public extension MessagesDisplayDelegate {
         return .bubble
     }
 
-    func backgroundColor(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
+    func backgroundColor(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> NSColor {
 
         switch message.data {
         case .emoji:
@@ -186,8 +186,8 @@ public extension MessagesDisplayDelegate {
     }
     
     func messageHeaderView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView {
-        let header = messagesCollectionView.dequeueReusableHeaderView(MessageDateHeaderView.self, for: indexPath)
-        header.dateLabel.text = MessageKitDateFormatter.shared.string(from: message.sentDate)
+        let header = messagesCollectionView.makeHeaderView(MessageDateHeaderView.self, for: indexPath)
+        header.dateLabel.stringValue = MessageKitDateFormatter.shared.string(from: message.sentDate)
         return header
     }
 
@@ -202,7 +202,7 @@ public extension MessagesDisplayDelegate {
     }
 
     func messageFooterView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageFooterView {
-        return messagesCollectionView.dequeueReusableFooterView(MessageFooterView.self, for: indexPath)
+        return messagesCollectionView.makeFooterView(MessageFooterView.self, for: indexPath)
     }
     
     func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
@@ -211,11 +211,11 @@ public extension MessagesDisplayDelegate {
 
     // MARK: - Text Messages Defaults
 
-    func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
+    func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> NSColor {
         guard let dataSource = messagesCollectionView.messagesDataSource else {
             fatalError(MessageKitError.nilMessagesDataSource)
         }
-        return dataSource.isFromCurrentSender(message: message) ? .white : .darkText
+        return dataSource.isFromCurrentSender(message: message) ? NSColor.white : NSColor.controlDarkShadowColor
     }
 
     func enabledDetectors(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType] {
@@ -236,7 +236,7 @@ public extension MessagesDisplayDelegate {
         return MKPinAnnotationView(annotation: nil, reuseIdentifier: nil)
     }
 
-    func animationBlockForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> ((UIImageView) -> Void)? {
+    func animationBlockForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> ((NSImageView) -> Void)? {
         return nil
     }
 

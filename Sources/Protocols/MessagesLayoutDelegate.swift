@@ -40,10 +40,10 @@ public protocol MessagesLayoutDelegate: AnyObject {
     ///
     /// The default value returned by this method is determined by the messages `Sender`:
     ///
-    /// Current Sender: `UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 4)`
+    /// Current Sender: `NSEdgeInsets(top: 0, left: 30, bottom: 0, right: 4)`
     ///
-    /// All other Senders: `UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 30)`
-    func messagePadding(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets
+    /// All other Senders: `NSEdgeInsets(top: 0, left: 4, bottom: 0, right: 30)`
+    func messagePadding(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> NSEdgeInsets
     
     /// Specifies the vertical and horizontal alignment for the `AvatarView` in a `MessageCollectionViewCell`.
     ///
@@ -125,10 +125,10 @@ public protocol MessagesLayoutDelegate: AnyObject {
     ///
     /// The default value returned by this method is determined by the messages `Sender`:
     ///
-    /// Current Sender: `UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 18)`
+    /// Current Sender: `NSEdgeInsets(top: 7, left: 14, bottom: 7, right: 18)`
     ///
-    /// All other Senders: `UIEdgeInsets(top: 7, left: 18, bottom: 7, right: 14)`
-    func messageLabelInset(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets
+    /// All other Senders: `NSEdgeInsets(top: 7, left: 18, bottom: 7, right: 14)`
+    func messageLabelInset(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> NSEdgeInsets
 
     // MARK: - Media Messages
 
@@ -191,14 +191,14 @@ public extension MessagesLayoutDelegate {
 
     // MARK: - All Messages Defaults
 
-    func messagePadding(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets {
+    func messagePadding(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> NSEdgeInsets {
         guard let dataSource = messagesCollectionView.messagesDataSource else {
             fatalError(MessageKitError.nilMessagesDataSource)
         }
         if dataSource.isFromCurrentSender(message: message) {
-            return UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 4)
+            return NSEdgeInsets(top: 0, left: 30, bottom: 0, right: 4)
         } else {
-            return UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 30)
+            return NSEdgeInsets(top: 0, left: 4, bottom: 0, right: 30)
         }
     }
 
@@ -206,14 +206,14 @@ public extension MessagesLayoutDelegate {
         guard let dataSource = messagesCollectionView.messagesDataSource else {
             fatalError(MessageKitError.nilMessagesDataSource)
         }
-        return dataSource.isFromCurrentSender(message: message) ? .messageTrailing(.zero) : .messageLeading(.zero)
+        return dataSource.isFromCurrentSender(message: message) ? .messageTrailing(NSEdgeInsetsZero) : .messageLeading(NSEdgeInsetsZero)
     }
 
     func cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
         guard let dataSource = messagesCollectionView.messagesDataSource else {
             fatalError(MessageKitError.nilMessagesDataSource)
         }
-        return dataSource.isFromCurrentSender(message: message) ? .messageLeading(.zero) : .messageTrailing(.zero)
+        return dataSource.isFromCurrentSender(message: message) ? .messageLeading(NSEdgeInsetsZero) : .messageTrailing(NSEdgeInsetsZero)
     }
 
     func avatarSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
@@ -242,14 +242,14 @@ public extension MessagesLayoutDelegate {
 
     // MARK: - Text Messages Defaults
 
-    func messageLabelInset(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets {
+    func messageLabelInset(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> NSEdgeInsets {
         guard let dataSource = messagesCollectionView.messagesDataSource else {
             fatalError(MessageKitError.nilMessagesDataSource)
         }
         if dataSource.isFromCurrentSender(message: message) {
-            return UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 18)
+            return NSEdgeInsets(top: 7, left: 14, bottom: 7, right: 18)
         } else {
-            return UIEdgeInsets(top: 7, left: 18, bottom: 7, right: 14)
+            return NSEdgeInsets(top: 7, left: 18, bottom: 7, right: 14)
         }
     }
 

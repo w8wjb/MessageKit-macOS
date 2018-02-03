@@ -23,7 +23,7 @@
  */
 
 import XCTest
-@testable import MessageKit
+@testable import MessageKit_macOS
 
 class MessageKitDateFormatterTests: XCTestCase {
 

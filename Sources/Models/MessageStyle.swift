@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-import UIKit
+import AppKit
 
 public enum MessageStyle {
 
@@ -35,14 +35,14 @@ public enum MessageStyle {
         case topRight
         case bottomRight
 
-        var imageOrientation: UIImageOrientation {
-            switch self {
-            case .bottomRight: return .up
-            case .bottomLeft: return .upMirrored
-            case .topLeft: return .down
-            case .topRight: return .downMirrored
-            }
-        }
+//        var imageOrientation: UIImageOrientation {
+//            switch self {
+//            case .bottomRight: return .up
+//            case .bottomLeft: return .upMirrored
+//            case .topLeft: return .down
+//            case .topRight: return .downMirrored
+//            }
+//        }
     }
 
     // MARK: - TailStyle
@@ -66,18 +66,18 @@ public enum MessageStyle {
 
     case none
     case bubble
-    case bubbleOutline(UIColor)
+    case bubbleOutline(NSColor)
     case bubbleTail(TailCorner, TailStyle)
-    case bubbleTailOutline(UIColor, TailCorner, TailStyle)
+    case bubbleTailOutline(NSColor, TailCorner, TailStyle)
     case custom((MessageContainerView) -> Void)
 
     // MARK: - Public
 
-    public var image: UIImage? {
+    public var image: NSImage? {
 
         guard let path = imagePath else { return nil }
 
-        guard var image = UIImage(contentsOfFile: path) else { return nil }
+        guard var image = NSImage(contentsOfFile: path) else { return nil }
 
         switch self {
         case .none, .custom:
@@ -85,8 +85,10 @@ public enum MessageStyle {
         case .bubble, .bubbleOutline:
             break
         case .bubbleTail(let corner, _), .bubbleTailOutline(_, let corner, _):
-            guard let cgImage = image.cgImage else { return nil }
-            image = UIImage(cgImage: cgImage, scale: image.scale, orientation: corner.imageOrientation)
+            break
+            // TODO - Create corner image
+//            guard let cgImage = image.cgImage else { return nil }
+//            image = NSImage(cgImage: cgImage, scale: image.scale, orientation: corner.imageOrientation)
         }
 
         return stretch(image)
@@ -115,10 +117,12 @@ public enum MessageStyle {
         return assetBundle.path(forResource: imageName, ofType: "png", inDirectory: "Images")
     }
 
-    private func stretch(_ image: UIImage) -> UIImage {
-        let center = CGPoint(x: image.size.width / 2, y: image.size.height / 2)
-        let capInsets = UIEdgeInsets(top: center.y, left: center.x, bottom: center.y, right: center.x)
-        return image.resizableImage(withCapInsets: capInsets, resizingMode: .stretch)
+    private func stretch(_ image: NSImage) -> NSImage {
+        return image
+        // TODO - Implement image stretch
+//        let center = CGPoint(x: image.size.width / 2, y: image.size.height / 2)
+//        let capInsets = UIEdgeInsets(top: center.y, left: center.x, bottom: center.y, right: center.x)
+//        return image.resizableImage(withCapInsets: capInsets, resizingMode: .stretch)
     }
 
 }

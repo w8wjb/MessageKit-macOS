@@ -22,13 +22,13 @@
  SOFTWARE.
  */
 
-import UIKit
+import AppKit
 
-open class MessageContainerView: UIImageView {
+open class MessageContainerView: NSImageView {
 
     // MARK: - Properties
 
-    private let imageMask = UIImageView()
+    private let imageMask = CALayer()
 
     open var style: MessageStyle = .none {
         didSet {
@@ -56,34 +56,37 @@ open class MessageContainerView: UIImageView {
     }
 
     private func applyMessageStyle() {
+        wantsLayer = true
+        
         switch style {
         case .bubble, .bubbleTail:
-            imageMask.image = style.image
+            imageMask.contents = style.image
             sizeMaskToView()
-            mask = imageMask
+            layer?.mask = imageMask
             image = nil
         case .bubbleOutline(let color):
             let bubbleStyle: MessageStyle = .bubble
-            imageMask.image = bubbleStyle.image
+            imageMask.contents = bubbleStyle.image
             sizeMaskToView()
-            mask = imageMask
+            layer?.mask = imageMask
             image = style.image
-            tintColor = color
+            // TODO: - Do we need to tint in Cocoa?
+//            tintColor = color
         case .bubbleTailOutline(let color, let tail, let corner):
             let bubbleStyle: MessageStyle = .bubbleTailOutline(.white, tail, corner)
-            imageMask.image = bubbleStyle.image
+            imageMask.contents = bubbleStyle.image
             sizeMaskToView()
-            mask = imageMask
+            layer?.mask = imageMask
             image = style.image
-            tintColor = color
+//            tintColor = color
         case .none:
-            mask = nil
+            layer?.mask = nil
             image = nil
-            tintColor = nil
+//            tintColor = nil
         case .custom(let configurationClosure):
-            mask = nil
+            layer?.mask = nil
             image = nil
-            tintColor = nil
+//            tintColor = nil
             configurationClosure(self)
         }
     }

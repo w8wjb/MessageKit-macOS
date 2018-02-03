@@ -22,17 +22,14 @@
  SOFTWARE.
  */
 
-import UIKit
+import AppKit
 
-open class MessagesViewController: UIViewController {
+open class MessagesViewController: NSViewController {
     
     // MARK: - Properties [Public]
 
     /// The `MessagesCollectionView` managed by the messages view controller object.
     open var messagesCollectionView = MessagesCollectionView()
-
-    /// The `MessageInputBar` used as the `inputAccessoryView` in the view controller.
-    open var messageInputBar = MessageInputBar()
 
     /// A Boolean value that determines whether the `MessagesCollectionView` scrolls to the
     /// bottom whenever the `InputTextView` begins editing.
@@ -46,16 +43,8 @@ open class MessagesViewController: UIViewController {
     /// The default value of this property is `false`.
     open var maintainPositionOnKeyboardFrameChanged: Bool = false
 
-    open override var canBecomeFirstResponder: Bool {
+    open override var acceptsFirstResponder: Bool {
         return true
-    }
-
-    open override var inputAccessoryView: UIView? {
-        return messageInputBar
-    }
-
-    open override var shouldAutorotate: Bool {
-        return false
     }
 
     /// A Boolean value used to determine if `viewDidLayoutSubviews()` has been called.
@@ -64,15 +53,20 @@ open class MessagesViewController: UIViewController {
     /// Indicated selected indexPath when handle menu action
     var selectedIndexPathForMenu: IndexPath?
 
-    var messageCollectionViewBottomInset: CGFloat = 0 {
-        didSet {
-            messagesCollectionView.contentInset.bottom = messageCollectionViewBottomInset
-            messagesCollectionView.scrollIndicatorInsets.bottom = messageCollectionViewBottomInset
-        }
-    }
+//    var messageCollectionViewBottomInset: CGFloat = 0 {
+//        didSet {
+//            messagesCollectionView.contentInset.bottom = messageCollectionViewBottomInset
+//            messagesCollectionView.scrollIndicatorInsets.bottom = messageCollectionViewBottomInset
+//        }
+//    }
 
     // MARK: - View Life Cycle
 
+    open override func loadView() {
+        self.view = NSView()
+        self.view.wantsLayer = true
+    }
+    
     open override func viewDidLoad() {
         super.viewDidLoad()
         setupDefaults()
@@ -80,35 +74,22 @@ open class MessagesViewController: UIViewController {
         setupConstraints()
         registerReusableViews()
         setupDelegates()
-        addMenuControllerObservers()
     }
 
-    open override func viewDidLayoutSubviews() {
-        // Hack to prevent animation of the contentInset after viewDidAppear
-        if isFirstLayout {
-            defer { isFirstLayout = false }
-            addKeyboardObservers()
-            messageCollectionViewBottomInset = keyboardOffsetFrame.height
-        }
-        adjustScrollViewInset()
-    }
+//    open override func viewDidLayout() {
+//        adjustScrollViewInset()
+//    }
 
     // MARK: - Initializers
 
-    deinit {
-        removeKeyboardObservers()
-        removeMenuControllerObservers()
-    }
 
     // MARK: - Methods [Private]
 
     /// Sets the default values for the MessagesViewController
     private func setupDefaults() {
-        extendedLayoutIncludesOpaqueBars = true
-        automaticallyAdjustsScrollViewInsets = false
-        view.backgroundColor = .white
-        messagesCollectionView.keyboardDismissMode = .interactive
-        messagesCollectionView.alwaysBounceVertical = true
+//        automaticallyAdjustsScrollViewInsets = false
+        view.layer?.backgroundColor = .white
+//        messagesCollectionView.alwaysBounceVertical = true
     }
 
     /// Sets the delegate and dataSource of the messagesCollectionView property.
@@ -124,24 +105,26 @@ open class MessagesViewController: UIViewController {
 
     /// Registers all cells and supplementary views of the messagesCollectionView property.
     private func registerReusableViews() {
-        messagesCollectionView.register(TextMessageCell.self)
-        messagesCollectionView.register(MediaMessageCell.self)
-        messagesCollectionView.register(LocationMessageCell.self)
+        messagesCollectionView.register(TextMessageItem.self)
+        messagesCollectionView.register(MediaMessageItem.self)
+        messagesCollectionView.register(LocationMessageItem.self)
 
-        messagesCollectionView.register(MessageFooterView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter)
-        messagesCollectionView.register(MessageHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader)
-        messagesCollectionView.register(MessageDateHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader)
+        messagesCollectionView.register(MessageFooterView.self, forSupplementaryViewOfKind: NSCollectionView.SupplementaryElementKind.sectionFooter)
+        messagesCollectionView.register(MessageHeaderView.self, forSupplementaryViewOfKind: NSCollectionView.SupplementaryElementKind.sectionHeader)
+        messagesCollectionView.register(MessageDateHeaderView.self, forSupplementaryViewOfKind: NSCollectionView.SupplementaryElementKind.sectionHeader)
     }
 
     /// Sets the constraints of the `MessagesCollectionView`.
     private func setupConstraints() {
         messagesCollectionView.translatesAutoresizingMaskIntoConstraints = false
         
-        let top = messagesCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: topLayoutGuide.length)
+        // TODO: Does this need a layout guide
+//        let top = messagesCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: topLayoutGuide.length)
+        let top = messagesCollectionView.topAnchor.constraint(equalTo: view.topAnchor)
         let bottom = messagesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         if #available(iOS 11.0, *) {
-            let leading = messagesCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor)
-            let trailing = messagesCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+            let leading = messagesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
+            let trailing = messagesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             NSLayoutConstraint.activate([top, bottom, trailing, leading])
         } else {
             let leading = messagesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor)

@@ -22,16 +22,16 @@
  SOFTWARE.
  */
 
-import UIKit
+import AppKit
 
-extension MessagesViewController: UICollectionViewDelegateFlowLayout {
+extension MessagesViewController: NSCollectionViewDelegateFlowLayout {
 
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    open func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let messagesFlowLayout = collectionViewLayout as? MessagesCollectionViewFlowLayout else { return .zero }
         return messagesFlowLayout.sizeForItem(at: indexPath)
     }
 
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    open func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
 
         guard let messagesCollectionView = collectionView as? MessagesCollectionView else {
             fatalError(MessageKitError.notMessagesCollectionView)
@@ -48,7 +48,7 @@ extension MessagesViewController: UICollectionViewDelegateFlowLayout {
         return layoutDelegate.headerViewSize(for: message, at: indexPath, in: messagesCollectionView)
     }
 
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+    open func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         guard let messagesCollectionView = collectionView as? MessagesCollectionView else {
             fatalError(MessageKitError.notMessagesCollectionView)
         }
@@ -64,7 +64,7 @@ extension MessagesViewController: UICollectionViewDelegateFlowLayout {
         return layoutDelegate.footerViewSize(for: message, at: indexPath, in: messagesCollectionView)
     }
 
-    open func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
+    open func collectionView(_ collectionView: NSCollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return false }
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
 
@@ -77,26 +77,28 @@ extension MessagesViewController: UICollectionViewDelegateFlowLayout {
         }
     }
 
-    open func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
+    open func collectionView(_ collectionView: NSCollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
         return (action == NSSelectorFromString("copy:"))
     }
 
-    open func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
+    open func collectionView(_ collectionView: NSCollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
             fatalError(MessageKitError.nilMessagesDataSource)
         }
-        let pasteBoard = UIPasteboard.general
+        let pasteBoard = NSPasteboard.general
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
-
+        
         switch message.data {
         case .text(let text), .emoji(let text):
-            pasteBoard.string = text
+            pasteBoard.setString(text, forType: .string)
         case .attributedText(let attributedText):
-            pasteBoard.string = attributedText.string
+            let rtf = attributedText.rtf(from: NSMakeRange(0, attributedText.length), documentAttributes: [.documentType : NSAttributedString.DocumentType.rtf])
+            pasteBoard.setData(rtf, forType: .rtf)
         case .photo(let image):
-            pasteBoard.image = image
+            pasteBoard.setData(image.tiffRepresentation, forType: .tiff)
         default:
             break
         }
+
     }
 }

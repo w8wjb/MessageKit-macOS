@@ -22,18 +22,18 @@
  SOFTWARE.
  */
 
-import UIKit
+import AppKit
 
 /// The layout attributes used by a `MessageCollectionViewCell` to layout its subviews.
-final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
+final class MessagesCollectionViewLayoutAttributes: NSCollectionViewLayoutAttributes {
 
     // MARK: - Properties
 
     var avatarFrame: CGRect = .zero
 
-    var messageLabelFont: UIFont = UIFont.preferredFont(forTextStyle: .body)
+    var messageLabelFont: NSFont = NSFont.preferredFont(forTextStyle: .body)
     var messageContainerFrame: CGRect = .zero
-    var messageLabelInsets: UIEdgeInsets = .zero
+    var messageLabelInsets: NSEdgeInsets = NSEdgeInsetsZero
 
     var topLabelFrame: CGRect = .zero
     var bottomLabelFrame: CGRect = .zero

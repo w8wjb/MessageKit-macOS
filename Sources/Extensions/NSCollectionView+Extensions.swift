@@ -22,48 +22,48 @@
  SOFTWARE.
  */
 
-import Foundation
+import AppKit
 
 /// Optional Cell Protocol to Simplify registration/cell type loading in a generic way
 public protocol CollectionViewReusable: AnyObject {
-    static func reuseIdentifier() -> String
+    static func reuseIdentifier() -> NSUserInterfaceItemIdentifier
 }
 
 public extension MessagesCollectionView {
     /// Registers a particular cell using its reuse-identifier
-    func register<CellType: UICollectionViewCell & CollectionViewReusable>(_ cellClass: CellType.Type) {
-	    register(cellClass, forCellWithReuseIdentifier: CellType.reuseIdentifier())
+    func register<CellType: NSCollectionViewItem & CollectionViewReusable>(_ cellClass: CellType.Type) {
+        register(cellClass, forItemWithIdentifier: CellType.reuseIdentifier())
     }
 
     /// Registers a reusable view for a specific SectionKind
-    func register<ViewType: UICollectionReusableView & CollectionViewReusable>(_ headerFooterClass: ViewType.Type, forSupplementaryViewOfKind kind: String) {
-	    register(headerFooterClass,
-	             forSupplementaryViewOfKind: kind,
-	             withReuseIdentifier: ViewType.reuseIdentifier())
+    func register<ViewType: NSView & CollectionViewReusable>(_ headerFooterClass: ViewType.Type, forSupplementaryViewOfKind kind: NSCollectionView.SupplementaryElementKind) {
+        register(headerFooterClass,
+                 forSupplementaryViewOfKind: kind,
+                 withIdentifier: ViewType.reuseIdentifier())
     }
 
     /// Generically dequeues a cell of the correct type allowing you to avoid scattering your code with guard-let-else-fatal
-    func dequeueReusableCell<CellType: UICollectionViewCell & CollectionViewReusable>(_ cellClass: CellType.Type, for indexPath: IndexPath) -> CellType {
-	    guard let cell = dequeueReusableCell(withReuseIdentifier: cellClass.reuseIdentifier(), for: indexPath) as? CellType else {
-    	    fatalError("Unable to dequeue \(String(describing: cellClass)) with reuseId of \(cellClass.reuseIdentifier())")
+    func makeItem<CellType: NSCollectionViewItem & CollectionViewReusable>(_ cellClass: CellType.Type, for indexPath: IndexPath) -> CellType {
+        guard let item = makeItem(withIdentifier: cellClass.reuseIdentifier(), for: indexPath) as? CellType else {
+    	    fatalError("Unable to make \(String(describing: cellClass)) with reuseId of \(cellClass.reuseIdentifier())")
 	    }
-	    return cell
+	    return item
     }
 
     /// Generically dequeues a header of the correct type allowing you to avoid scattering your code with guard-let-else-fatal
-    func dequeueReusableHeaderView<ViewType: UICollectionReusableView & CollectionViewReusable>(_ viewClass: ViewType.Type, for indexPath: IndexPath) -> ViewType {
-        let view = dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: viewClass.reuseIdentifier(), for: indexPath)
+    func makeHeaderView<ViewType: NSView & CollectionViewReusable>(_ viewClass: ViewType.Type, for indexPath: IndexPath) -> ViewType {
+        let view = makeSupplementaryView(ofKind: .sectionHeader, withIdentifier: viewClass.reuseIdentifier(), for: indexPath)
         guard let viewType = view as? ViewType else {
-            fatalError("Unable to dequeue \(String(describing: viewClass)) with reuseId of \(viewClass.reuseIdentifier())")
+            fatalError("Unable to make \(String(describing: viewClass)) with reuseId of \(viewClass.reuseIdentifier())")
         }
         return viewType
     }
 
     /// Generically dequeues a footer of the correct type allowing you to avoid scattering your code with guard-let-else-fatal
-    func dequeueReusableFooterView<ViewType: UICollectionReusableView & CollectionViewReusable>(_ viewClass: ViewType.Type, for indexPath: IndexPath) -> ViewType {
-        let view = dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: viewClass.reuseIdentifier(), for: indexPath)
+    func makeFooterView<ViewType: NSView & CollectionViewReusable>(_ viewClass: ViewType.Type, for indexPath: IndexPath) -> ViewType {
+        let view = makeSupplementaryView(ofKind: .sectionFooter, withIdentifier: viewClass.reuseIdentifier(), for: indexPath)
         guard let viewType = view as? ViewType else {
-            fatalError("Unable to dequeue \(String(describing: viewClass)) with reuseId of \(viewClass.reuseIdentifier())")
+            fatalError("Unable to make \(String(describing: viewClass)) with reuseId of \(viewClass.reuseIdentifier())")
         }
         return viewType
     }

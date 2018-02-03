@@ -75,8 +75,8 @@ final class MessageIntermediateLayoutAttributes {
     // MessageContainerView
     var messageContainerSize: CGSize = .zero
     var messageContainerMaxWidth: CGFloat = 0
-    var messageContainerPadding: UIEdgeInsets = .zero
-    var messageLabelInsets: UIEdgeInsets = .zero
+    var messageContainerPadding: NSEdgeInsets = NSEdgeInsetsZero
+    var messageLabelInsets: NSEdgeInsets = NSEdgeInsetsZero
     
     lazy var messageContainerFrame: CGRect = {
         
@@ -99,7 +99,7 @@ final class MessageIntermediateLayoutAttributes {
     }()
     
     // Cell Top Label
-    var topLabelAlignment: LabelAlignment = .cellLeading(.zero)
+    var topLabelAlignment: LabelAlignment = .cellLeading(NSEdgeInsetsZero)
     var topLabelSize: CGSize = .zero
     var topLabelMaxWidth: CGFloat = 0
     
@@ -129,7 +129,7 @@ final class MessageIntermediateLayoutAttributes {
     }()
 
     // Cell Bottom Label
-    var bottomLabelAlignment: LabelAlignment = .cellTrailing(.zero)
+    var bottomLabelAlignment: LabelAlignment = .cellTrailing(NSEdgeInsetsZero)
     var bottomLabelSize: CGSize = .zero
     var bottomLabelMaxWidth: CGFloat = 0
     
@@ -171,7 +171,7 @@ final class MessageIntermediateLayoutAttributes {
 
 extension MessageIntermediateLayoutAttributes {
     
-    var bottomLabelPadding: UIEdgeInsets {
+    var bottomLabelPadding: NSEdgeInsets {
         return bottomLabelAlignment.insets
     }
     
@@ -183,7 +183,7 @@ extension MessageIntermediateLayoutAttributes {
         return bottomLabelPadding.left + bottomLabelPadding.right
     }
     
-    var topLabelPadding: UIEdgeInsets {
+    var topLabelPadding: NSEdgeInsets {
         return topLabelAlignment.insets
     }
     

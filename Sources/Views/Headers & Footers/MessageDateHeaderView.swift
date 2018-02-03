@@ -22,14 +22,16 @@
  SOFTWARE.
  */
 
-import UIKit
+import AppKit
 
 open class MessageDateHeaderView: MessageHeaderView {
-    open override class func reuseIdentifier() -> String { return "messagekit.header.date" }
+    open override class func reuseIdentifier() -> NSUserInterfaceItemIdentifier {
+        return NSUserInterfaceItemIdentifier("messagekit.header.date")
+    }
 
     // MARK: - Properties
 
-    open let dateLabel = UILabel()
+    open let dateLabel = NSTextField(labelWithString: "")
 
     // MARK: - Initializers
 
@@ -37,7 +39,7 @@ open class MessageDateHeaderView: MessageHeaderView {
         super.init(frame: frame)
         addSubview(dateLabel)
         dateLabel.fillSuperview()
-        dateLabel.textAlignment = .center
+        dateLabel.alignment = .center
         dateLabel.font = .boldSystemFont(ofSize: 10)
         dateLabel.textColor = .darkGray
     }

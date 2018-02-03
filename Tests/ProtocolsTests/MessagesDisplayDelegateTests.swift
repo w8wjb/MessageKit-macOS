@@ -24,7 +24,7 @@
 
 import XCTest
 
-@testable import MessageKit
+@testable import MessageKit_macOS
 
 class MessagesDisplayDelegateTests: XCTestCase {
 
@@ -35,9 +35,7 @@ class MessagesDisplayDelegateTests: XCTestCase {
 
         sut = MockMessagesViewController()
         _ = sut.view
-        sut.beginAppearanceTransition(true, animated: true)
-        sut.endAppearanceTransition()
-        sut.view.layoutIfNeeded()
+        sut.view.layoutSubtreeIfNeeded()
     }
 
     override func tearDown() {
@@ -50,19 +48,19 @@ class MessagesDisplayDelegateTests: XCTestCase {
         XCTAssertEqual(sut.backgroundColor(for: sut.dataProvider.messages[0],
                                            at: IndexPath(item: 0, section: 0),
                                            in: sut.messagesCollectionView),
-                       UIColor.outgoingGreen)
+                       NSColor.outgoingGreen)
         XCTAssertNotEqual(sut.backgroundColor(for: sut.dataProvider.messages[0],
                                               at: IndexPath(item: 0, section: 0),
                                               in: sut.messagesCollectionView),
-                          UIColor.incomingGray)
+                          NSColor.incomingGray)
         XCTAssertEqual(sut.backgroundColor(for: sut.dataProvider.messages[1],
                                            at: IndexPath(item: 1, section: 0),
                                            in: sut.messagesCollectionView),
-                       UIColor.incomingGray)
+                       NSColor.incomingGray)
         XCTAssertNotEqual(sut.backgroundColor(for: sut.dataProvider.messages[1],
                                               at: IndexPath(item: 1, section: 0),
                                               in: sut.messagesCollectionView),
-                          UIColor.outgoingGreen)
+                          NSColor.outgoingGreen)
     }
 
     func testBackgroundColorWithoutDataSource_returnsWhiteForDefault() {
@@ -185,8 +183,6 @@ class TextMessageDisplayDelegateTests: XCTestCase {
 
         sut = MockMessagesViewController()
         _ = sut.view
-        sut.beginAppearanceTransition(true, animated: true)
-        sut.endAppearanceTransition()
     }
 
     override func tearDown() {
@@ -208,7 +204,7 @@ class TextMessageDisplayDelegateTests: XCTestCase {
                                       at: IndexPath(item: 0, section: 0),
                                       in: sut.messagesCollectionView)
 
-        XCTAssertEqual(textColor, .darkText)
+        XCTAssertEqual(textColor, NSColor.controlDarkShadowColor)
     }
 
     func testTextColorWithoutDataSource_returnsDarkTextForDefault() {
@@ -218,7 +214,7 @@ class TextMessageDisplayDelegateTests: XCTestCase {
                                       at: IndexPath(item: 0, section: 0),
                                       in: sut.messagesCollectionView)
 
-        XCTAssertEqual(textColor, .darkText)
+        XCTAssertEqual(textColor, NSColor.controlDarkShadowColor)
     }
 
     func testEnableDetectors_returnsEmptyForDefault() {

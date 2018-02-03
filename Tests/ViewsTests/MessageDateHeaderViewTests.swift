@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 import XCTest
-@testable import MessageKit
+@testable import MessageKit_macOS
 
 class MessageDateHeaderViewTests: XCTestCase {
 
@@ -40,9 +40,9 @@ class MessageDateHeaderViewTests: XCTestCase {
 
     func testInit() {
         XCTAssertTrue(view.subviews.contains(view.dateLabel))
-        XCTAssertEqual(view.dateLabel.textAlignment, .center)
+        XCTAssertEqual(view.dateLabel.alignment, .center)
         XCTAssertEqual(view.dateLabel.font, .boldSystemFont(ofSize: 10))
-        XCTAssertEqual(view.dateLabel.textColor, UIColor.darkGray)
+        XCTAssertEqual(view.dateLabel.textColor, NSColor.darkGray)
     }
 
 }

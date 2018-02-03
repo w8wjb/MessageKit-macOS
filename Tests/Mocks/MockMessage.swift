@@ -24,6 +24,7 @@
 
 import Foundation
 import CoreLocation
+@testable import MessageKit_macOS
 
 struct MockMessage: MessageType {
 
@@ -47,11 +48,11 @@ struct MockMessage: MessageType {
         self.init(data: .attributedText(attributedText), sender: sender, messageId: messageId)
     }
 
-    init(image: UIImage, sender: Sender, messageId: String) {
+    init(image: NSImage, sender: Sender, messageId: String) {
         self.init(data: .photo(image), sender: sender, messageId: messageId)
     }
 
-    init(thumbnail: UIImage, sender: Sender, messageId: String) {
+    init(thumbnail: NSImage, sender: Sender, messageId: String) {
         let url = URL(fileURLWithPath: "")
         self.init(data: .video(file: url, thumbnail: thumbnail), sender: sender, messageId: messageId)
     }

@@ -22,9 +22,9 @@
  SOFTWARE.
  */
 
-import UIKit
+import AppKit
 
-extension UIView {
+extension NSView {
     
     func fillSuperview() {
         guard let superview = self.superview else {

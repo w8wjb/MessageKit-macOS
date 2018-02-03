@@ -22,11 +22,11 @@
  SOFTWARE.
  */
 
-import UIKit
+import AppKit
 
-extension MessagesViewController: UICollectionViewDataSource {
+extension MessagesViewController: NSCollectionViewDataSource {
 
-    open func numberOfSections(in collectionView: UICollectionView) -> Int {
+    open func numberOfSections(in collectionView: NSCollectionView) -> Int {
         guard let collectionView = collectionView as? MessagesCollectionView else {
             fatalError(MessageKitError.notMessagesCollectionView)
         }
@@ -34,7 +34,7 @@ extension MessagesViewController: UICollectionViewDataSource {
         return collectionView.messagesDataSource?.numberOfMessages(in: collectionView) ?? 0
     }
 
-    open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    open func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let collectionView = collectionView as? MessagesCollectionView else {
             fatalError(MessageKitError.notMessagesCollectionView)
         }
@@ -43,7 +43,7 @@ extension MessagesViewController: UICollectionViewDataSource {
         return messageCount > 0 ? 1 : 0
     }
 
-    open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    public func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
 
         guard let messagesCollectionView = collectionView as? MessagesCollectionView else {
             fatalError(MessageKitError.notMessagesCollectionView)
@@ -57,21 +57,21 @@ extension MessagesViewController: UICollectionViewDataSource {
 
         switch message.data {
         case .text, .attributedText, .emoji:
-            let cell = messagesCollectionView.dequeueReusableCell(TextMessageCell.self, for: indexPath)
-            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
-            return cell
+            let item = messagesCollectionView.makeItem(TextMessageItem.self, for: indexPath)
+            item.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return item
         case .photo, .video:
-            let cell = messagesCollectionView.dequeueReusableCell(MediaMessageCell.self, for: indexPath)
-            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
-            return cell
+            let item = messagesCollectionView.makeItem(MediaMessageItem.self, for: indexPath)
+            item.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return item
         case .location:
-            let cell = messagesCollectionView.dequeueReusableCell(LocationMessageCell.self, for: indexPath)
-            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
-            return cell
+            let item = messagesCollectionView.makeItem(LocationMessageItem.self, for: indexPath)
+            item.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return item
         }
     }
 
-    open func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    public func collectionView(_ collectionView: NSCollectionView, viewForSupplementaryElementOfKind kind: NSCollectionView.SupplementaryElementKind, at indexPath: IndexPath) -> NSView {
 
         guard let messagesCollectionView = collectionView as? MessagesCollectionView else {
             fatalError(MessageKitError.notMessagesCollectionView)
@@ -88,9 +88,9 @@ extension MessagesViewController: UICollectionViewDataSource {
         let message = dataSource.messageForItem(at: indexPath, in: messagesCollectionView)
 
         switch kind {
-        case UICollectionElementKindSectionHeader:
+        case NSCollectionView.SupplementaryElementKind.sectionHeader:
             return displayDelegate.messageHeaderView(for: message, at: indexPath, in: messagesCollectionView)
-        case UICollectionElementKindSectionFooter:
+        case NSCollectionView.SupplementaryElementKind.sectionFooter:
             return displayDelegate.messageFooterView(for: message, at: indexPath, in: messagesCollectionView)
         default:
             fatalError(MessageKitError.unrecognizedSectionKind)

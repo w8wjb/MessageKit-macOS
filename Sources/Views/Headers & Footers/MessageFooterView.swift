@@ -22,10 +22,12 @@
  SOFTWARE.
  */
 
-import UIKit
+import AppKit
 
-open class MessageFooterView: UICollectionReusableView, CollectionViewReusable {
-    open class func reuseIdentifier() -> String { return "messagekit.footer.base" }
+open class MessageFooterView: NSView, CollectionViewReusable {
+    open class func reuseIdentifier() -> NSUserInterfaceItemIdentifier {
+        return NSUserInterfaceItemIdentifier("messagekit.footer.base")
+    }
 
     // MARK: - Initializers
 
