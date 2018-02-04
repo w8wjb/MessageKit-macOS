@@ -58,6 +58,7 @@ open class MessageCollectionViewItem: NSCollectionViewItem, CollectionViewReusab
         view.autoresizingMask = [.width, .height]
         
         
+        // TODO: Remove this later; just for debugging purposes
         view.wantsLayer = true
         view.layer?.borderColor = NSColor.green.cgColor
         view.layer?.borderWidth = 1

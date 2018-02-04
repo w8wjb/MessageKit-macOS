@@ -160,6 +160,8 @@ open class AvatarView: NSImageView {
     // MARK: - Internal methods
 
     internal func prepareView() {
+        self.layer = CALayer()
+        self.layer?.contentsGravity = kCAGravityResizeAspectFill
         wantsLayer = true
         imageScaling = .scaleProportionallyUpOrDown
         layer?.backgroundColor = NSColor.gray.cgColor
@@ -171,7 +173,7 @@ open class AvatarView: NSImageView {
     
     open func set(avatar: Avatar) {
         if let image = avatar.image {
-            self.image = image
+            self.layer?.contents = image
         } else {
             initials = avatar.initials
         }
