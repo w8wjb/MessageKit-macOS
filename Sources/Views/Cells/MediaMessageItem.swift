@@ -30,10 +30,6 @@ open class MediaMessageItem: MessageCollectionViewItem {
         return NSUserInterfaceItemIdentifier("messagekit.cell.mediamessage")
     }
 
-//    public override init(frame: CGRect) {
-//        super.init(frame: frame)
-//    }
-    
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -76,9 +72,11 @@ open class MediaMessageItem: MessageCollectionViewItem {
         switch message.data {
         case .photo(let image):
             imageView?.image = image
+            imageView?.imageScaling = .scaleProportionallyUpOrDown
             playButtonView.isHidden = true
         case .video(_, let image):
             imageView?.image = image
+            imageView?.imageScaling = .scaleProportionallyUpOrDown
             playButtonView.isHidden = false
         default:
             break

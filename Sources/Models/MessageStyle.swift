@@ -170,7 +170,6 @@ public enum MessageStyle {
         
         let tailWidth: CGFloat = 16
         let tailMargin = tailWidth / 2
-        let tailHeight: CGFloat = 16
         let tailStart: CGFloat = tailWidth * 2
         let peakHeight: CGFloat = 4
         let cornerRadius: CGFloat = min(16, (rect.maxX / 2))
@@ -240,35 +239,5 @@ public enum MessageStyle {
     }
     
 
-    // MARK: - Private
-
-    private var imageName: String? {
-        switch self {
-        case .bubble:
-            return "bubble_full"
-        case .bubbleOutline:
-            return "bubble_outlined"
-        case .bubbleTail(_, let tailStyle):
-            return "bubble_full" + tailStyle.imageNameSuffix
-        case .bubbleTailOutline(_, _, let tailStyle):
-            return "bubble_outlined" + tailStyle.imageNameSuffix
-        case .none, .custom:
-            return nil
-        }
-    }
-
-    private var imagePath: String? {
-        guard let imageName = imageName else { return nil }
-        let assetBundle = Bundle.messageKitAssetBundle()
-        return assetBundle.path(forResource: imageName, ofType: "png", inDirectory: "Images")
-    }
-
-    private func stretch(_ image: NSImage) -> NSImage {
-        return image
-        // TODO - Implement image stretch
-//        let center = CGPoint(x: image.size.width / 2, y: image.size.height / 2)
-//        let capInsets = UIEdgeInsets(top: center.y, left: center.x, bottom: center.y, right: center.x)
-//        return image.resizableImage(withCapInsets: capInsets, resizingMode: .stretch)
-    }
 
 }

@@ -185,9 +185,9 @@ extension ConversationViewController: MessagesLayoutDelegate {
 
     func messagePadding(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> NSEdgeInsets {
         if isFromCurrentSender(message: message) {
-            return NSEdgeInsets(top: 0, left: 30, bottom: 0, right: 4)
+            return NSEdgeInsets(top: 0, left: 30, bottom: 0, right: 8)
         } else {
-            return NSEdgeInsets(top: 0, left: 4, bottom: 0, right: 30)
+            return NSEdgeInsets(top: 0, left: 8, bottom: 0, right: 30)
         }
     }
 

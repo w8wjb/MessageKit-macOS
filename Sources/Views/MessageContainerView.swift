@@ -45,43 +45,32 @@ open class MessageContainerView: NSImageView {
 
     // MARK: - Methods
 
-//    private func sizeMaskToView() {
-//        switch style {
-//        case .none, .custom:
-//            break
-//        case .bubble, .bubbleTail:
-//            imageMask.frame = bounds
-//        case .bubbleOutline, .bubbleTailOutline:
-//            imageMask.frame = bounds.insetBy(dx: 1.0, dy: 1.0)
-//        }
-//    }
-
     private func applyMessageStyle() {
         wantsLayer = true
         
+        mask = nil
+        
         switch style {
-        case .bubble, .bubbleTail:
+        case .bubble:
+            layer?.cornerRadius = 16
+            
+        case .bubbleTail:
             mask = style.generateMask(for: self.bounds)
-            layer?.mask = mask
-            image = nil
         case .bubbleOutline(let color):
-            let bubbleStyle: MessageStyle = .bubble
-            mask = style.generateMask(for: self.bounds)
-            layer?.mask = mask
+            layer?.cornerRadius = 16
+            layer?.borderColor = color.cgColor
+            layer?.borderWidth = 1
+
         case .bubbleTailOutline(let color, let tail, let corner):
             let bubbleStyle: MessageStyle = .bubbleTailOutline(.white, tail, corner)
             mask = style.generateMask(for: self.bounds)
-            layer?.mask = mask
-//            image = style.image
         case .none:
-            layer?.mask = nil
-            image = nil
-//            tintColor = nil
+            break
         case .custom(let configurationClosure):
-            layer?.mask = nil
-            image = nil
-//            tintColor = nil
             configurationClosure(self)
         }
+        
+        layer?.mask = mask
+        
     }
 }

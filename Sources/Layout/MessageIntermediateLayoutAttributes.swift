@@ -57,13 +57,13 @@ final class MessageIntermediateLayoutAttributes {
         
         switch avatarPosition.vertical {
         case .cellTop:
-            break
-        case .cellBottom:
             origin.y = cellFrame.height - avatarSize.height
+        case .cellBottom:
+            break
         case .messageTop:
-            origin.y = messageContainerFrame.minY
-        case .messageBottom:
             origin.y = messageContainerFrame.maxY - avatarSize.height
+        case .messageBottom:
+            origin.y = messageContainerFrame.minY
         case .messageCenter:
             origin.y = messageContainerFrame.midY - (avatarSize.height/2)
         }
@@ -109,7 +109,7 @@ final class MessageIntermediateLayoutAttributes {
         
         var origin = CGPoint.zero
         
-        origin.y = topLabelPadding.top
+        origin.y = messageContainerFrame.maxY + topLabelPadding.top
         
         switch topLabelAlignment {
         case .cellLeading:
@@ -139,7 +139,7 @@ final class MessageIntermediateLayoutAttributes {
         
         var origin: CGPoint = .zero
         
-        origin.y = messageContainerFrame.maxY + messageContainerPadding.bottom + bottomLabelPadding.top
+        origin.y = messageContainerFrame.minY - bottomLabelSize.height - bottomLabelPadding.top
         
         switch bottomLabelAlignment {
         case .cellLeading:
