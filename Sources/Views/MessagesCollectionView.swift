@@ -38,6 +38,12 @@ open class MessagesCollectionView: NSCollectionView {
 
     open var showsDateHeaderAfterTimeInterval: TimeInterval = 3600
 
+    open override var frame: NSRect {
+        didSet {
+            collectionViewLayout?.invalidateLayout()
+        }
+    }
+    
     private var indexPathForLastItem: IndexPath? {
 
         let lastSection = numberOfSections - 1
@@ -52,6 +58,7 @@ open class MessagesCollectionView: NSCollectionView {
         super.init(frame: frame)
         wantsLayer = true
         layer?.backgroundColor = .white
+        
         collectionViewLayout = MessagesCollectionViewFlowLayout()
         
         autoresizingMask = [.width, .maxXMargin, .minYMargin, .height, .maxXMargin]
@@ -64,7 +71,7 @@ open class MessagesCollectionView: NSCollectionView {
     public convenience init() {
         self.init(frame: .zero)
     }
-
+    
     // MARK: - Methods
     
     // TODO: - Manage NScrollView

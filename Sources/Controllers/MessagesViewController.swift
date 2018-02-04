@@ -68,8 +68,6 @@ open class MessagesViewController: NSViewController {
         self.view = NSView()
         self.view.autoresizesSubviews = true
         self.view.autoresizingMask = [.height, .width]
-        
-
     }
     
     open override func viewDidLoad() {
@@ -80,10 +78,6 @@ open class MessagesViewController: NSViewController {
         registerReusableViews()
         setupDelegates()
     }
-
-//    open override func viewDidLayout() {
-//        adjustScrollViewInset()
-//    }
 
     // MARK: - Initializers
 
