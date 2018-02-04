@@ -53,6 +53,8 @@ open class MessagesCollectionView: NSCollectionView {
         wantsLayer = true
         layer?.backgroundColor = .white
         collectionViewLayout = MessagesCollectionViewFlowLayout()
+        
+        autoresizingMask = [.width, .maxXMargin, .minYMargin, .height, .maxXMargin]
     }
     
     required public init?(coder aDecoder: NSCoder) {

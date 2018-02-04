@@ -22,19 +22,16 @@
  SOFTWARE.
  */
 
-import Cocoa
+import AppKit
 
-@NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
+extension NSRect {
     
-    
-    
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Insert code here to initialize your application
+    func insetBy(_ insets: NSEdgeInsets) -> NSRect {
+        return NSRect(x: self.minX + insets.left,
+                      y: self.minY + insets.bottom,
+                      width: self.width - insets.left - insets.right,
+                      height: self.height - insets.bottom - insets.top)
     }
-    
-    func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
-    }
+
     
 }

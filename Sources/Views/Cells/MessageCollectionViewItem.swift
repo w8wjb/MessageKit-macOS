@@ -53,23 +53,28 @@ open class MessageCollectionViewItem: NSCollectionViewItem, CollectionViewReusab
 
     open weak var delegate: MessageCellDelegate?
     
-    public init(frame: CGRect) {
-        super.init(nibName: nil, bundle: nil)
-        view = NSView(frame: frame)
-        view.autoresizingMask = [.width, .height]
-        setupSubviews()
-    }
-    
-    public override init(nibName nibNameOrNil: NSNib.Name?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+//    public init(frame: CGRect) {
+//        super.init(nibName: nil, bundle: nil)
+//    }
+//
+//    public override init(nibName nibNameOrNil: NSNib.Name?, bundle nibBundleOrNil: Bundle?) {
+//        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+//    }
+//
+//    required public init?(coder aDecoder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
     
     open override func loadView() {
-        self.view = NSView()
+        view = NSView()
+        view.autoresizingMask = [.width, .height]
+        
+        
+        view.wantsLayer = true
+        view.layer?.borderColor = NSColor.green.cgColor
+        view.layer?.borderWidth = 1
+
+        setupSubviews()
     }
 
     open func setupSubviews() {

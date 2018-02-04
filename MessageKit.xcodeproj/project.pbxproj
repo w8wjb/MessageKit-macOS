@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7C29811F20250686008C2701 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C4C9764202505CC009CEB2C /* Nimble.framework */; };
-		7C29812020250686008C2701 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C4C9763202505CC009CEB2C /* Quick.framework */; };
 		7C29812120250752008C2701 /* MessagesViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC7D1F87AB230030B058 /* MessagesViewControllerTests.swift */; };
 		7C29812220250799008C2701 /* MockMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC7B1F87AB230030B058 /* MockMessage.swift */; };
 		7C2981232025079E008C2701 /* MockMessagesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC7A1F87AB230030B058 /* MockMessagesDataSource.swift */; };
@@ -74,6 +72,7 @@
 		7C4C9765202505CD009CEB2C /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C4C9763202505CC009CEB2C /* Quick.framework */; };
 		7C4C9766202505CD009CEB2C /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C4C9764202505CC009CEB2C /* Nimble.framework */; };
 		7C4C976720250603009CEB2C /* DetectorTypeSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F066E221FDA3F0200E11013 /* DetectorTypeSpec.swift */; };
+		7C6900FF2027534600FFE247 /* NSRect+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6900FE2027534600FFE247 /* NSRect+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -127,6 +126,7 @@
 		7C4C9762202504AE009CEB2C /* MessageKit-macOS copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MessageKit-macOS copy-Info.plist"; path = "/Users/wbustraa/dev/wjb/QTH/MessageKit/MessageKit-macOS copy-Info.plist"; sourceTree = "<absolute>"; };
 		7C4C9763202505CC009CEB2C /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/Mac/Quick.framework; sourceTree = "<group>"; };
 		7C4C9764202505CC009CEB2C /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/Mac/Nimble.framework; sourceTree = "<group>"; };
+		7C6900FE2027534600FFE247 /* NSRect+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRect+Extensions.swift"; sourceTree = "<group>"; };
 		8962AC741F87AB230030B058 /* MessageKitDateFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageKitDateFormatterTests.swift; sourceTree = "<group>"; };
 		8962AC7A1F87AB230030B058 /* MockMessagesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMessagesDataSource.swift; sourceTree = "<group>"; };
 		8962AC7B1F87AB230030B058 /* MockMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMessage.swift; sourceTree = "<group>"; };
@@ -192,8 +192,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7C29811F20250686008C2701 /* Nimble.framework in Frameworks */,
-				7C29812020250686008C2701 /* Quick.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,6 +389,7 @@
 				B7A03F651F8669EB006AEF79 /* NSColor+Extensions.swift */,
 				B7A03F661F8669EB006AEF79 /* NSView+Extensions.swift */,
 				7C4C970C2024CA6D009CEB2C /* NSFont+Extensions.swift */,
+				7C6900FE2027534600FFE247 /* NSRect+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -595,6 +594,7 @@
 				7C4C971B2024F7F6009CEB2C /* MessageDateHeaderView.swift in Sources */,
 				7C4C97022024BF35009CEB2C /* MessageCellDelegate.swift in Sources */,
 				7C4C97072024BF96009CEB2C /* MessageCollectionViewItem.swift in Sources */,
+				7C6900FF2027534600FFE247 /* NSRect+Extensions.swift in Sources */,
 				7C4C971A2024F550009CEB2C /* NSView+Extensions.swift in Sources */,
 				7C4C970E2024D6DF009CEB2C /* NSFont+Extensions.swift in Sources */,
 				7C4C96F42024BBA6009CEB2C /* MessageKitError.swift in Sources */,
@@ -673,6 +673,7 @@
 		7C4C96E92024BB04009CEB2C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -707,6 +708,7 @@
 		7C4C96EA2024BB04009CEB2C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;

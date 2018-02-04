@@ -154,7 +154,13 @@ open class MessageLabel: NSTextField {
     public override init(frame: CGRect) {
         super.init(frame: frame)
         self.maximumNumberOfLines = 0
+        self.isBezeled = false
+        self.drawsBackground = false
+        self.isEditable = false
+        self.isSelectable = false
         self.lineBreakMode = .byWordWrapping
+        self.wantsLayer = true
+        
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -164,12 +170,7 @@ open class MessageLabel: NSTextField {
     // MARK: - Open Methods
 
     open override func draw(_ dirtyRect: NSRect) {
-        // TODO - I *think* this might be the right equivalent, but it needs to be tested
-//    open override func drawText(in rect: CGRect) {
-
-        // TODO - This may not be the right way to inset
-//        let insetRect = UIEdgeInsetsInsetRect(rect, textInsets)
-        let insetRect = dirtyRect.insetBy(dx: textInsets.left, dy: textInsets.top)
+        let insetRect = dirtyRect.insetBy(textInsets)
         
         textContainer.size = CGSize(width: insetRect.width, height: dirtyRect.height)
 

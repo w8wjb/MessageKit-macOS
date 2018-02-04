@@ -23,7 +23,7 @@
  */
 
 import Foundation
-import MessageKit
+import MessageKit_macOS
 import CoreLocation
 
 struct MockMessage: MessageType {
@@ -48,11 +48,11 @@ struct MockMessage: MessageType {
         self.init(data: .attributedText(attributedText), sender: sender, messageId: messageId, date: date)
 	}
 
-    init(image: UIImage, sender: Sender, messageId: String, date: Date) {
+    init(image: NSImage, sender: Sender, messageId: String, date: Date) {
         self.init(data: .photo(image), sender: sender, messageId: messageId, date: date)
     }
 
-    init(thumbnail: UIImage, sender: Sender, messageId: String, date: Date) {
+    init(thumbnail: NSImage, sender: Sender, messageId: String, date: Date) {
         let url = URL(fileURLWithPath: "")
         self.init(data: .video(file: url, thumbnail: thumbnail), sender: sender, messageId: messageId, date: date)
     }

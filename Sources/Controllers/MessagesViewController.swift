@@ -28,6 +28,8 @@ open class MessagesViewController: NSViewController {
     
     // MARK: - Properties [Public]
 
+    open var scrollView: NSScrollView!
+    
     /// The `MessagesCollectionView` managed by the messages view controller object.
     open var messagesCollectionView = MessagesCollectionView()
 
@@ -64,7 +66,10 @@ open class MessagesViewController: NSViewController {
 
     open override func loadView() {
         self.view = NSView()
-        self.view.wantsLayer = true
+        self.view.autoresizesSubviews = true
+        self.view.autoresizingMask = [.height, .width]
+        
+
     }
     
     open override func viewDidLoad() {
@@ -100,7 +105,18 @@ open class MessagesViewController: NSViewController {
 
     /// Adds the messagesCollectionView to the controllers root view.
     private func setupSubviews() {
-        view.addSubview(messagesCollectionView)
+        scrollView = NSScrollView()
+        scrollView.autoresizingMask = [.height, .width]
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.automaticallyAdjustsContentInsets = true
+        scrollView.autoresizesSubviews = true
+        scrollView.scrollsDynamically = true
+        scrollView.hasVerticalScroller = true
+        scrollView.hasHorizontalScroller = false
+
+        scrollView.documentView = messagesCollectionView
+
+        self.view.addSubview(self.scrollView)
     }
 
     /// Registers all cells and supplementary views of the messagesCollectionView property.
@@ -116,20 +132,9 @@ open class MessagesViewController: NSViewController {
 
     /// Sets the constraints of the `MessagesCollectionView`.
     private func setupConstraints() {
-        messagesCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        
-        // TODO: Does this need a layout guide
-//        let top = messagesCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: topLayoutGuide.length)
-        let top = messagesCollectionView.topAnchor.constraint(equalTo: view.topAnchor)
-        let bottom = messagesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        if #available(iOS 11.0, *) {
-            let leading = messagesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
-            let trailing = messagesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-            NSLayoutConstraint.activate([top, bottom, trailing, leading])
-        } else {
-            let leading = messagesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
-            let trailing = messagesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-            NSLayoutConstraint.activate([top, bottom, trailing, leading])
-        }
+        view.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
+        view.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
+        view.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
+        view.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
     }
 }

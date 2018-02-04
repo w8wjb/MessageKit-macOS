@@ -73,26 +73,172 @@ public enum MessageStyle {
 
     // MARK: - Public
 
-    public var image: NSImage? {
-
-        guard let path = imagePath else { return nil }
-
-        guard var image = NSImage(contentsOfFile: path) else { return nil }
-
+    public func generateMask(for rect: NSRect) -> CALayer? {
+        
         switch self {
         case .none, .custom:
             return nil
         case .bubble, .bubbleOutline:
-            break
+            return nil
         case .bubbleTail(let corner, _), .bubbleTailOutline(_, let corner, _):
-            break
-            // TODO - Create corner image
-//            guard let cgImage = image.cgImage else { return nil }
-//            image = NSImage(cgImage: cgImage, scale: image.scale, orientation: corner.imageOrientation)
+            switch corner {
+            case .bottomRight:
+                return generateMaskTailRight(for: rect)
+            default:
+                return generateMaskTailLeft(for: rect)
+            }
         }
-
-        return stretch(image)
     }
+    
+    private func generateMaskTailLeft(for rect: NSRect) -> CALayer? {
+        let shape = CAShapeLayer()
+        
+        let tailWidth: CGFloat = 16
+        let tailMargin = tailWidth / 2
+        let tailHeight: CGFloat = 16
+        let tailStart: CGFloat = tailWidth * 2
+        let peakHeight: CGFloat = 4
+        let cornerRadius: CGFloat = min(16, (rect.maxX / 2))
+
+        let path = CGMutablePath()
+        
+        // End of tail
+        path.move(to: rect.origin)
+        
+        // Upper tail curve
+        path.addQuadCurve(to: CGPoint(x: rect.minX + tailMargin,
+                                      y: rect.minY + tailHeight),
+                          control: CGPoint(x: rect.minX + tailMargin,
+                                           y: rect.minY))
+        
+        // Left edge
+        path.addLine(to: CGPoint(x: rect.minY + tailMargin,
+                                 y: rect.maxY - cornerRadius))
+        
+        // Upper left corner
+        path.addArc(tangent1End: CGPoint(x: rect.minX + tailMargin,
+                                         y: rect.maxY),
+                    tangent2End: CGPoint(x: rect.minX + tailMargin + cornerRadius,
+                                         y: rect.maxY),
+                    radius: cornerRadius)
+        
+        // Upper edge
+        path.addLine(to: CGPoint(x: rect.maxX - cornerRadius,
+                                 y: rect.maxY))
+        
+        // Upper right corner
+        path.addArc(tangent1End: CGPoint(x: rect.maxX,
+                                         y: rect.maxY),
+                    tangent2End: CGPoint(x: rect.maxX,
+                                         y: rect.maxY - cornerRadius),
+                    radius: cornerRadius)
+        
+        // Right edge
+        path.addLine(to: CGPoint(x: rect.maxX , y: rect.minY + cornerRadius))
+        
+        
+        // Bottom right corner
+        path.addArc(tangent1End: CGPoint(x: rect.maxX,
+                                         y: rect.minY),
+                    tangent2End: CGPoint(x: rect.maxX - cornerRadius,
+                                         y: rect.minY),
+                    radius: cornerRadius)
+        
+        // Bottom edge
+        path.addLine(to: CGPoint(x: rect.minX + tailStart, y: rect.minY))
+        
+        // Curve up
+        path.addQuadCurve(to: CGPoint(x: rect.minX + tailWidth,
+                                      y: rect.minY + peakHeight),
+                          control: CGPoint(x: rect.minX + tailWidth + peakHeight,
+                                           y: rect.minY))
+        
+        // Curve back down to corner
+        path.addQuadCurve(to: CGPoint(x: rect.minX,
+                                      y: rect.minY),
+                          control: CGPoint(x: rect.minX + tailWidth - peakHeight,
+                                           y: rect.minY))
+        path.closeSubpath()
+        
+        shape.path = path
+        
+        return shape
+    }
+    
+    private func generateMaskTailRight(for rect: NSRect) -> CALayer? {
+        let shape = CAShapeLayer()
+        
+        let tailWidth: CGFloat = 16
+        let tailMargin = tailWidth / 2
+        let tailHeight: CGFloat = 16
+        let tailStart: CGFloat = tailWidth * 2
+        let peakHeight: CGFloat = 4
+        let cornerRadius: CGFloat = min(16, (rect.maxX / 2))
+        
+        let path = CGMutablePath()
+        
+        // Start before upper left corner
+        path.move(to: CGPoint(x: rect.minX,
+                              y: rect.maxY - cornerRadius))
+        
+        // Upper left corner
+        path.addArc(tangent1End: CGPoint(x: rect.minX,
+                                         y: rect.maxY),
+                    tangent2End: CGPoint(x: rect.minX + cornerRadius,
+                                         y: rect.maxY),
+                    radius: cornerRadius)
+        
+        // Upper edge
+        path.addLine(to: CGPoint(x: rect.maxX - cornerRadius,
+                                 y: rect.maxY))
+        
+        // Upper right corner
+        path.addArc(tangent1End: CGPoint(x: rect.maxX - tailMargin,
+                                         y: rect.maxY),
+                    tangent2End: CGPoint(x: rect.maxX - tailMargin,
+                                         y: rect.maxY - cornerRadius),
+                    radius: cornerRadius)
+        
+        // Right edge
+        path.addLine(to: CGPoint(x: rect.maxX - tailMargin , y: rect.minY + cornerRadius))
+        
+        
+        // Curve to corner
+        path.addQuadCurve(to: CGPoint(x: rect.maxX,
+                                      y: rect.minY),
+                          control: CGPoint(x: rect.maxX - tailMargin,
+                                           y: rect.minY))
+        
+        // Curve back up from corner
+        path.addQuadCurve(to: CGPoint(x: rect.maxX - tailWidth,
+                                      y: rect.minY + peakHeight),
+                          control: CGPoint(x: rect.maxX - tailWidth + peakHeight,
+                                           y: rect.minY))
+
+        // Curve back down to bottom edge
+        path.addQuadCurve(to: CGPoint(x: rect.maxX - tailStart,
+                                      y: rect.minY),
+                          control: CGPoint(x: rect.maxX - tailWidth - peakHeight,
+                                           y: rect.minY))
+
+        // Bottom edge
+        path.addLine(to: CGPoint(x: rect.minX + cornerRadius, y: rect.minY))
+
+        // Bottom right corner
+        path.addArc(tangent1End: CGPoint(x: rect.minX,
+                                         y: rect.minY),
+                    tangent2End: CGPoint(x: rect.minX,
+                                         y: rect.minY + cornerRadius),
+                    radius: cornerRadius)
+        
+        
+        path.closeSubpath()
+        
+        shape.path = path
+        
+        return shape
+    }
+    
 
     // MARK: - Private
 

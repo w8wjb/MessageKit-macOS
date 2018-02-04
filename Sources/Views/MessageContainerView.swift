@@ -28,7 +28,7 @@ open class MessageContainerView: NSImageView {
 
     // MARK: - Properties
 
-    private let imageMask = CALayer()
+    private var mask: CALayer?
 
     open var style: MessageStyle = .none {
         didSet {
@@ -38,47 +38,41 @@ open class MessageContainerView: NSImageView {
 
     open override var frame: CGRect {
         didSet {
-            sizeMaskToView()
+            mask = style.generateMask(for: self.bounds)
+            layer?.mask = mask
         }
     }
 
     // MARK: - Methods
 
-    private func sizeMaskToView() {
-        switch style {
-        case .none, .custom:
-            break
-        case .bubble, .bubbleTail:
-            imageMask.frame = bounds
-        case .bubbleOutline, .bubbleTailOutline:
-            imageMask.frame = bounds.insetBy(dx: 1.0, dy: 1.0)
-        }
-    }
+//    private func sizeMaskToView() {
+//        switch style {
+//        case .none, .custom:
+//            break
+//        case .bubble, .bubbleTail:
+//            imageMask.frame = bounds
+//        case .bubbleOutline, .bubbleTailOutline:
+//            imageMask.frame = bounds.insetBy(dx: 1.0, dy: 1.0)
+//        }
+//    }
 
     private func applyMessageStyle() {
         wantsLayer = true
         
         switch style {
         case .bubble, .bubbleTail:
-            imageMask.contents = style.image
-            sizeMaskToView()
-            layer?.mask = imageMask
+            mask = style.generateMask(for: self.bounds)
+            layer?.mask = mask
             image = nil
         case .bubbleOutline(let color):
             let bubbleStyle: MessageStyle = .bubble
-            imageMask.contents = bubbleStyle.image
-            sizeMaskToView()
-            layer?.mask = imageMask
-            image = style.image
-            // TODO: - Do we need to tint in Cocoa?
-//            tintColor = color
+            mask = style.generateMask(for: self.bounds)
+            layer?.mask = mask
         case .bubbleTailOutline(let color, let tail, let corner):
             let bubbleStyle: MessageStyle = .bubbleTailOutline(.white, tail, corner)
-            imageMask.contents = bubbleStyle.image
-            sizeMaskToView()
-            layer?.mask = imageMask
-            image = style.image
-//            tintColor = color
+            mask = style.generateMask(for: self.bounds)
+            layer?.mask = mask
+//            image = style.image
         case .none:
             layer?.mask = nil
             image = nil

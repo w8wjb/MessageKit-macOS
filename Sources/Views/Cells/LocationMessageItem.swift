@@ -39,10 +39,9 @@ open class LocationMessageItem: MessageCollectionViewItem {
         return indicator
     }()
     
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        imageView = NSImageView()
-    }
+//    public override init(frame: CGRect) {
+//        super.init(frame: frame)
+//    }
     
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -56,8 +55,12 @@ open class LocationMessageItem: MessageCollectionViewItem {
 
     open override func setupSubviews() {
         super.setupSubviews()
-        imageView?.imageScaling = .scaleProportionallyUpOrDown
-        messageContainerView.addSubview(imageView!)
+        
+        let imageView = NSImageView()
+        imageView.imageScaling = .scaleProportionallyUpOrDown
+
+        self.imageView = imageView
+        messageContainerView.addSubview(imageView)
         messageContainerView.addSubview(activityIndicator)
         setupConstraints()
     }
@@ -124,7 +127,9 @@ open class LocationMessageItem: MessageCollectionViewItem {
             composedImage.unlockFocus()
 
             self.imageView?.image = composedImage
-            animationBlock?(self.imageView!)
+            if let imageView = self.imageView {
+                animationBlock?(imageView)
+            }
         }
     }
 }

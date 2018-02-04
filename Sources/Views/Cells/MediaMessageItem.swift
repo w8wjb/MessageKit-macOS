@@ -30,10 +30,9 @@ open class MediaMessageItem: MessageCollectionViewItem {
         return NSUserInterfaceItemIdentifier("messagekit.cell.mediamessage")
     }
 
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        imageView = NSImageView()
-    }
+//    public override init(frame: CGRect) {
+//        super.init(frame: frame)
+//    }
     
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -41,6 +40,10 @@ open class MediaMessageItem: MessageCollectionViewItem {
     
     public override init(nibName nibNameOrNil: NSNib.Name?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    open override func loadView() {
+        super.loadView()
     }
 
     // MARK: - Properties
@@ -60,7 +63,10 @@ open class MediaMessageItem: MessageCollectionViewItem {
 
     open override func setupSubviews() {
         super.setupSubviews()
-        messageContainerView.addSubview(imageView!)
+        
+        let imageView = NSImageView()
+        self.imageView = imageView
+        messageContainerView.addSubview(imageView)
         messageContainerView.addSubview(playButtonView)
         setupConstraints()
     }
