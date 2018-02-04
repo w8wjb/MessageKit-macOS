@@ -57,7 +57,9 @@ open class LocationMessageItem: MessageCollectionViewItem {
         super.setupSubviews()
         
         let imageView = NSImageView()
-        imageView.imageScaling = .scaleProportionallyUpOrDown
+        imageView.layer = CALayer()
+        imageView.layer?.contentsGravity = kCAGravityResizeAspectFill
+        imageView.wantsLayer = true
 
         self.imageView = imageView
         messageContainerView.addSubview(imageView)
@@ -126,8 +128,8 @@ open class LocationMessageItem: MessageCollectionViewItem {
             annotationView.image?.draw(at: point, from: imageFrame, operation: .overlay, fraction: 1)
             composedImage.unlockFocus()
 
-            self.imageView?.image = composedImage
             if let imageView = self.imageView {
+                imageView.layer?.contents = composedImage
                 animationBlock?(imageView)
             }
         }
