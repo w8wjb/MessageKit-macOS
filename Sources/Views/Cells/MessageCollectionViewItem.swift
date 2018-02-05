@@ -39,46 +39,37 @@ open class MessageCollectionViewItem: NSCollectionViewItem, CollectionViewReusab
         return view
     }()
 
-    open var cellTopLabel: NSTextField = {
-        let label = NSTextField(labelWithString: "")
-        label.maximumNumberOfLines = 0
-        return label
-    }()
+    open var cellTopLabel = CATextLayer()
 
-    open var cellBottomLabel: NSTextField = {
-        let label = NSTextField(labelWithString: "")
-        label.maximumNumberOfLines = 0
-        return label
-    }()
+    open var cellBottomLabel = CATextLayer()
 
     open weak var delegate: MessageCellDelegate?
 
     open override func loadView() {
         view = NSView()
         view.autoresizingMask = [.width, .height]
-        
-        
-        // TODO: Remove this later; just for debugging purposes
         view.wantsLayer = true
-        view.layer?.borderColor = NSColor.green.cgColor
-        view.layer?.borderWidth = 1
-
         setupSubviews()
     }
 
     open func setupSubviews() {
         view.addSubview(messageContainerView)
         view.addSubview(avatarView)
-        view.addSubview(cellTopLabel)
-        view.addSubview(cellBottomLabel)
+        
+        // Disable animation for position changes
+        cellTopLabel.actions = ["position": NSNull()]
+        cellTopLabel.contentsScale = NSScreen.main?.backingScaleFactor ?? 1
+        view.layer?.addSublayer(cellTopLabel)
+        
+        cellBottomLabel.actions = ["position": NSNull()]
+        cellBottomLabel.contentsScale = NSScreen.main?.backingScaleFactor ?? 1
+        view.layer?.addSublayer(cellBottomLabel)
     }
 
     open override func prepareForReuse() {
         super.prepareForReuse()
-        cellTopLabel.stringValue = ""
-        cellTopLabel.attributedStringValue = NSAttributedString()
-        cellBottomLabel.stringValue = ""
-        cellBottomLabel.attributedStringValue = NSAttributedString()
+        cellTopLabel.string = nil
+        cellBottomLabel.string = nil
     }
 
     // MARK: - Configuration
@@ -114,8 +105,8 @@ open class MessageCollectionViewItem: NSCollectionViewItem, CollectionViewReusab
         let topText = dataSource.cellTopLabelAttributedText(for: message, at: indexPath)
         let bottomText = dataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
 
-        cellTopLabel.attributedStringValue = topText ?? NSAttributedString()
-        cellBottomLabel.attributedStringValue = bottomText  ?? NSAttributedString()
+        cellTopLabel.string = topText ?? NSAttributedString()
+        cellBottomLabel.string = bottomText  ?? NSAttributedString()
     }
 
     /// Handle tap gesture on contentView and its subviews like messageContainerView, cellTopLabel, cellBottomLabel, avatarView ....
