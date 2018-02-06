@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-import UIKit
+import AppKit
 
 /**
  A UIView thats intrinsicContentSize is overrided so an exact height can be specified
@@ -32,7 +32,7 @@ import UIKit
  2. Default backgroundColor is UIColor.lightGray
  3. Intended to be used in an `InputStackView`
  */
-open class SeparatorLine: UIView {
+open class SeparatorLine: NSView {
     
     // MARK: - Properties
     
@@ -61,7 +61,8 @@ open class SeparatorLine: UIView {
     
     /// Sets up the default properties
     open func setup() {
-        backgroundColor = .lightGray
+        wantsLayer = true
+        layer?.backgroundColor = NSColor.lightGray.cgColor
         translatesAutoresizingMaskIntoConstraints = false
         setContentHuggingPriority(.defaultHigh, for: .vertical)
     }

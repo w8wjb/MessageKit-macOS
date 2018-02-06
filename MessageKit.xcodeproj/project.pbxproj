@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7C1424F52028FFF800B4E0D2 /* MessageInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F421F86694F006AEF79 /* MessageInputBar.swift */; };
+		7C1424F62029004900B4E0D2 /* MessageInputBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F581F8669CA006AEF79 /* MessageInputBarDelegate.swift */; };
+		7C1424F7202900AC00B4E0D2 /* SeparatorLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C57C781F9AE3E50043CC03 /* SeparatorLine.swift */; };
+		7C1424F8202900F600B4E0D2 /* InputStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C57C7B1F9AE4870043CC03 /* InputStackView.swift */; };
+		7C1424F92029032800B4E0D2 /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F401F86694F006AEF79 /* InputTextView.swift */; };
+		7C1424FA20290B0600B4E0D2 /* InputBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F411F86694F006AEF79 /* InputBarItem.swift */; };
 		7C29812120250752008C2701 /* MessagesViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC7D1F87AB230030B058 /* MessagesViewControllerTests.swift */; };
 		7C29812220250799008C2701 /* MockMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC7B1F87AB230030B058 /* MockMessage.swift */; };
 		7C2981232025079E008C2701 /* MockMessagesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC7A1F87AB230030B058 /* MockMessagesDataSource.swift */; };
@@ -111,8 +117,6 @@
 		1FF377A320087C82004FD648 /* MessageKitError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageKitError.swift; sourceTree = "<group>"; };
 		1FF377A520087D20004FD648 /* MessagesViewController+DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesViewController+DataSource.swift"; sourceTree = "<group>"; };
 		1FF377A720087D56004FD648 /* MessagesViewController+Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesViewController+Delegate.swift"; sourceTree = "<group>"; };
-		1FF377A920087D78004FD648 /* MessagesViewController+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesViewController+Menu.swift"; sourceTree = "<group>"; };
-		1FF377AB20087DA2004FD648 /* MessagesViewController+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesViewController+Keyboard.swift"; sourceTree = "<group>"; };
 		38C57C781F9AE3E50043CC03 /* SeparatorLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeparatorLine.swift; sourceTree = "<group>"; };
 		38C57C7B1F9AE4870043CC03 /* InputStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputStackView.swift; sourceTree = "<group>"; };
 		7C4C96D12024BABE009CEB2C /* MessageKit copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MessageKit copy-Info.plist"; path = "/Users/wbustraa/dev/wjb/QTH/MessageKit/MessageKit copy-Info.plist"; sourceTree = "<absolute>"; };
@@ -451,8 +455,6 @@
 				B7A03F4E1F86697C006AEF79 /* MessagesViewController.swift */,
 				1FF377A520087D20004FD648 /* MessagesViewController+DataSource.swift */,
 				1FF377A720087D56004FD648 /* MessagesViewController+Delegate.swift */,
-				1FF377A920087D78004FD648 /* MessagesViewController+Menu.swift */,
-				1FF377AB20087DA2004FD648 /* MessagesViewController+Keyboard.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -597,9 +599,11 @@
 				7C6900FF2027534600FFE247 /* NSRect+Extensions.swift in Sources */,
 				7C4C971A2024F550009CEB2C /* NSView+Extensions.swift in Sources */,
 				7C4C970E2024D6DF009CEB2C /* NSFont+Extensions.swift in Sources */,
+				7C1424F52028FFF800B4E0D2 /* MessageInputBar.swift in Sources */,
 				7C4C96F42024BBA6009CEB2C /* MessageKitError.swift in Sources */,
 				7C4C96FA2024BD47009CEB2C /* String+Extensions.swift in Sources */,
 				7C4C97152024ED4D009CEB2C /* MediaMessageItem.swift in Sources */,
+				7C1424F7202900AC00B4E0D2 /* SeparatorLine.swift in Sources */,
 				7C4C97062024BF8A009CEB2C /* MessageType.swift in Sources */,
 				7C4C96F92024BD43009CEB2C /* NSAttributedString+Extensions.swift in Sources */,
 				7C4C96F72024BD38009CEB2C /* Bundle+Extensions.swift in Sources */,
@@ -609,16 +613,20 @@
 				7C4C97082024BFB3009CEB2C /* NSCollectionView+Extensions.swift in Sources */,
 				7C4C96F62024BBFE009CEB2C /* MessageStyle.swift in Sources */,
 				7C4C96F22024BB8B009CEB2C /* LocationMessageSnapshotOptions.swift in Sources */,
+				7C1424F92029032800B4E0D2 /* InputTextView.swift in Sources */,
 				7C4C97142024ED05009CEB2C /* TextMessageItem.swift in Sources */,
 				7C4C96F32024BB94009CEB2C /* MessageData.swift in Sources */,
 				7C4C96FF2024BDF9009CEB2C /* MessageContainerView.swift in Sources */,
+				7C1424F62029004900B4E0D2 /* MessageInputBarDelegate.swift in Sources */,
 				7C4C96F82024BD3D009CEB2C /* CGRect+Extensions.swift in Sources */,
 				7C4C97162024ED73009CEB2C /* LocationMessageItem.swift in Sources */,
 				7C4C97192024F408009CEB2C /* NSColor+Extensions.swift in Sources */,
+				7C1424FA20290B0600B4E0D2 /* InputBarItem.swift in Sources */,
 				7C4C97122024E484009CEB2C /* MessageIntermediateLayoutAttributes.swift in Sources */,
 				7C4C96EE2024BB3B009CEB2C /* Avatar.swift in Sources */,
 				7C4C97002024BEB9009CEB2C /* MessagesViewController.swift in Sources */,
 				7C4C971C2024F84A009CEB2C /* MessagesViewController+Delegate.swift in Sources */,
+				7C1424F8202900F600B4E0D2 /* InputStackView.swift in Sources */,
 				7C4C96F02024BB5A009CEB2C /* DetectorType.swift in Sources */,
 				7C4C970A2024C1A1009CEB2C /* MessageFooterView.swift in Sources */,
 				7C29812820250874008C2701 /* MessagesDataSource.swift in Sources */,

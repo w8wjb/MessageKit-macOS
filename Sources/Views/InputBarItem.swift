@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-import UIKit
+import AppKit
 
 /**
  A InputItem that inherits from UIButton
@@ -30,7 +30,7 @@ import UIKit
  ## Important Notes ##
  1. Intended to be used in an `InputStackView`
  */
-open class InputBarButtonItem: UIButton {
+open class InputBarButtonItem: NSButton {
     
     /// The spacing properties of the InputBarButtonItem
     ///
@@ -56,11 +56,11 @@ open class InputBarButtonItem: UIButton {
         didSet {
             switch spacing {
             case .flexible:
-                setContentHuggingPriority(UILayoutPriority(rawValue: 1), for: .horizontal)
+                setContentHuggingPriority(NSLayoutConstraint.Priority(rawValue: 1), for: .horizontal)
             case .fixed:
-                setContentHuggingPriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
+                setContentHuggingPriority(NSLayoutConstraint.Priority(rawValue: 1000), for: .horizontal)
             case .none:
-                setContentHuggingPriority(UILayoutPriority(rawValue: 500), for: .horizontal)
+                setContentHuggingPriority(NSLayoutConstraint.Priority(rawValue: 500), for: .horizontal)
             }
         }
     }
@@ -87,24 +87,24 @@ open class InputBarButtonItem: UIButton {
     open var parentStackViewPosition: InputStackView.Position?
     
     /// The title for the UIControlState.normal
-    open var title: String? {
-        get {
-            return title(for: .normal)
-        }
-        set {
-            setTitle(newValue, for: .normal)
-        }
-    }
+//    open var title: String? {
+//        get {
+//            return title(for: .normal)
+//        }
+//        set {
+//            setTitle(newValue, for: .normal)
+//        }
+//    }
     
-    /// The image for the UIControlState.normal
-    open var image: UIImage? {
-        get {
-            return image(for: .normal)
-        }
-        set {
-            setImage(newValue, for: .normal)
-        }
-    }
+//    /// The image for the UIControlState.normal
+//    open var image: UIImage? {
+//        get {
+//            return image(for: .normal)
+//        }
+//        set {
+//            setImage(newValue, for: .normal)
+//        }
+//    }
     
     /// Calls the onSelectedAction or onDeselectedAction when set
     open override var isHighlighted: Bool {
@@ -159,16 +159,18 @@ open class InputBarButtonItem: UIButton {
     
     /// Sets up the default properties
     open func setup() {
-        contentVerticalAlignment = .center
-        contentHorizontalAlignment = .center
-        imageView?.contentMode = .scaleAspectFit
-        setContentHuggingPriority(UILayoutPriority(rawValue: 500), for: .horizontal)
-        setContentHuggingPriority(UILayoutPriority(rawValue: 500), for: .vertical)
-        setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 1), for: .normal)
-        setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 0.3), for: .highlighted)
-        setTitleColor(.lightGray, for: .disabled)
-        adjustsImageWhenHighlighted = false
-        addTarget(self, action: #selector(InputBarButtonItem.touchUpInsideAction), for: .touchUpInside)
+//        contentVerticalAlignment = .center
+//        contentHorizontalAlignment = .center
+        //imageView?.contentMode = .scaleAspectFit
+        setContentHuggingPriority(NSLayoutConstraint.Priority(rawValue: 500), for: .horizontal)
+        setContentHuggingPriority(NSLayoutConstraint.Priority(rawValue: 500), for: .vertical)
+        
+        
+//        setTitleColor(NSColor(red: 0, green: 122/255, blue: 1, alpha: 1), for: .normal)
+//        setTitleColor(NSColor(red: 0, green: 122/255, blue: 1, alpha: 0.3), for: .highlighted)
+//        setTitleColor(.lightGray, for: .disabled)
+//        adjustsImageWhenHighlighted = false
+//        addTarget(self, action: #selector(InputBarButtonItem.touchUpInsideAction), for: .touchUpInside)
     }
     
     // MARK: - Size Adjustment

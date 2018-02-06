@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-import UIKit
+import AppKit
 
 /**
  A UIStackView that's intended for holding `InputBarButtonItem`s
@@ -32,7 +32,7 @@ import UIKit
  2. Default distribution is .fill
  3. The distribution property needs to be based on its arranged subviews intrinsicContentSize so it is not recommended to change it
  */
-open class InputStackView: UIStackView {
+open class InputStackView: NSStackView {
     
     /// The stack view position in the MessageInputBar
     ///
@@ -46,9 +46,9 @@ open class InputStackView: UIStackView {
     
     // MARK: Initialization
     
-    convenience init(axis: UILayoutConstraintAxis, spacing: CGFloat) {
+    convenience init(orientation: NSUserInterfaceLayoutOrientation, spacing: CGFloat) {
         self.init(frame: .zero)
-        self.axis = axis
+        self.orientation = orientation
         self.spacing = spacing
     }
     
@@ -57,8 +57,8 @@ open class InputStackView: UIStackView {
         setup()
     }
     
-    required public init(coder: NSCoder) {
-        super.init(coder: coder)
+    public required init?(coder decoder: NSCoder) {
+        super.init(coder: decoder)
     }
     
     // MARK: - Setup
