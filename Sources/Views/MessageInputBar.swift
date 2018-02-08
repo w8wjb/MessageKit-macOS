@@ -95,24 +95,19 @@ open class MessageInputBar: NSView {
         let textView = InputTextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.messageInputBar = self
+        textView.delegate = self
         return textView
     }()
 
     /// A InputBarButtonItem used as the send button and initially placed in the rightStackView
     open var sendButton: InputBarButtonItem = {
-        return InputBarButtonItem()
-            .configure {
-                
-                
-                $0.setSize(CGSize(width: 52, height: 28), animated: false)
-                $0.isEnabled = false
-                let title = NSAttributedString(string: "Send", attributes:
-                    [NSAttributedStringKey.font : NSFont.preferredFont(forTextStyle: .headline)])
-                $0.attributedTitle = title
-                
-            }.onTouchUpInside {
-                $0.messageInputBar?.didSelectSendButton()
-        }
+        let button = InputBarButtonItem()
+        button.setSize(CGSize(width: 52, height: 28), animated: false)
+        button.isEnabled = false
+        let title = NSAttributedString(string: "Send", attributes:
+            [NSAttributedStringKey.font : NSFont.preferredFont(forTextStyle: .headline)])
+        button.attributedTitle = title
+        return button
     }()
     
     /**
@@ -303,6 +298,8 @@ open class MessageInputBar: NSView {
         contentView.addSubview(rightStackView)
         contentView.addSubview(bottomStackView)
         setStackViewItems([sendButton], forStack: .right, animated: false)
+        
+        sendButton.action = #selector(self.didSelectSendButton(_:))
     }
     
     /// Sets up the initial constraints of each subview
@@ -656,7 +653,16 @@ open class MessageInputBar: NSView {
     /// Calls the delegates `didPressSendButtonWith` method
     /// Assumes that the InputTextView's text has been set to empty and calls `inputTextViewDidChange()`
     /// Invalidates each of the inputManagers
-    open func didSelectSendButton() {
+    @objc
+    open func didSelectSendButton(_ sender: Any) {
         delegate?.messageInputBar(self, didPressSendButtonWith: inputTextView.stringValue)
     }
+}
+
+extension MessageInputBar: NSTextFieldDelegate {
+    
+    open override func controlTextDidChange(_ obj: Notification) {
+        textViewDidChange()
+    }
+    
 }

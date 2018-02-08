@@ -75,9 +75,6 @@ open class InputTextView: NSTextField {
     /// A weak reference to the MessageInputBar that the InputTextView is contained within
     open weak var messageInputBar: MessageInputBar?
     
-    /// The constraints of the placeholderLabel
-    private var placeholderLabelConstraintSet: NSLayoutConstraintSet?
-    
     // MARK: - Initializers
 
     public convenience init() {
@@ -100,12 +97,6 @@ open class InputTextView: NSTextField {
     open func setup() {
         
         font = NSFont.preferredFont(forTextStyle: .body)
-//        textContainerInset = NSSize(width: 4, height: 4)
-//        scrollIndicatorInsets = NSEdgeInsets(top: .leastNonzeroMagnitude,
-//                                             left: .leastNonzeroMagnitude,
-//                                             bottom: .leastNonzeroMagnitude,
-//                                             right: .leastNonzeroMagnitude)
-//        isScrollEnabled = false
         wantsLayer = true
         layer?.cornerRadius = 5.0
         layer?.borderWidth = 1.25
