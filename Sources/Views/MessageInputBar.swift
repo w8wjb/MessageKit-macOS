@@ -191,8 +191,11 @@ open class MessageInputBar: NSView {
     
     /// The height that will fit the current text in the InputTextView based on its current bounds
     public var requiredInputTextViewHeight: CGFloat {
+        let layoutManager = NSLayoutManager()
+        
         let maxTextViewSize = CGSize(width: inputTextView.bounds.width, height: .greatestFiniteMagnitude)
-        return inputTextView.sizeThatFits(maxTextViewSize).height.rounded(.down)
+        return inputTextView.intrinsicContentSize.height.rounded(.down)
+//        return inputTextView.sizeThatFits(maxTextViewSize).height.rounded(.down)
     }
     
     /// The fixed widthAnchor constant of the leftStackView
@@ -621,7 +624,7 @@ open class MessageInputBar: NSView {
     /// Invalidates the intrinsicContentSize
     @objc
     open func textViewDidChange() {
-        let trimmedText = inputTextView.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedText = inputTextView.string.trimmingCharacters(in: .whitespacesAndNewlines)
 
         sendButton.isEnabled = !trimmedText.isEmpty || inputTextView.images.count > 0
 
@@ -631,8 +634,9 @@ open class MessageInputBar: NSView {
         
         if requiredInputTextViewHeight != inputTextView.bounds.height {
             // Prevent un-needed content size invalidation
-            invalidateIntrinsicContentSize()
+            
         }
+        invalidateIntrinsicContentSize()
     }
     
     /// Calls each items `keyboardEditingBeginsAction` method
@@ -655,13 +659,17 @@ open class MessageInputBar: NSView {
     /// Invalidates each of the inputManagers
     @objc
     open func didSelectSendButton(_ sender: Any) {
-        delegate?.messageInputBar(self, didPressSendButtonWith: inputTextView.stringValue)
+        delegate?.messageInputBar(self, didPressSendButtonWith: inputTextView.string)
     }
 }
 
-extension MessageInputBar: NSTextFieldDelegate {
+extension MessageInputBar: NSTextViewDelegate {
     
     open override func controlTextDidChange(_ obj: Notification) {
+        textViewDidChange()
+    }
+    
+    public func textDidChange(_ notification: Notification) {
         textViewDidChange()
     }
     

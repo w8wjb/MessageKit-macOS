@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7C26F15A2032863700DE2840 /* GrowingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C26F1592032863700DE2840 /* GrowingTextView.swift */; };
 		7C6900E3202602FD00FFE247 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C6900D0202602FC00FFE247 /* Assets.xcassets */; };
 		7C6900E6202602FD00FFE247 /* MockMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6900D4202602FC00FFE247 /* MockMessage.swift */; };
 		7C6900E7202602FD00FFE247 /* Settings+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6900D5202602FC00FFE247 /* Settings+UserDefaults.swift */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7C26F1592032863700DE2840 /* GrowingTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowingTextView.swift; sourceTree = "<group>"; };
 		7C6900D0202602FC00FFE247 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7C6900D4202602FC00FFE247 /* MockMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockMessage.swift; sourceTree = "<group>"; };
 		7C6900D5202602FC00FFE247 /* Settings+UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Settings+UserDefaults.swift"; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 				7C6900D7202602FC00FFE247 /* SampleData.swift */,
 				7C6900D5202602FC00FFE247 /* Settings+UserDefaults.swift */,
 				7C6900FC20261C7500FFE247 /* ViewController.swift */,
+				7C26F1592032863700DE2840 /* GrowingTextView.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -280,6 +283,7 @@
 				7C6900E9202602FD00FFE247 /* SampleData.swift in Sources */,
 				7C6900EB202602FD00FFE247 /* ConversationViewController.swift in Sources */,
 				7C6900E6202602FD00FFE247 /* MockMessage.swift in Sources */,
+				7C26F15A2032863700DE2840 /* GrowingTextView.swift in Sources */,
 				7C6900E7202602FD00FFE247 /* Settings+UserDefaults.swift in Sources */,
 				7C6900EA202602FD00FFE247 /* AppDelegate.swift in Sources */,
 			);

@@ -33,7 +33,7 @@ import AppKit
  3. Default placeholder text is "New Message"
  4. Will pass a pasted image it's `MessageInputBar`'s `InputManager`s
  */
-open class InputTextView: NSTextField {
+open class InputTextView: NSTextView {
     
     // MARK: - Properties
     
@@ -77,19 +77,24 @@ open class InputTextView: NSTextField {
     
     // MARK: - Initializers
 
+    public override init(frame frameRect: NSRect, textContainer container: NSTextContainer?) {
+        super.init(frame: frameRect, textContainer: container)
+        setup()
+    }
+    
     public convenience init() {
         self.init(frame: NSRect.zero)
     }
     
     public override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
-        setup()
     }
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
     }
+    
     
     // MARK: - Setup
     
@@ -101,7 +106,9 @@ open class InputTextView: NSTextField {
         layer?.cornerRadius = 5.0
         layer?.borderWidth = 1.25
         layer?.borderColor = NSColor.lightGray.cgColor
-        allowsEditingTextAttributes = false
+        
+        setContentCompressionResistancePriority(NSLayoutConstraint.Priority.defaultHigh, for: NSLayoutConstraint.Orientation.horizontal)
+        setContentCompressionResistancePriority(NSLayoutConstraint.Priority.defaultHigh, for: NSLayoutConstraint.Orientation.vertical)
     }
 
     
@@ -185,8 +192,9 @@ open class InputTextView: NSTextField {
     private func parseForAttachedImages() -> [NSImage] {
 
         var images = [NSImage]()
-        let range = NSRange(location: 0, length: attributedStringValue.length)
-        attributedStringValue.enumerateAttribute(.attachment, in: range, options: [], using: { value, range, _ -> Void in
+        let attributedText = attributedString()
+        let range = NSRange(location: 0, length: attributedText.length)
+        attributedText.enumerateAttribute(.attachment, in: range, options: [], using: { value, range, _ -> Void in
 
             if let attachment = value as? NSTextAttachment {
                 if let image = attachment.image {
@@ -208,8 +216,9 @@ open class InputTextView: NSTextField {
     private func parseForComponents() -> [Any] {
         
         var components = [Any]()
-        let range = NSRange(location: 0, length: attributedStringValue.length)
-        attributedStringValue.enumerateAttributes(in: range, options: []) { (object, range, _) in
+        let attributedText = attributedString()
+        let range = NSRange(location: 0, length: attributedText.length)
+        attributedText.enumerateAttributes(in: range, options: []) { (object, range, _) in
             
             if object.keys.contains(.attachment) {
                 if let attachment = object[.attachment] as? NSTextAttachment {
@@ -222,7 +231,7 @@ open class InputTextView: NSTextField {
                     }
                 }
             } else {
-                let stringValue = attributedStringValue.attributedSubstring(from: range).string.trimmingCharacters(in: .whitespacesAndNewlines)
+                let stringValue = attributedText.attributedSubstring(from: range).string.trimmingCharacters(in: .whitespacesAndNewlines)
                 if !stringValue.isEmpty {
                     components.append(stringValue)
                 }

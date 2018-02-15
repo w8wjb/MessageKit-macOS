@@ -291,7 +291,7 @@ extension ConversationViewController: MessageInputBarDelegate {
 
         }
 
-        inputBar.inputTextView.stringValue = String()
+        inputBar.inputTextView.string = String()
 //        messagesCollectionView.scrollToBottom()
     }
 
