@@ -17,7 +17,7 @@
                BlueprintIdentifier = "7C4C96D62024BB03009CEB2C"
                BuildableName = "MessageKit_macOS.framework"
                BlueprintName = "MessageKit-macOS"
-               ReferencedContainer = "container:MessageKit.xcodeproj">
+               ReferencedContainer = "container:MessageKit-macOS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -36,7 +36,7 @@
                BlueprintIdentifier = "7C4C96DE2024BB04009CEB2C"
                BuildableName = "MessageKit-macOSTests.xctest"
                BlueprintName = "MessageKit-macOSTests"
-               ReferencedContainer = "container:MessageKit.xcodeproj">
+               ReferencedContainer = "container:MessageKit-macOS.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -46,7 +46,7 @@
             BlueprintIdentifier = "7C4C96D62024BB03009CEB2C"
             BuildableName = "MessageKit_macOS.framework"
             BlueprintName = "MessageKit-macOS"
-            ReferencedContainer = "container:MessageKit.xcodeproj">
+            ReferencedContainer = "container:MessageKit-macOS.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -69,7 +69,7 @@
             BlueprintIdentifier = "7C4C96D62024BB03009CEB2C"
             BuildableName = "MessageKit_macOS.framework"
             BlueprintName = "MessageKit-macOS"
-            ReferencedContainer = "container:MessageKit.xcodeproj">
+            ReferencedContainer = "container:MessageKit-macOS.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -87,7 +87,7 @@
             BlueprintIdentifier = "7C4C96D62024BB03009CEB2C"
             BuildableName = "MessageKit_macOS.framework"
             BlueprintName = "MessageKit-macOS"
-            ReferencedContainer = "container:MessageKit.xcodeproj">
+            ReferencedContainer = "container:MessageKit-macOS.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

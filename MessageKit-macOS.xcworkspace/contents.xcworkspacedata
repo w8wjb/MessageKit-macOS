@@ -5,6 +5,6 @@
       location = "group:Example/ChatExample.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:MessageKit.xcodeproj">
+      location = "group:MessageKit-macOS.xcodeproj">
    </FileRef>
 </Workspace>

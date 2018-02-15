@@ -551,7 +551,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 88916B1C1CF0DF2F00469F91 /* Build configuration list for PBXProject "MessageKit" */;
+			buildConfigurationList = 88916B1C1CF0DF2F00469F91 /* Build configuration list for PBXProject "MessageKit-macOS" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -938,7 +938,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		88916B1C1CF0DF2F00469F91 /* Build configuration list for PBXProject "MessageKit" */ = {
+		88916B1C1CF0DF2F00469F91 /* Build configuration list for PBXProject "MessageKit-macOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				88916B341CF0DF2F00469F91 /* Debug */,
