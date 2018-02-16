@@ -31,7 +31,7 @@ open class MessageDateHeaderView: MessageHeaderView {
 
     // MARK: - Properties
 
-    open let dateLabel = NSTextField(labelWithString: "")
+    open let dateLabel = NSTextField()
 
     // MARK: - Initializers
 
@@ -39,6 +39,11 @@ open class MessageDateHeaderView: MessageHeaderView {
         super.init(frame: frame)
         addSubview(dateLabel)
         dateLabel.fillSuperview()
+        dateLabel.maximumNumberOfLines = 1
+        dateLabel.isBezeled = false
+        dateLabel.drawsBackground = false
+        dateLabel.isEditable = false
+        dateLabel.isSelectable = true
         dateLabel.alignment = .center
         dateLabel.font = .boldSystemFont(ofSize: 10)
         dateLabel.textColor = .darkGray
