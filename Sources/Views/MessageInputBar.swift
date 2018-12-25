@@ -50,7 +50,7 @@ open class MessageInputBar: NSView {
     }()
     
     /// A SeparatorLine that is anchored at the top of the MessageInputBar with a height of 1
-    open let separatorLine = SeparatorLine()
+    public let separatorLine = SeparatorLine()
     
     /**
      The InputStackView at the InputStackView.top position
@@ -59,7 +59,7 @@ open class MessageInputBar: NSView {
      1. It's axis is initially set to .vertical
      2. It's alignment is initially set to .fill
      */
-    open let topStackView: InputStackView = {
+    public let topStackView: InputStackView = {
         let stackView = InputStackView(orientation: .vertical, spacing: 0)
 //        stackView.alignment = .
         return stackView
@@ -71,7 +71,7 @@ open class MessageInputBar: NSView {
      ## Important Notes ##
      1. It's axis is initially set to .horizontal
      */
-    open let leftStackView = InputStackView(orientation: .horizontal, spacing: 0)
+    public let leftStackView = InputStackView(orientation: .horizontal, spacing: 0)
     
     /**
      The InputStackView at the InputStackView.right position
@@ -79,7 +79,7 @@ open class MessageInputBar: NSView {
      ## Important Notes ##
      1. It's axis is initially set to .horizontal
      */
-    open let rightStackView = InputStackView(orientation: .horizontal, spacing: 0)
+    public let rightStackView = InputStackView(orientation: .horizontal, spacing: 0)
     
     /**
      The InputStackView at the InputStackView.bottom position
@@ -88,7 +88,7 @@ open class MessageInputBar: NSView {
      1. It's axis is initially set to .horizontal
      2. It's spacing is initially set to 15
      */
-    open let bottomStackView = InputStackView(orientation: .horizontal, spacing: 15)
+    public let bottomStackView = InputStackView(orientation: .horizontal, spacing: 15)
     
     /// The InputTextView a user can input a message in
     open lazy var inputTextView: InputTextView = {
@@ -191,13 +191,13 @@ open class MessageInputBar: NSView {
     
     /// The height that will fit the current text in the InputTextView based on its current bounds
     public var requiredInputTextViewHeight: CGFloat {
-        let layoutManager = NSLayoutManager()
-        
-        let maxTextViewSize = CGSize(width: inputTextView.bounds.width, height: .greatestFiniteMagnitude)
+      //        let layoutManager = NSLayoutManager()
+      
+      //        let maxTextViewSize = CGSize(width: inputTextView.bounds.width, height: .greatestFiniteMagnitude)
         return inputTextView.intrinsicContentSize.height.rounded(.down)
 //        return inputTextView.sizeThatFits(maxTextViewSize).height.rounded(.down)
     }
-    
+  
     /// The fixed widthAnchor constant of the leftStackView
     public private(set) var leftStackViewWidthConstant: CGFloat = 0 {
         didSet {

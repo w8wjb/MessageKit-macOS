@@ -87,7 +87,7 @@ open class MessageLabel: NSTextField {
         }
     }
 
-    open override var lineBreakMode: NSParagraphStyle.NSLineBreakMode {
+    open override var lineBreakMode: NSLineBreakMode {
         didSet {
             textContainer.lineBreakMode = lineBreakMode
             if !isConfiguring { setNeedsDisplay() }

@@ -31,7 +31,7 @@ open class MessageDateHeaderView: MessageHeaderView {
 
     // MARK: - Properties
 
-    open let dateLabel = NSTextField()
+    let dateLabel = NSTextField()
 
     // MARK: - Initializers
 

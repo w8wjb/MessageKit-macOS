@@ -100,24 +100,24 @@ final class SampleData {
 
         switch attributes[randomAttribute] {
         case "Font1":
-            mutableAttributedString.addAttribute(NSAttributedStringKey.font, value: NSFont.userFont(ofSize: 12)!, range: range)
+          mutableAttributedString.addAttribute(NSAttributedString.Key.font, value: NSFont.userFont(ofSize: 12)!, range: range)
         case "Font2":
-            mutableAttributedString.addAttributes([NSAttributedStringKey.font: NSFont.monospacedDigitSystemFont(ofSize: NSFont.systemFontSize, weight: NSFont.Weight.bold)], range: range)
+          mutableAttributedString.addAttributes([NSAttributedString.Key.font: NSFont.monospacedDigitSystemFont(ofSize: NSFont.systemFontSize, weight: NSFont.Weight.bold)], range: range)
         case "Font3":
-            mutableAttributedString.addAttributes([NSAttributedStringKey.font: NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)], range: range)
+          mutableAttributedString.addAttributes([NSAttributedString.Key.font: NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)], range: range)
         case "Font4":
-            mutableAttributedString.addAttributes([NSAttributedStringKey.font: NSFont.systemFont(ofSize: NSFont.systemFontSize)], range: range)
+          mutableAttributedString.addAttributes([NSAttributedString.Key.font: NSFont.systemFont(ofSize: NSFont.systemFontSize)], range: range)
         case "Color":
-            mutableAttributedString.addAttributes([NSAttributedStringKey.foregroundColor: NSColor.red], range: range)
+          mutableAttributedString.addAttributes([NSAttributedString.Key.foregroundColor: NSColor.red], range: range)
         case "Combo":
             let msg9String = "Use .attributedText() to add bold, italic, colored text and more..."
             let msg9Text = NSString(string: msg9String)
             let msg9AttributedText = NSMutableAttributedString(string: String(msg9Text))
 
-            msg9AttributedText.addAttribute(NSAttributedStringKey.font, value: NSFont.messageFont(ofSize: NSFont.systemFontSize), range: NSRange(location: 0, length: msg9Text.length))
-            msg9AttributedText.addAttributes([NSAttributedStringKey.font: NSFont.monospacedDigitSystemFont(ofSize: NSFont.systemFontSize, weight: NSFont.Weight.bold)], range: msg9Text.range(of: ".attributedText()"))
-            msg9AttributedText.addAttributes([NSAttributedStringKey.font: NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)], range: msg9Text.range(of: "bold"))
-            msg9AttributedText.addAttributes([NSAttributedStringKey.foregroundColor: NSColor.red], range: msg9Text.range(of: "colored"))
+            msg9AttributedText.addAttribute(NSAttributedString.Key.font, value: NSFont.messageFont(ofSize: NSFont.systemFontSize), range: NSRange(location: 0, length: msg9Text.length))
+            msg9AttributedText.addAttributes([NSAttributedString.Key.font: NSFont.monospacedDigitSystemFont(ofSize: NSFont.systemFontSize, weight: NSFont.Weight.bold)], range: msg9Text.range(of: ".attributedText()"))
+            msg9AttributedText.addAttributes([NSAttributedString.Key.font: NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)], range: msg9Text.range(of: "bold"))
+            msg9AttributedText.addAttributes([NSAttributedString.Key.foregroundColor: NSColor.red], range: msg9Text.range(of: "colored"))
             mutableAttributedString = msg9AttributedText
         default:
             fatalError("Unrecognized attribute for mock message")

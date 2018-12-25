@@ -92,7 +92,7 @@ extension ConversationViewController: MessagesDataSource {
 
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         let name = message.sender.displayName
-        return NSAttributedString(string: name, attributes: [NSAttributedStringKey.font: NSFont.userFont(ofSize: 10)!])
+      return NSAttributedString(string: name, attributes: [NSAttributedString.Key.font: NSFont.userFont(ofSize: 10)!])
     }
 
     func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
@@ -106,7 +106,7 @@ extension ConversationViewController: MessagesDataSource {
         }
         let formatter = ConversationDateFormatter.formatter
         let dateString = formatter.string(from: message.sentDate)
-        return NSAttributedString(string: dateString, attributes: [NSAttributedStringKey.font: NSFont.userFont(ofSize: 10)!])
+      return NSAttributedString(string: dateString, attributes: [NSAttributedString.Key.font: NSFont.userFont(ofSize: 10)!])
     }
 
 }
@@ -121,7 +121,7 @@ extension ConversationViewController: MessagesDisplayDelegate {
         return isFromCurrentSender(message: message) ? NSColor.white : NSColor.controlDarkShadowColor
     }
 
-    func detectorAttributes(for detector: DetectorType, and message: MessageType, at indexPath: IndexPath) -> [NSAttributedStringKey : Any] {
+  func detectorAttributes(for detector: DetectorType, and message: MessageType, at indexPath: IndexPath) -> [NSAttributedString.Key : Any] {
         return MessageLabel.defaultAttributes
     }
 

@@ -62,8 +62,8 @@ open class MessageContainerView: NSImageView {
             layer?.borderWidth = 1
 
         case .bubbleTailOutline(let color, let tail, let corner):
-            let bubbleStyle: MessageStyle = .bubbleTailOutline(.white, tail, corner)
-            mask = style.generateMask(for: self.bounds)
+            let bubbleStyle: MessageStyle = .bubbleTailOutline(color, tail, corner)
+            mask = bubbleStyle.generateMask(for: self.bounds)
         case .none:
             break
         case .custom(let configurationClosure):

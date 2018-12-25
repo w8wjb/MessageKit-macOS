@@ -29,7 +29,7 @@ open class PlayButtonView: NSView {
     // MARK: - Properties
 
     // TODO - This would provably be more efficient as a CALayer
-    open let triangleView = NSView()
+  public let triangleView = NSView()
 
     private var triangleCenterXConstraint: NSLayoutConstraint?
     private var cacheFrame: CGRect = .zero

@@ -16,7 +16,7 @@ class ViewController: NSViewController {
         
         
         let conversationViewController = ConversationViewController()
-        addChildViewController(conversationViewController)
+        addChild(conversationViewController)
         
         conversationViewController.view.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(conversationViewController.view)

@@ -311,7 +311,7 @@ open class InputBarButtonItem: NSButton {
     // MARK: - Static Spacers
     
     /// An InputBarButtonItem that's spacing property is set to be .flexible
-    open static var flexibleSpace: InputBarButtonItem {
+    public static var flexibleSpace: InputBarButtonItem {
         let item = InputBarButtonItem()
         item.setSize(.zero, animated: false)
         item.spacing = .flexible
