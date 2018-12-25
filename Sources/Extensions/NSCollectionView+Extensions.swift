@@ -52,7 +52,7 @@ public extension MessagesCollectionView {
 
     /// Generically dequeues a header of the correct type allowing you to avoid scattering your code with guard-let-else-fatal
     func makeHeaderView<ViewType: NSView & CollectionViewReusable>(_ viewClass: ViewType.Type, for indexPath: IndexPath) -> ViewType {
-        let view = makeSupplementaryView(ofKind: .sectionHeader, withIdentifier: viewClass.reuseIdentifier(), for: indexPath)
+        let view = makeSupplementaryView(ofKind: NSCollectionView.elementKindSectionHeader, withIdentifier: viewClass.reuseIdentifier(), for: indexPath)
         guard let viewType = view as? ViewType else {
             fatalError("Unable to make \(String(describing: viewClass)) with reuseId of \(viewClass.reuseIdentifier())")
         }
@@ -61,7 +61,7 @@ public extension MessagesCollectionView {
 
     /// Generically dequeues a footer of the correct type allowing you to avoid scattering your code with guard-let-else-fatal
     func makeFooterView<ViewType: NSView & CollectionViewReusable>(_ viewClass: ViewType.Type, for indexPath: IndexPath) -> ViewType {
-        let view = makeSupplementaryView(ofKind: .sectionFooter, withIdentifier: viewClass.reuseIdentifier(), for: indexPath)
+        let view = makeSupplementaryView(ofKind: NSCollectionView.elementKindSectionFooter, withIdentifier: viewClass.reuseIdentifier(), for: indexPath)
         guard let viewType = view as? ViewType else {
             fatalError("Unable to make \(String(describing: viewClass)) with reuseId of \(viewClass.reuseIdentifier())")
         }

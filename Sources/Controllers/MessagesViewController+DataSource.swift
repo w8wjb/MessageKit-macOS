@@ -88,9 +88,9 @@ extension MessagesViewController: NSCollectionViewDataSource {
         let message = dataSource.messageForItem(at: indexPath, in: messagesCollectionView)
 
         switch kind {
-        case NSCollectionView.SupplementaryElementKind.sectionHeader:
+        case NSCollectionView.elementKindSectionHeader:
             return displayDelegate.messageHeaderView(for: message, at: indexPath, in: messagesCollectionView)
-        case NSCollectionView.SupplementaryElementKind.sectionFooter:
+        case NSCollectionView.elementKindSectionFooter:
             return displayDelegate.messageFooterView(for: message, at: indexPath, in: messagesCollectionView)
         default:
             fatalError(MessageKitError.unrecognizedSectionKind)

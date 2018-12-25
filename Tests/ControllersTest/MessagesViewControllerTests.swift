@@ -120,7 +120,7 @@ class MessagesViewControllerTests: XCTestCase {
     }
 
     func testCellForItemWithAttributedTextData_returnsTextMessageCell() {
-        let attributes = [NSAttributedStringKey.foregroundColor: NSColor.black]
+        let attributes = [NSAttributedString.Key.foregroundColor: NSColor.black]
         let attriutedString = NSAttributedString(string: "Test", attributes: attributes)
         messagesDataSource.messages.append(MockMessage(attributedText: attriutedString,
                                                        sender: messagesDataSource.senders[0],

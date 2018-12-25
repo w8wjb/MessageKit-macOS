@@ -119,9 +119,9 @@ open class MessagesViewController: NSViewController {
         messagesCollectionView.register(MediaMessageItem.self)
         messagesCollectionView.register(LocationMessageItem.self)
 
-        messagesCollectionView.register(MessageFooterView.self, forSupplementaryViewOfKind: NSCollectionView.SupplementaryElementKind.sectionFooter)
-        messagesCollectionView.register(MessageHeaderView.self, forSupplementaryViewOfKind: NSCollectionView.SupplementaryElementKind.sectionHeader)
-        messagesCollectionView.register(MessageDateHeaderView.self, forSupplementaryViewOfKind: NSCollectionView.SupplementaryElementKind.sectionHeader)
+        messagesCollectionView.register(MessageFooterView.self, forSupplementaryViewOfKind: NSCollectionView.elementKindSectionFooter)
+        messagesCollectionView.register(MessageHeaderView.self, forSupplementaryViewOfKind: NSCollectionView.elementKindSectionHeader)
+        messagesCollectionView.register(MessageDateHeaderView.self, forSupplementaryViewOfKind: NSCollectionView.elementKindSectionHeader)
     }
 
     /// Sets the constraints of the `MessagesCollectionView`.

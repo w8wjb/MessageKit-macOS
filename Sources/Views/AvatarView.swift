@@ -106,7 +106,7 @@ open class AvatarView: NSImageView {
 
         let textStyle = NSMutableParagraphStyle()
         textStyle.alignment = .center
-        let textFontAttributes: [NSAttributedStringKey: Any] = [NSAttributedStringKey.font: font, NSAttributedStringKey.foregroundColor: placeholderTextColor, NSAttributedStringKey.paragraphStyle: textStyle]
+        let textFontAttributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: font, NSAttributedString.Key.foregroundColor: placeholderTextColor, NSAttributedString.Key.paragraphStyle: textStyle]
 
         let textTextHeight: CGFloat = initials.boundingRect(with: CGSize(width: textRect.width, height: CGFloat.infinity), options: .usesLineFragmentOrigin, attributes: textFontAttributes, context: nil).height
         context.saveGState()
@@ -161,7 +161,7 @@ open class AvatarView: NSImageView {
 
     internal func prepareView() {
         self.layer = CALayer()
-        self.layer?.contentsGravity = kCAGravityResizeAspectFill
+        self.layer?.contentsGravity = CALayerContentsGravity.resizeAspectFill
         wantsLayer = true
         imageScaling = .scaleProportionallyUpOrDown
         layer?.backgroundColor = NSColor.gray.cgColor
@@ -173,6 +173,7 @@ open class AvatarView: NSImageView {
     
     open func set(avatar: Avatar) {
         if let image = avatar.image {
+            self.image = image
             self.layer?.contents = image
         } else {
             initials = avatar.initials

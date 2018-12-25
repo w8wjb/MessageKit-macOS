@@ -58,7 +58,7 @@ open class LocationMessageItem: MessageCollectionViewItem {
         
         let imageView = NSImageView()
         imageView.layer = CALayer()
-        imageView.layer?.contentsGravity = kCAGravityResizeAspectFill
+        imageView.layer?.contentsGravity = CALayerContentsGravity.resizeAspectFill
         imageView.wantsLayer = true
 
         self.imageView = imageView
@@ -90,7 +90,7 @@ open class LocationMessageItem: MessageCollectionViewItem {
 
         activityIndicator.startAnimation(self)
 
-        let snapshotOptions = MKMapSnapshotOptions()
+        let snapshotOptions = MKMapSnapshotter.Options()
         snapshotOptions.region = MKCoordinateRegion(center: location.coordinate, span: options.span)
         snapshotOptions.showsBuildings = options.showsBuildings
         snapshotOptions.showsPointsOfInterest = options.showsPointsOfInterest

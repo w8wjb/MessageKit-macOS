@@ -105,7 +105,7 @@ open class MessageInputBar: NSView {
         button.setSize(CGSize(width: 52, height: 28), animated: false)
         button.isEnabled = false
         let title = NSAttributedString(string: "Send", attributes:
-            [NSAttributedStringKey.font : NSFont.preferredFont(forTextStyle: .headline)])
+            [NSAttributedString.Key.font : NSFont.preferredFont(forTextStyle: .headline)])
         button.attributedTitle = title
         return button
     }()
@@ -665,7 +665,7 @@ open class MessageInputBar: NSView {
 
 extension MessageInputBar: NSTextViewDelegate {
     
-    open override func controlTextDidChange(_ obj: Notification) {
+    open func controlTextDidChange(_ obj: Notification) {
         textViewDidChange()
     }
     

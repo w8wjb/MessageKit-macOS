@@ -26,7 +26,6 @@
 		7C29812E20254B82008C2701 /* MessageKitAssets.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B0C8D99A1F73076B000A86E4 /* MessageKitAssets.bundle */; };
 		7C29813020254F9C008C2701 /* MessagesCollectionViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC831F87AB230030B058 /* MessagesCollectionViewTests.swift */; };
 		7C29813120255014008C2701 /* AvatarViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC851F87AB230030B058 /* AvatarViewTests.swift */; };
-		7C298132202550FD008C2701 /* MessageCollectionViewCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC861F87AB230030B058 /* MessageCollectionViewCellTests.swift */; };
 		7C298133202551EB008C2701 /* MessageDateHeaderViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC891F87AB230030B058 /* MessageDateHeaderViewTests.swift */; };
 		7C4C96E02024BB04009CEB2C /* MessageKit_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C4C96D72024BB03009CEB2C /* MessageKit_macOS.framework */; };
 		7C4C96E52024BB04009CEB2C /* MessageKit_macOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4C96E42024BB04009CEB2C /* MessageKit_macOSTests.swift */; };
@@ -140,7 +139,6 @@
 		8962AC831F87AB230030B058 /* MessagesCollectionViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewTests.swift; sourceTree = "<group>"; };
 		8962AC841F87AB230030B058 /* InputBarItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputBarItemTests.swift; sourceTree = "<group>"; };
 		8962AC851F87AB230030B058 /* AvatarViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarViewTests.swift; sourceTree = "<group>"; };
-		8962AC861F87AB230030B058 /* MessageCollectionViewCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCollectionViewCellTests.swift; sourceTree = "<group>"; };
 		8962AC871F87AB230030B058 /* InputTextViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextViewTests.swift; sourceTree = "<group>"; };
 		8962AC881F87AB230030B058 /* MessageInputBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputBarTests.swift; sourceTree = "<group>"; };
 		8962AC891F87AB230030B058 /* MessageDateHeaderViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDateHeaderViewTests.swift; sourceTree = "<group>"; };
@@ -365,7 +363,6 @@
 				8962AC831F87AB230030B058 /* MessagesCollectionViewTests.swift */,
 				8962AC841F87AB230030B058 /* InputBarItemTests.swift */,
 				8962AC851F87AB230030B058 /* AvatarViewTests.swift */,
-				8962AC861F87AB230030B058 /* MessageCollectionViewCellTests.swift */,
 				8962AC871F87AB230030B058 /* InputTextViewTests.swift */,
 				8962AC881F87AB230030B058 /* MessageInputBarTests.swift */,
 				8962AC891F87AB230030B058 /* MessageDateHeaderViewTests.swift */,
@@ -542,11 +539,13 @@
 				TargetAttributes = {
 					7C4C96D62024BB03009CEB2C = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
 					};
 					7C4C96DE2024BB04009CEB2C = {
 						CreatedOnToolsVersion = 9.2;
 						DevelopmentTeam = R94MW7P6QY;
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -653,7 +652,6 @@
 				7C4C96E52024BB04009CEB2C /* MessageKit_macOSTests.swift in Sources */,
 				7C29813020254F9C008C2701 /* MessagesCollectionViewTests.swift in Sources */,
 				7C298126202507B9008C2701 /* MessagesViewControllerSpec.swift in Sources */,
-				7C298132202550FD008C2701 /* MessageCollectionViewCellTests.swift in Sources */,
 				7C2981232025079E008C2701 /* MockMessagesDataSource.swift in Sources */,
 				7C298133202551EB008C2701 /* MessageDateHeaderViewTests.swift in Sources */,
 				7C29812120250752008C2701 /* MessagesViewControllerTests.swift in Sources */,
@@ -709,7 +707,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -744,7 +742,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -773,7 +771,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -802,7 +800,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};

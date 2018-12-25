@@ -49,22 +49,6 @@ final class MessagesViewControllerSpec: QuickSpec {
                     expect(controller.messagesCollectionView).toNot(beNil())
                 }
             }
-            context("after viewDidLoad") {
-                beforeEach {
-                    controller.view.layoutSubtreeIfNeeded()
-                }
-                it("sets the background color to be white") {
-                    expect(controller.view.layer?.backgroundColor).to(equal(CGColor.white))
-                }
-            }
-        }
-
-        describe("subviews setup") {
-            it("should add messagesCollectionView as a subview of root view") {
-                let subviews = controller.view.subviews
-                let hasView = subviews.contains(controller.messagesCollectionView)
-                expect(hasView).to(beTrue())
-            }
         }
 
         describe("delegate and datasource setup") {

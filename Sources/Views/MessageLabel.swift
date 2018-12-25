@@ -87,7 +87,7 @@ open class MessageLabel: NSTextField {
         }
     }
 
-    open override var lineBreakMode: NSParagraphStyle.LineBreakMode {
+    open override var lineBreakMode: NSParagraphStyle.NSLineBreakMode {
         didSet {
             textContainer.lineBreakMode = lineBreakMode
             if !isConfiguring { setNeedsDisplay() }
@@ -115,23 +115,23 @@ open class MessageLabel: NSTextField {
 
     private var attributesNeedUpdate = false
 
-    public static var defaultAttributes: [NSAttributedStringKey: Any] = {
+    public static var defaultAttributes: [NSAttributedString.Key: Any] = {
         return [
-            NSAttributedStringKey.foregroundColor: NSColor.controlDarkShadowColor,
-            NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
-            NSAttributedStringKey.underlineColor: NSColor.controlDarkShadowColor
+            NSAttributedString.Key.foregroundColor: NSColor.controlDarkShadowColor,
+            NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
+            NSAttributedString.Key.underlineColor: NSColor.controlDarkShadowColor
         ]
     }()
 
-    open internal(set) var addressAttributes: [NSAttributedStringKey: Any] = defaultAttributes
+    open internal(set) var addressAttributes: [NSAttributedString.Key: Any] = defaultAttributes
 
-    open internal(set) var dateAttributes: [NSAttributedStringKey: Any] = defaultAttributes
+    open internal(set) var dateAttributes: [NSAttributedString.Key: Any] = defaultAttributes
 
-    open internal(set) var phoneNumberAttributes: [NSAttributedStringKey: Any] = defaultAttributes
+    open internal(set) var phoneNumberAttributes: [NSAttributedString.Key: Any] = defaultAttributes
 
-    open internal(set) var urlAttributes: [NSAttributedStringKey: Any] = defaultAttributes
+    open internal(set) var urlAttributes: [NSAttributedString.Key: Any] = defaultAttributes
 
-    public func setAttributes(_ attributes: [NSAttributedStringKey: Any], detector: DetectorType) {
+    public func setAttributes(_ attributes: [NSAttributedString.Key: Any], detector: DetectorType) {
         switch detector {
         case .phoneNumber:
             phoneNumberAttributes = attributes
@@ -263,7 +263,7 @@ open class MessageLabel: NSTextField {
         }
     }
 
-    private func detectorAttributes(for detectorType: DetectorType) -> [NSAttributedStringKey: Any] {
+    private func detectorAttributes(for detectorType: DetectorType) -> [NSAttributedString.Key: Any] {
 
         switch detectorType {
         case .address:
@@ -278,7 +278,7 @@ open class MessageLabel: NSTextField {
 
     }
 
-    private func detectorAttributes(for checkingResultType: NSTextCheckingResult.CheckingType) -> [NSAttributedStringKey: Any] {
+    private func detectorAttributes(for checkingResultType: NSTextCheckingResult.CheckingType) -> [NSAttributedString.Key: Any] {
         switch checkingResultType {
         case .address:
             return addressAttributes

@@ -24,7 +24,7 @@
 
 import Quick
 import Nimble
-@testable import MessageKit
+@testable import MessageKit_macOS
 
 final class SenderSpec: QuickSpec {
 
