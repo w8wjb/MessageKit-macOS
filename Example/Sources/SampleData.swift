@@ -190,7 +190,7 @@ final class SampleData {
       let message = randomMessage()
       switch message.data {
       case .attributedText(let attributedText):
-        print("Message \(i) is attributedText: \(attributedText.string)")
+        print("Message \(i) is attributedText: \(attributedText)")
       case .emoji(let emoji):
         print("Message \(i) is an emoji")
       case .location(let location):

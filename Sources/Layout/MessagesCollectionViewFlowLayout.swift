@@ -271,9 +271,6 @@ fileprivate extension MessagesCollectionViewFlowLayout {
       attributes.messageLabelFont = emojiLabelFont
     case .text:
       attributes.messageLabelFont = messageLabelFont
-    case .attributedText(let text):
-      guard let font = text.attribute(.font, at: 0, effectiveRange: nil) as? NSFont else { return }
-      attributes.messageLabelFont = font
     default:
       break
     }
@@ -343,8 +340,14 @@ private extension MessagesCollectionViewFlowLayout {
   ///   - text: The `String` used to calculate a size that fits.
   ///   - maxWidth: The max width available for the label.
   func labelSize(for text: String, considering maxWidth: CGFloat, and font: NSFont) -> CGSize {
-    let attributedText = NSAttributedString(string: text, attributes: [.font : font])
-    return labelSize(for: attributedText, considering: maxWidth)
+    
+    let estimatedHeight = text.height(considering: maxWidth, and: font)
+    let estimatedWidth = text.width(considering: estimatedHeight, and: font)
+    
+    let finalHeight = estimatedHeight
+    let finalWidth = estimatedWidth > maxWidth ? maxWidth : estimatedWidth
+    
+    return CGSize(width: finalWidth, height: finalHeight)
   }
   
 }

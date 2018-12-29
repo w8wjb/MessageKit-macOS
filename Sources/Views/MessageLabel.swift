@@ -42,24 +42,6 @@ open class MessageLabel: NSTextView {
     }
   }
   
-  var stringValue: String {
-    get {
-      return attributedStringValue.string
-    }
-    
-    set {
-      
-      var attributes = [NSAttributedString.Key : Any]()
-      
-      attributes[.paragraphStyle] = NSParagraphStyle.default
-      if let font = self.font {
-        attributes[.font] = font
-      }
-      
-      attributedStringValue = NSAttributedString(string: newValue, attributes: attributes)
-    }
-  }
-  
   var attributedStringValue: NSAttributedString {
     get {
       if let textStorage = self.textStorage {
@@ -154,8 +136,7 @@ open class MessageLabel: NSTextView {
     }
     attributesNeedUpdate = false
     isConfiguring = false
-    //    setNeedsDisplay(self)
-    //    setNeedsDisplay()
+    needsDisplay = true
   }
   
   // MARK: - Private Methods

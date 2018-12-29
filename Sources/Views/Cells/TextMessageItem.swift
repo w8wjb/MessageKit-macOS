@@ -45,7 +45,9 @@ open class TextMessageItem: MessageCollectionViewItem {
   open override func apply(_ layoutAttributes: NSCollectionViewLayoutAttributes) {
     super.apply(layoutAttributes)
     if let attributes = layoutAttributes as? MessagesCollectionViewLayoutAttributes {
-      messageLabel.font = attributes.messageLabelFont
+      if let font = attributes.messageLabelFont {
+        messageLabel.font = font
+      }
       messageLabel.frame = messageContainerView.bounds.insetBy(attributes.messageLabelInsets)
     }
   }
@@ -67,7 +69,6 @@ open class TextMessageItem: MessageCollectionViewItem {
       fatalError(MessageKitError.nilMessagesDisplayDelegate)
     }
     
-    let textColor = displayDelegate.textColor(for: message, at: indexPath, in: messagesCollectionView)
     let enabledDetectors = displayDelegate.enabledDetectors(for: message, at: indexPath, in: messagesCollectionView)
     
     messageLabel.configure {
@@ -78,14 +79,16 @@ open class TextMessageItem: MessageCollectionViewItem {
       }
       switch message.data {
       case .text(let text), .emoji(let text):
-        messageLabel.stringValue = text
+        messageLabel.string = text
       case .attributedText(let text):
         messageLabel.attributedStringValue = text
       default:
         break
       }
       // Needs to be set after the attributedText because it takes precedence
-      messageLabel.textColor = textColor
+      if let textColor = displayDelegate.textColor(for: message, at: indexPath, in: messagesCollectionView) {
+        messageLabel.textColor = textColor
+      }
     }
   }
   

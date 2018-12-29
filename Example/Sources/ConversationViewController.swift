@@ -117,9 +117,9 @@ extension ConversationViewController: MessagesDisplayDelegate {
   
   // MARK: - Text Messages
   
-  func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> NSColor {
-    return isFromCurrentSender(message: message) ? NSColor.white : NSColor.controlDarkShadowColor
-  }
+//  func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> NSColor {
+//    return isFromCurrentSender(message: message) ? NSColor.white : NSColor.controlDarkShadowColor
+//  }
   
   func detectorAttributes(for detector: DetectorType, and message: MessageType, at indexPath: IndexPath) -> [NSAttributedString.Key : Any] {
     return MessageLabel.defaultAttributes

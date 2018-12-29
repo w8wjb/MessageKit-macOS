@@ -109,7 +109,7 @@ public protocol MessagesDisplayDelegate: AnyObject {
     /// Current Sender: NSColor.white
     ///
     /// All other Senders: NSColor.darkText
-    func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> NSColor
+    func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> NSColor?
 
     /// Specifies the `DetectorType`s to check for the `MessageType`'s text against.
     ///
@@ -211,11 +211,8 @@ public extension MessagesDisplayDelegate {
 
     // MARK: - Text Messages Defaults
 
-    func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> NSColor {
-        guard let dataSource = messagesCollectionView.messagesDataSource else {
-            fatalError(MessageKitError.nilMessagesDataSource)
-        }
-        return dataSource.isFromCurrentSender(message: message) ? NSColor.white : NSColor.controlDarkShadowColor
+    func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> NSColor? {
+        return nil
     }
 
     func enabledDetectors(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType] {

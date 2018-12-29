@@ -31,7 +31,7 @@ final class MessagesCollectionViewLayoutAttributes: NSCollectionViewLayoutAttrib
 
     var avatarFrame: CGRect = .zero
 
-    var messageLabelFont: NSFont = NSFont.preferredFont(forTextStyle: .body)
+    var messageLabelFont: NSFont?
     var messageContainerFrame: CGRect = .zero
     var messageLabelInsets: NSEdgeInsets = NSEdgeInsetsZero
 
