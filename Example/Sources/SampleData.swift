@@ -191,15 +191,15 @@ final class SampleData {
       switch message.data {
       case .attributedText(let attributedText):
         print("Message \(i) is attributedText: \(attributedText)")
-      case .emoji(let emoji):
+      case .emoji(_):
         print("Message \(i) is an emoji")
-      case .location(let location):
+      case .location(_):
         print("Message \(i) is a location")
-      case .photo(let image):
+      case .photo(_):
         print("Message \(i) is a photo")
       case .text(let text):
         print("Message \(i) is text: \(text)")
-      case .video(let file, let thumbnail):
+      case .video(_, _):
         print("Message \(i) is a video")
       }
       messages.append(message)
@@ -212,7 +212,7 @@ final class SampleData {
     case dan:
       return Avatar(image: #imageLiteral(resourceName: "Dan-Leonard"), initials: "DL")
     case steven:
-      return Avatar(initials: "S")
+      return Avatar(initials: "SJ")
     case jobs:
       return Avatar(image: #imageLiteral(resourceName: "Steve-Jobs"), initials: "SJ")
     case cook:
