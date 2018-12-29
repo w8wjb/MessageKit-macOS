@@ -25,20 +25,20 @@
 import AppKit
 
 extension String {
-
-    func height(considering width: CGFloat, and font: NSFont) -> CGFloat {
-
-        let constraintBox = CGSize(width: width, height: .greatestFiniteMagnitude)
-      let rect = self.boundingRect(with: constraintBox, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
-        return rect.height
-
-    }
-
-    func width(considering height: CGFloat, and font: NSFont) -> CGFloat {
-
-        let constraintBox = CGSize(width: .greatestFiniteMagnitude, height: height)
-      let rect = self.boundingRect(with: constraintBox, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
-        return rect.width
-
-    }
+  
+  func height(considering width: CGFloat, and font: NSFont) -> CGFloat {
+    
+    let constraintBox = CGSize(width: width, height: .greatestFiniteMagnitude)
+    let rect = self.boundingRect(with: constraintBox, options: .usesLineFragmentOrigin, attributes: [.font: font], context: nil)
+    return rect.height
+    
+  }
+  
+  func width(considering height: CGFloat, and font: NSFont) -> CGFloat {
+    
+    let constraintBox = CGSize(width: .greatestFiniteMagnitude, height: height)
+    let rect = self.boundingRect(with: constraintBox, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
+    return rect.width
+    
+  }
 }

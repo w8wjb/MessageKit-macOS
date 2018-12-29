@@ -109,33 +109,4 @@ open class MessageCollectionViewItem: NSCollectionViewItem, CollectionViewReusab
         cellBottomLabel.string = bottomText  ?? NSAttributedString()
     }
 
-    /// Handle tap gesture on contentView and its subviews like messageContainerView, cellTopLabel, cellBottomLabel, avatarView ....
-//    open func handleTapGesture(_ gesture: UIGestureRecognizer) {
-//        let touchLocation = gesture.location(in: self)
-//
-//        switch true {
-//        case messageContainerView.frame.contains(touchLocation) && !cellContentView(canHandle: convert(touchLocation, to: messageContainerView)):
-//            delegate?.didTapMessage(in: self)
-//        case avatarView.frame.contains(touchLocation):
-//            delegate?.didTapAvatar(in: self)
-//        case cellTopLabel.frame.contains(touchLocation):
-//            delegate?.didTapTopLabel(in: self)
-//        case cellBottomLabel.frame.contains(touchLocation):
-//            delegate?.didTapBottomLabel(in: self)
-//        default:
-//            break
-//        }
-//    }
-    
-    /// Handle long press gesture, return true when gestureRecognizer's touch point in `messageContainerView`'s frame
-//    open override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-//        let touchPoint = gestureRecognizer.location(in: self)
-//        guard gestureRecognizer.isKind(of: UILongPressGestureRecognizer.self) else { return false }
-//        return messageContainerView.frame.contains(touchPoint)
-//    }
-
-    /// Handle `ContentView`'s tap gesture, return false when `ContentView` doesn't needs to handle gesture
-//    open func cellContentView(canHandle touchPoint: CGPoint) -> Bool {
-//        return false
-//    }
 }

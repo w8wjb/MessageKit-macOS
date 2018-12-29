@@ -41,7 +41,6 @@ final class MessagesCollectionViewLayoutAttributes: NSCollectionViewLayoutAttrib
     // MARK: - Methods
 
     override func copy(with zone: NSZone? = nil) -> Any {
-        // swiftlint:disable force_cast
         let copy = super.copy(with: zone) as! MessagesCollectionViewLayoutAttributes
         copy.avatarFrame = avatarFrame
         copy.messageContainerFrame = messageContainerFrame
@@ -50,18 +49,15 @@ final class MessagesCollectionViewLayoutAttributes: NSCollectionViewLayoutAttrib
         copy.topLabelFrame = topLabelFrame
         copy.bottomLabelFrame = bottomLabelFrame
         return copy
-        // swiftlint:enable force_cast
     }
 
     override func isEqual(_ object: Any?) -> Bool {
 
         // MARK: - LEAVE this as is
-        // swiftlint:disable unused_optional_binding
         if let _ = object as? MessagesCollectionViewLayoutAttributes {
             return super.isEqual(object)
         } else {
             return false
         }
-        // swiftlint:enable unused_optional_binding
     }
 }

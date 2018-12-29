@@ -32,10 +32,10 @@ final class MessageLabelSpec: QuickSpec {
     //swiftlint:disable function_body_length
     override func spec() {
 
-        var messageLabel: MessageLabel!
+        var messageLabel: MessageTextView!
 
         beforeEach {
-            messageLabel = MessageLabel()
+            messageLabel = MessageTextView()
         }
 
 //        describe("text recognized by a DetectorType") {
@@ -241,7 +241,7 @@ final class MessageLabelSpec: QuickSpec {
 
 // MARK: - Helpers
 
-fileprivate extension MessageLabel {
+fileprivate extension MessageTextView {
 
     var textAttributes: [NSAttributedString.Key: Any] {
         let length = attributedStringValue.length

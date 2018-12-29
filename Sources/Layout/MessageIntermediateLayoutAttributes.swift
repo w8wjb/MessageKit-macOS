@@ -83,7 +83,7 @@ final class MessageIntermediateLayoutAttributes {
         guard messageContainerSize != .zero else { return .zero }
         
         var origin: CGPoint = .zero
-        origin.y = topLabelSize.height + messageContainerPadding.top + topLabelVerticalPadding
+        origin.y = bottomLabelSize.height + messageContainerPadding.bottom + bottomLabelVerticalPadding
         
         switch avatarPosition.horizontal {
         case .cellLeading:
