@@ -42,6 +42,22 @@ open class MessageLabel: NSTextView {
     }
   }
   
+  open override var string: String {
+    get {
+      return super.string
+    }
+    
+    set {
+      
+      var attributes = [NSAttributedString.Key : Any]()
+      attributes[.paragraphStyle] = NSParagraphStyle.default
+      if let font = self.font {
+        attributes[.font] = font
+      }
+      attributedStringValue = NSAttributedString(string: newValue, attributes: attributes)
+    }
+  }
+  
   var attributedStringValue: NSAttributedString {
     get {
       if let textStorage = self.textStorage {
@@ -51,9 +67,7 @@ open class MessageLabel: NSTextView {
     }
     
     set {
-      if let textStorage = self.textStorage {
-        textStorage.setAttributedString(newValue)
-      }
+      setTextStorage(newValue, shouldParse: true)
     }
   }
   
@@ -141,41 +155,45 @@ open class MessageLabel: NSTextView {
   
   // MARK: - Private Methods
   
-  //  private func setTextStorage(_ newText: NSAttributedString?, shouldParse: Bool) {
-  //
-  //    //        guard let newText = newText, newText.length > 0 else {
-  //    //            textStorage.setAttributedString(NSAttributedString())
-  //    //            setNeedsDisplay()
-  //    //            return
-  //    //        }
-  //    //
-  //    //        let style = paragraphStyle(for: newText)
-  //    //        let range = NSRange(location: 0, length: newText.length)
-  //    //
-  //    //        let mutableText = NSMutableAttributedString(attributedString: newText)
-  //    //        mutableText.addAttribute(.paragraphStyle, value: style, range: range)
-  //    //
-  //    //        if shouldParse {
-  //    //            rangesForDetectors.removeAll()
-  //    //            let results = parse(text: mutableText)
-  //    //            setRangesForDetectors(in: results)
-  //    //        }
-  //    //
-  //    //        for (detector, rangeTuples) in rangesForDetectors {
-  //    //            if enabledDetectors.contains(detector) {
-  //    //                let attributes = detectorAttributes(for: detector)
-  //    //                rangeTuples.forEach { (range, _) in
-  //    //                    mutableText.addAttributes(attributes, range: range)
-  //    //                }
-  //    //            }
-  //    //        }
-  //    //
-  //    //        let modifiedText = NSAttributedString(attributedString: mutableText)
-  //    //        textStorage.setAttributedString(modifiedText)
-  //    //
-  //    //        if !isConfiguring { setNeedsDisplay() }
-  //
-  //  }
+  private func setTextStorage(_ newText: NSAttributedString?, shouldParse: Bool) {
+    
+    guard let textStorage = self.textStorage else {
+      return
+    }
+    
+    guard let newText = newText, newText.length > 0 else {
+      textStorage.setAttributedString(NSAttributedString())
+      needsDisplay = true
+      return
+    }
+    
+    let style = paragraphStyle(for: newText)
+    let range = NSRange(location: 0, length: newText.length)
+    
+    let mutableText = NSMutableAttributedString(attributedString: newText)
+    mutableText.addAttribute(.paragraphStyle, value: style, range: range)
+    
+    if shouldParse {
+      rangesForDetectors.removeAll()
+      let results = parse(text: mutableText)
+      setRangesForDetectors(in: results)
+    }
+    
+    for (detector, rangeTuples) in rangesForDetectors {
+      if enabledDetectors.contains(detector) {
+        rangeTuples.forEach { (range, _) in
+          let attributes = detectorAttributes(for: detector, attributedString: mutableText, range: range)
+          mutableText.addAttributes(attributes, range: range)
+        }
+      }
+    }
+    
+    let modifiedText = NSAttributedString(attributedString: mutableText)
+    textStorage.setAttributedString(modifiedText)
+    
+    if !isConfiguring { needsDisplay = true }
+    
+  }
   
   private func paragraphStyle(for text: NSAttributedString) -> NSParagraphStyle {
     guard text.length > 0 else { return NSParagraphStyle() }
@@ -199,27 +217,38 @@ open class MessageLabel: NSTextView {
       guard let rangeTuples = rangesForDetectors[detector] else { continue }
       
       for (range, _)  in rangeTuples {
-        let attributes = detectorAttributes(for: detector)
+        let attributes = detectorAttributes(for: detector, attributedString: attributedStringValue, range: range)
         mutableAttributedString.addAttributes(attributes, range: range)
       }
       
       let updatedString = NSAttributedString(attributedString: mutableAttributedString)
-      //            textStorage.setAttributedString(updatedString)
+      textStorage?.setAttributedString(updatedString)
     }
   }
   
-  private func detectorAttributes(for detectorType: DetectorType) -> [NSAttributedString.Key: Any] {
-    
+  private func detectorAttributes(for detectorType: DetectorType, attributedString: NSAttributedString, range: NSRange) -> [NSAttributedString.Key: Any] {
+
+    let substring = attributedString.attributedSubstring(from: range)
+
+    var attributes = MessageLabel.defaultAttributes
     switch detectorType {
     case .address:
-      return addressAttributes
+      attributes = addressAttributes
+      attributes[.link] = "address"
     case .date:
-      return dateAttributes
+      attributes = dateAttributes
+      attributes[.link] = "date"
     case .phoneNumber:
-      return phoneNumberAttributes
+      attributes = phoneNumberAttributes
+//      let url = NSURL(string: "tel:\(substring.string)")
+      attributes[.link] = "tel"
     case .url:
-      return urlAttributes
+      attributes = urlAttributes
+      let url = NSURL(string: substring.string)
+      attributes[.link] = url
     }
+    
+    return attributes
     
   }
   
@@ -253,7 +282,7 @@ open class MessageLabel: NSTextView {
     guard checkingResults.isEmpty == false else { return }
     
     for result in checkingResults {
-      
+
       switch result.resultType {
       case .address:
         var ranges = rangesForDetectors[.address] ?? []
@@ -283,6 +312,48 @@ open class MessageLabel: NSTextView {
     
   }
   
+  open override func clicked(onLink link: Any, at charIndex: Int) {
+    //    super.clicked(onLink: link, at: charIndex)
+    if link is NSURL {
+      super.clicked(onLink: link, at: charIndex)
+      return
+    }
+    
+    for (detectorType, ranges) in rangesForDetectors {
+      for (range, value) in ranges {
+        if range.contains(charIndex) {
+          handleClicked(for: detectorType, value: value)
+        }
+      }
+    }
+  }
+  
+  private func handleClicked(for detectorType: DetectorType, value: MessageTextCheckingType) {
+    
+    switch value {
+    case let .addressComponents(addressComponents):
+      var transformedAddressComponents = [String: String]()
+      guard let addressComponents = addressComponents else { return }
+      addressComponents.forEach { (key, value) in
+        transformedAddressComponents[key.rawValue] = value
+      }
+      handleAddress(transformedAddressComponents)
+    case let .phoneNumber(phoneNumber):
+      guard let phoneNumber = phoneNumber else { return }
+      handlePhoneNumber(phoneNumber)
+    case let .date(date):
+      guard let date = date else { return }
+      handleDate(date)
+    case let .link(url):
+      guard let url = url else { return }
+      handleURL(url)
+    }
+  }
+  
+  private func handleAddress(_ addressComponents: [String: String]) {
+    messageLabelDelegate?.didSelectAddress(addressComponents)
+  }
+  
   private func handleDate(_ date: Date) {
     messageLabelDelegate?.didSelectDate(date)
   }
@@ -294,8 +365,9 @@ open class MessageLabel: NSTextView {
   private func handlePhoneNumber(_ phoneNumber: String) {
     messageLabelDelegate?.didSelectPhoneNumber(phoneNumber)
   }
-  
+
 }
+
 
 private enum MessageTextCheckingType {
   case addressComponents([NSTextCheckingKey: String]?)
