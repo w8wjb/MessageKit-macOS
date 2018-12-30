@@ -31,6 +31,12 @@ final class SampleData {
   
   private init() {}
   
+  var showTextMessages = false
+  var showAttributedTextMessages = false
+  var showImageMessages = false
+  var showLocationMessages = true
+  var showEmojiMessages = false
+  
   let messageTextValues = [
     "Ok",
     "k",
@@ -88,9 +94,7 @@ final class SampleData {
     CLLocation(latitude: 37.3118, longitude: -122.0312),
     CLLocation(latitude: 33.6318, longitude: -100.0386),
     CLLocation(latitude: 29.3358, longitude: -108.8311),
-    CLLocation(latitude: 39.3218, longitude: -127.4312),
-    CLLocation(latitude: 35.3218, longitude: -127.4314),
-    CLLocation(latitude: 39.3218, longitude: -113.3317)
+    CLLocation(latitude: 38.8894838, longitude: -77.03527910000003) // Washington monument
   ]
   
   let emojis = [
@@ -102,13 +106,12 @@ final class SampleData {
     "🇧🇷"
   ]
   
-  func attributedString(with text: String) -> NSAttributedString {
+  func attributedString(with text: String, andType attributeType: String) -> NSAttributedString {
     let nsString = NSString(string: text)
     var mutableAttributedString = NSMutableAttributedString(string: text)
-    let randomAttribute = Int(arc4random_uniform(UInt32(attributes.count)))
     let range = NSRange(location: 0, length: nsString.length)
     
-    switch attributes[randomAttribute] {
+    switch attributeType {
     case "Font1":
       mutableAttributedString.addAttribute(NSAttributedString.Key.font, value: NSFont.userFont(ofSize: 20)!, range: range)
     case "Font2":
@@ -137,13 +140,13 @@ final class SampleData {
   }
   
   func dateAddingRandomTime() -> Date {
-    let randomNumber = Int(arc4random_uniform(UInt32(10)))
+    let randomNumber = Int.random(in: 0..<10)
     if randomNumber % 2 == 0 {
       let date = Calendar.current.date(byAdding: .hour, value: randomNumber, to: now)!
       now = date
       return date
     } else {
-      let randomMinute = Int(arc4random_uniform(UInt32(59)))
+      let randomMinute = Int.random(in: 0..<59)
       let date = Calendar.current.date(byAdding: .minute, value: randomMinute, to: now)!
       now = date
       return date
@@ -152,36 +155,49 @@ final class SampleData {
   
   func randomMessage() -> MockMessage {
     
-    let randomNumberSender = Int(arc4random_uniform(UInt32(senders.count)))
-    let randomNumberText = Int(arc4random_uniform(UInt32(messageTextValues.count)))
-    let randomNumberImage = Int(arc4random_uniform(UInt32(messageImages.count)))
-    let randomMessageType = Int(arc4random_uniform(UInt32(messageTypes.count)))
-    let randomNumberLocation = Int(arc4random_uniform(UInt32(locations.count)))
-    let randomNumberEmoji = Int(arc4random_uniform(UInt32(emojis.count)))
-    let uniqueID = NSUUID().uuidString
-    let sender = senders[randomNumberSender]
-    let date = dateAddingRandomTime()
-    
-    switch messageTypes[randomMessageType] {
+    switch messageTypes.randomElement()! {
     case "Text":
-      let messageText = messageTextValues[randomNumberText]
-      return MockMessage(text: messageText, sender: sender, messageId: uniqueID, date: date)
+      return MockMessage(text: messageTextValues.randomElement()!,
+                         sender: senders.randomElement()!,
+                         messageId: newMessageId(),
+                         date: dateAddingRandomTime())
     case "AttributedText":
-      let attributedText = attributedString(with: messageTextValues[randomNumberText])
-      return MockMessage(attributedText: attributedText, sender: senders[randomNumberSender], messageId: uniqueID, date: date)
+      let text = messageTextValues.randomElement()!
+      let attributeType = attributes.randomElement()!
+      let attributedText = attributedString(with: text, andType: attributeType)
+      return MockMessage(attributedText: attributedText,
+                         sender: senders.randomElement()!,
+                         messageId: newMessageId(),
+                         date: dateAddingRandomTime())
     case "Photo":
-      let image = messageImages[randomNumberImage]
-      return MockMessage(image: image, sender: sender, messageId: uniqueID, date: date)
+      let image = messageImages.randomElement()!
+      return MockMessage(image: image,
+                         sender: senders.randomElement()!,
+                         messageId: newMessageId(),
+                         date: dateAddingRandomTime())
     case "Video":
-      let image = messageImages[randomNumberImage]
-      return MockMessage(thumbnail: image, sender: sender, messageId: uniqueID, date: date)
+      let image = messageImages.randomElement()!
+      return MockMessage(thumbnail: image,
+                         sender: senders.randomElement()!,
+                         messageId: newMessageId(),
+                         date: dateAddingRandomTime())
     case "Location":
-      return MockMessage(location: locations[randomNumberLocation], sender: sender, messageId: uniqueID, date: date)
+      return MockMessage(location: locations.randomElement()!,
+                         sender: senders.randomElement()!,
+                         messageId: newMessageId(),
+                         date: dateAddingRandomTime())
     case "Emoji":
-      return MockMessage(emoji: emojis[randomNumberEmoji], sender: sender, messageId: uniqueID, date: date)
+      return MockMessage(emoji: emojis.randomElement()!,
+                         sender: senders.randomElement()!,
+                         messageId: newMessageId(),
+                         date: dateAddingRandomTime())
     default:
       fatalError("Unrecognized mock message type")
     }
+  }
+  
+  private func newMessageId() -> String {
+    return NSUUID().uuidString
   }
   
   func getMessages(count: Int, completion: ([MockMessage]) -> Void) {
@@ -206,6 +222,68 @@ final class SampleData {
     }
     completion(messages)
   }
+  
+  
+  func getMessages(completion: ([MockMessage]) -> Void) {
+    var messages: [MockMessage] = []
+    
+    
+    if showTextMessages {
+      for messageText in messageTextValues {
+        let msg = MockMessage(text: messageText,
+                              sender: senders.randomElement()!,
+                              messageId: newMessageId(),
+                              date: dateAddingRandomTime())
+        messages.append(msg)
+      }
+    }
+    
+    if showAttributedTextMessages {
+      for messageText in messageTextValues {
+        for attributeType in attributes {
+          let attributedText = attributedString(with: messageText, andType: attributeType)
+          let msg = MockMessage(attributedText: attributedText,
+                                sender: senders.randomElement()!,
+                                messageId: newMessageId(),
+                                date: dateAddingRandomTime())
+          messages.append(msg)
+        }
+      }
+    }
+    
+    if showImageMessages {
+      for image in messageImages {
+        let msg = MockMessage(image: image,
+                              sender: senders.randomElement()!,
+                              messageId: newMessageId(),
+                              date: dateAddingRandomTime())
+        messages.append(msg)
+      }
+    }
+    
+    if showLocationMessages {
+      for location in locations {
+        let msg = MockMessage(location: location,
+                              sender: senders.randomElement()!,
+                              messageId: newMessageId(),
+                              date: dateAddingRandomTime())
+        messages.append(msg)
+      }
+    }
+    
+    if showEmojiMessages {
+      for emoji in emojis {
+        let msg = MockMessage(emoji: emoji,
+                              sender: senders.randomElement()!,
+                              messageId: newMessageId(),
+                              date: dateAddingRandomTime())
+        messages.append(msg)
+      }
+    }
+    
+    completion(messages)
+  }
+  
   
   func getAvatarFor(sender: Sender) -> Avatar {
     switch sender {

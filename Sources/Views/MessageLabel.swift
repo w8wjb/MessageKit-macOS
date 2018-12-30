@@ -313,7 +313,6 @@ open class MessageLabel: NSTextView {
   }
   
   open override func clicked(onLink link: Any, at charIndex: Int) {
-    //    super.clicked(onLink: link, at: charIndex)
     if link is NSURL {
       super.clicked(onLink: link, at: charIndex)
       return

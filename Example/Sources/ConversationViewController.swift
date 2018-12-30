@@ -38,7 +38,7 @@ class ConversationViewController: MessagesViewController {
     let messagesToFetch = UserDefaults.standard.mockMessagesCount()
     
     DispatchQueue.global(qos: .userInitiated).async {
-      SampleData.shared.getMessages(count: messagesToFetch) { messages in
+      SampleData.shared.getMessages() { messages in
         DispatchQueue.main.async {
           self.messageList = messages
           self.messagesCollectionView.reloadData()
@@ -149,13 +149,13 @@ extension ConversationViewController: MessagesDisplayDelegate {
   
   // MARK: - Location Messages
   
-  func annotationViewForLocation(message: MessageType, at indexPath: IndexPath, in messageCollectionView: MessagesCollectionView) -> MKAnnotationView? {
-    let annotationView = MKAnnotationView(annotation: nil, reuseIdentifier: nil)
-    let pinImage = #imageLiteral(resourceName: "pin")
-    annotationView.image = pinImage
-    annotationView.centerOffset = CGPoint(x: 0, y: -pinImage.size.height / 2)
-    return annotationView
-  }
+//  func annotationViewForLocation(message: MessageType, at indexPath: IndexPath, in messageCollectionView: MessagesCollectionView) -> MKAnnotationView? {
+//    let annotationView = MKAnnotationView(annotation: nil, reuseIdentifier: nil)
+//    let pinImage = #imageLiteral(resourceName: "pin")
+//    annotationView.image = pinImage
+//    annotationView.centerOffset = CGPoint(x: 0, y: -pinImage.size.height / 2)
+//    return annotationView
+//  }
   
   func animationBlockForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> ((NSImageView) -> Void)? {
     return { view in
@@ -169,10 +169,13 @@ extension ConversationViewController: MessagesDisplayDelegate {
     }
   }
   
-  func snapshotOptionsForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LocationMessageSnapshotOptions {
-    
-    return LocationMessageSnapshotOptions()
-  }
+//  func snapshotOptionsForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LocationMessageSnapshotOptions {
+//
+//    var options = LocationMessageSnapshotOptions()
+//    options.mapType = .hybrid
+//    options.spanRadiusMiles = 0.25
+//    return options
+//  }
 }
 
 // MARK: - MessagesLayoutDelegate
