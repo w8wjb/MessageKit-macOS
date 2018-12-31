@@ -34,7 +34,7 @@ final class SampleData {
   var showTextMessages = false
   var showAttributedTextMessages = false
   var showImageMessages = false
-  var showLocationMessages = true
+  var showLocationMessages = false
   var showEmojiMessages = false
   
   let messageTextValues = [

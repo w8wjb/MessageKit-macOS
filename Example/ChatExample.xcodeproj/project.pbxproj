@@ -16,6 +16,7 @@
 		7C6900EB202602FD00FFE247 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6900D9202602FC00FFE247 /* ConversationViewController.swift */; };
 		7C6900F72026118B00FFE247 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C6900F52026118B00FFE247 /* Main.storyboard */; };
 		7C6900FD20261C7500FFE247 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6900FC20261C7500FFE247 /* ViewController.swift */; };
+		7CAF5D1821D95DE600E210D2 /* GrowingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAF5D1721D95DE600E210D2 /* GrowingTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		7C6900F62026118B00FFE247 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
 		7C6900FA202618FA00FFE247 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7C6900FC20261C7500FFE247 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		7CAF5D1721D95DE600E210D2 /* GrowingTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowingTextField.swift; sourceTree = "<group>"; };
 		7CF533652026025F00826365 /* ChatExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -60,6 +62,7 @@
 				7C6900D5202602FC00FFE247 /* Settings+UserDefaults.swift */,
 				7C6900FC20261C7500FFE247 /* ViewController.swift */,
 				7C26F1592032863700DE2840 /* GrowingTextView.swift */,
+				7CAF5D1721D95DE600E210D2 /* GrowingTextField.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -186,6 +189,7 @@
 				7C26F15A2032863700DE2840 /* GrowingTextView.swift in Sources */,
 				7C6900E7202602FD00FFE247 /* Settings+UserDefaults.swift in Sources */,
 				7C6900EA202602FD00FFE247 /* AppDelegate.swift in Sources */,
+				7CAF5D1821D95DE600E210D2 /* GrowingTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
