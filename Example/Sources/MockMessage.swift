@@ -26,43 +26,76 @@ import Foundation
 import MessageKit_macOS
 import CoreLocation
 
+private struct CoordinateItem: LocationItem {
+  
+  var location: CLLocation
+  var size: CGSize
+  
+  init(location: CLLocation) {
+    self.location = location
+    self.size = CGSize(width: 240, height: 240)
+  }
+  
+}
+
+private struct ImageMediaItem: MediaItem {
+  
+  var url: URL?
+  var image: NSImage?
+  var placeholderImage: NSImage
+  var size: CGSize
+  
+  init(image: NSImage) {
+    self.image = image
+    self.size = CGSize(width: 240, height: 240)
+    self.placeholderImage = NSImage()
+  }
+  
+}
+
 struct MockMessage: MessageType {
-	
-	var messageId: String
-	var sender: Sender
-	var sentDate: Date
-	var data: MessageData
-	
-    init(data: MessageData, sender: Sender, messageId: String, date: Date) {
-		self.data = data
-		self.sender = sender
-		self.messageId = messageId
-		self.sentDate = date
-	}
-	
-    init(text: String, sender: Sender, messageId: String, date: Date) {
-        self.init(data: .text(text), sender: sender, messageId: messageId, date: date)
-	}
-	
-    init(attributedText: NSAttributedString, sender: Sender, messageId: String, date: Date) {
-        self.init(data: .attributedText(attributedText), sender: sender, messageId: messageId, date: date)
-	}
-
-    init(image: NSImage, sender: Sender, messageId: String, date: Date) {
-        self.init(data: .photo(image), sender: sender, messageId: messageId, date: date)
-    }
-
-    init(thumbnail: NSImage, sender: Sender, messageId: String, date: Date) {
-        let url = URL(fileURLWithPath: "")
-        self.init(data: .video(file: url, thumbnail: thumbnail), sender: sender, messageId: messageId, date: date)
-    }
-
-    init(location: CLLocation, sender: Sender, messageId: String, date: Date) {
-        self.init(data: .location(location), sender: sender, messageId: messageId, date: date)
-    }
-
-    init(emoji: String, sender: Sender, messageId: String, date: Date) {
-        self.init(data: .emoji(emoji), sender: sender, messageId: messageId, date: date)
-    }
-
+  
+  var messageId: String
+  var sender: Sender
+  var sentDate: Date
+  var kind: MessageKind
+  
+  private init(kind: MessageKind, sender: Sender, messageId: String, date: Date) {
+    self.kind = kind
+    self.sender = sender
+    self.messageId = messageId
+    self.sentDate = date
+  }
+  
+  init(custom: Any?, sender: Sender, messageId: String, date: Date) {
+    self.init(kind: .custom(custom), sender: sender, messageId: messageId, date: date)
+  }
+  
+  init(text: String, sender: Sender, messageId: String, date: Date) {
+    self.init(kind: .text(text), sender: sender, messageId: messageId, date: date)
+  }
+  
+  init(attributedText: NSAttributedString, sender: Sender, messageId: String, date: Date) {
+    self.init(kind: .attributedText(attributedText), sender: sender, messageId: messageId, date: date)
+  }
+  
+  init(image: NSImage, sender: Sender, messageId: String, date: Date) {
+    let mediaItem = ImageMediaItem(image: image)
+    self.init(kind: .photo(mediaItem), sender: sender, messageId: messageId, date: date)
+  }
+  
+  init(thumbnail: NSImage, sender: Sender, messageId: String, date: Date) {
+    let mediaItem = ImageMediaItem(image: thumbnail)
+    self.init(kind: .video(mediaItem), sender: sender, messageId: messageId, date: date)
+  }
+  
+  init(location: CLLocation, sender: Sender, messageId: String, date: Date) {
+    let locationItem = CoordinateItem(location: location)
+    self.init(kind: .location(locationItem), sender: sender, messageId: messageId, date: date)
+  }
+  
+  init(emoji: String, sender: Sender, messageId: String, date: Date) {
+    self.init(kind: .emoji(emoji), sender: sender, messageId: messageId, date: date)
+  }
+  
 }

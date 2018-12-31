@@ -22,12 +22,21 @@
  SOFTWARE.
  */
 
-import AppKit
+import Foundation
 
-open class MessageCollectionViewItem: NSCollectionViewItem, CollectionViewReusable {
+/// A protocol used to represent the data for a media message.
+public protocol MediaItem {
   
-  open class func reuseIdentifier() -> NSUserInterfaceItemIdentifier {
-    return NSUserInterfaceItemIdentifier("messagekit.cell.base-cell")
-  }
+  /// The url where the media is located.
+  var url: URL? { get }
+  
+  /// The image.
+  var image: NSImage? { get }
+  
+  /// A placeholder image for when the image is obtained asychronously.
+  var placeholderImage: NSImage { get }
+  
+  /// The size of the media item.
+  var size: CGSize { get }
   
 }

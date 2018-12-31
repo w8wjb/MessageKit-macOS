@@ -35,14 +35,14 @@ class ConversationViewController: MessagesViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    let messagesToFetch = UserDefaults.standard.mockMessagesCount()
+//    let messagesToFetch = UserDefaults.standard.mockMessagesCount()
     
     DispatchQueue.global(qos: .userInitiated).async {
       SampleData.shared.getMessages() { messages in
         DispatchQueue.main.async {
           self.messageList = messages
           self.messagesCollectionView.reloadData()
-          //self.messagesCollectionView.scrollToBottom()
+//          self.messagesCollectionView.scrollToBottom()
         }
       }
     }
@@ -71,20 +71,35 @@ class ConversationViewController: MessagesViewController {
     }
   }
   
+  func addMessage(message: String) {
+    
+    let msg = MockMessage(text: message, sender: currentSender(), messageId: UUID().uuidString, date: Date())
+    self.messageList.append(msg)
+    
+    self.messagesCollectionView.insertItemAfterLast()
+//    self.messagesCollectionView.reloadData()
+//    self.messagesCollectionView.scrollToBottom(animated: false)
+    
+  }
+  
   
 }
 
 // MARK: - MessagesDataSource
 
 extension ConversationViewController: MessagesDataSource {
-  
+
   func currentSender() -> Sender {
     return SampleData.shared.currentSender
   }
   
-  func numberOfMessages(in messagesCollectionView: MessagesCollectionView) -> Int {
+  func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
     return messageList.count
   }
+
+//  func numberOfMessages(in messagesCollectionView: MessagesCollectionView) -> Int {
+//    return messageList.count
+//  }
   
   func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
     return messageList[indexPath.section]
@@ -95,8 +110,7 @@ extension ConversationViewController: MessagesDataSource {
     return NSAttributedString(string: name, attributes: [NSAttributedString.Key.font: NSFont.userFont(ofSize: 10)!])
   }
   
-  func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-    
+  func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
     struct ConversationDateFormatter {
       static let formatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -114,6 +128,8 @@ extension ConversationViewController: MessagesDataSource {
 // MARK: - MessagesDisplayDelegate
 
 extension ConversationViewController: MessagesDisplayDelegate {
+
+  
   
   // MARK: - Text Messages
   
@@ -148,34 +164,16 @@ extension ConversationViewController: MessagesDisplayDelegate {
   }
   
   // MARK: - Location Messages
-  
-//  func annotationViewForLocation(message: MessageType, at indexPath: IndexPath, in messageCollectionView: MessagesCollectionView) -> MKAnnotationView? {
-//    let annotationView = MKAnnotationView(annotation: nil, reuseIdentifier: nil)
-//    let pinImage = #imageLiteral(resourceName: "pin")
-//    annotationView.image = pinImage
-//    annotationView.centerOffset = CGPoint(x: 0, y: -pinImage.size.height / 2)
-//    return annotationView
-//  }
-  
-  func animationBlockForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> ((NSImageView) -> Void)? {
-    return { view in
-      //            view.layer?.transform = CATransform3DMakeScale(0, 0, 0)
-      //            view.layer?.opacity = 0.0
-      //
-      //            UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: [], animations: {
-      //                view.layer.transform = CATransform3DIdentity
-      //                view.alpha = 1.0
-      //            }, completion: nil)
-    }
+
+  func snapshotOptionsForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LocationMessageSnapshotOptions {
+
+    var options = LocationMessageSnapshotOptions()
+    options.mapType = .hybrid
+    options.spanRadiusMiles = 0.25
+    return options
   }
   
-//  func snapshotOptionsForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LocationMessageSnapshotOptions {
-//
-//    var options = LocationMessageSnapshotOptions()
-//    options.mapType = .hybrid
-//    options.spanRadiusMiles = 0.25
-//    return options
-//  }
+
 }
 
 // MARK: - MessagesLayoutDelegate
@@ -186,21 +184,21 @@ extension ConversationViewController: MessagesLayoutDelegate {
     return AvatarPosition(horizontal: .natural, vertical: .messageBottom)
   }
   
-  func cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
-    if isFromCurrentSender(message: message) {
-      return .messageTrailing(NSEdgeInsets(top: 0, left: 0, bottom: 0, right: 10))
-    } else {
-      return .messageLeading(NSEdgeInsets(top: 0, left: 10, bottom: 0, right: 0))
-    }
-  }
-  
-  func cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
-    if isFromCurrentSender(message: message) {
-      return .messageLeading(NSEdgeInsets(top: 0, left: 10, bottom: 0, right: 0))
-    } else {
-      return .messageTrailing(NSEdgeInsets(top: 0, left: 0, bottom: 0, right: 10))
-    }
-  }
+//  func cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
+//    if isFromCurrentSender(message: message) {
+//      return .messageTrailing(NSEdgeInsets(top: 0, left: 0, bottom: 0, right: 10))
+//    } else {
+//      return .messageLeading(NSEdgeInsets(top: 0, left: 10, bottom: 0, right: 0))
+//    }
+//  }
+//  
+//  func cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
+//    if isFromCurrentSender(message: message) {
+//      return .messageLeading(NSEdgeInsets(top: 0, left: 10, bottom: 0, right: 0))
+//    } else {
+//      return .messageTrailing(NSEdgeInsets(top: 0, left: 0, bottom: 0, right: 10))
+//    }
+//  }
   
   func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
     

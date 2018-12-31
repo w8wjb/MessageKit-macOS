@@ -24,40 +24,73 @@
 
 import AppKit
 
-/// The layout attributes used by a `MessageCollectionViewCell` to layout its subviews.
-final class MessagesCollectionViewLayoutAttributes: NSCollectionViewLayoutAttributes {
-
-    // MARK: - Properties
-
-    var avatarFrame: CGRect = .zero
-
-    var messageLabelFont: NSFont?
-    var messageContainerFrame: CGRect = .zero
-    var messageLabelInsets: NSEdgeInsets = NSEdgeInsetsZero
-
-    var topLabelFrame: CGRect = .zero
-    var bottomLabelFrame: CGRect = .zero
-
-    // MARK: - Methods
-
-    override func copy(with zone: NSZone? = nil) -> Any {
-        let copy = super.copy(with: zone) as! MessagesCollectionViewLayoutAttributes
-        copy.avatarFrame = avatarFrame
-        copy.messageContainerFrame = messageContainerFrame
-        copy.messageLabelFont = messageLabelFont
-        copy.messageLabelInsets = messageLabelInsets
-        copy.topLabelFrame = topLabelFrame
-        copy.bottomLabelFrame = bottomLabelFrame
-        return copy
+/// The layout attributes used by a `MessageCollectionViewItem` to layout its subviews.
+open class MessagesCollectionViewLayoutAttributes: NSCollectionViewLayoutAttributes {
+  
+  // MARK: - Properties
+  
+  public var avatarSize: CGSize = .zero
+  public var avatarPosition = AvatarPosition(vertical: .cellBottom)
+  
+  public var messageContainerSize: CGSize = .zero
+  public var messageContainerPadding: NSEdgeInsets = NSEdgeInsetsZero
+  public var messageLabelFont: NSFont = NSFont.preferredFont(forTextStyle: .body)
+  public var messageLabelInsets: NSEdgeInsets = NSEdgeInsetsZero
+  
+  public var cellTopLabelAlignment = LabelAlignment(textAlignment: .center)
+  public var cellTopLabelSize: CGSize = .zero
+  
+  public var messageTopLabelAlignment = LabelAlignment(textAlignment: .center)
+  public var messageTopLabelSize: CGSize = .zero
+  
+  public var messageBottomLabelAlignment = LabelAlignment(textAlignment: .center)
+  public var messageBottomLabelSize: CGSize = .zero
+  
+  public var accessoryViewSize: CGSize = .zero
+  public var accessoryViewPadding: HorizontalEdgeInsets = .zero
+  
+  // MARK: - Methods
+  
+  open override func copy(with zone: NSZone? = nil) -> Any {
+    // swiftlint:disable force_cast
+    let copy = super.copy(with: zone) as! MessagesCollectionViewLayoutAttributes
+    copy.avatarSize = avatarSize
+    copy.avatarPosition = avatarPosition
+    copy.messageContainerSize = messageContainerSize
+    copy.messageContainerPadding = messageContainerPadding
+    copy.messageLabelFont = messageLabelFont
+    copy.messageLabelInsets = messageLabelInsets
+    copy.cellTopLabelAlignment = cellTopLabelAlignment
+    copy.cellTopLabelSize = cellTopLabelSize
+    copy.messageTopLabelAlignment = messageTopLabelAlignment
+    copy.messageTopLabelSize = messageTopLabelSize
+    copy.messageBottomLabelAlignment = messageBottomLabelAlignment
+    copy.messageBottomLabelSize = messageBottomLabelSize
+    copy.accessoryViewSize = accessoryViewSize
+    copy.accessoryViewPadding = accessoryViewPadding
+    return copy
+    // swiftlint:enable force_cast
+  }
+  
+  open override func isEqual(_ object: Any?) -> Bool {
+    // MARK: - LEAVE this as is
+    if let attributes = object as? MessagesCollectionViewLayoutAttributes {
+      return super.isEqual(object) && attributes.avatarSize == avatarSize
+        && attributes.avatarPosition == attributes.avatarPosition
+        && attributes.messageContainerSize == messageContainerSize
+        && attributes.messageContainerPadding == messageContainerPadding
+        && attributes.messageLabelFont == messageLabelFont
+        && attributes.messageLabelInsets == messageLabelInsets
+        && attributes.cellTopLabelAlignment == cellTopLabelAlignment
+        && attributes.cellTopLabelSize == cellTopLabelSize
+        && attributes.messageTopLabelAlignment == messageTopLabelAlignment
+        && attributes.messageTopLabelSize == messageTopLabelSize
+        && attributes.messageBottomLabelAlignment == messageBottomLabelAlignment
+        && attributes.messageBottomLabelSize == messageBottomLabelSize
+        && attributes.accessoryViewSize == accessoryViewSize
+        && attributes.accessoryViewPadding == accessoryViewPadding
+    } else {
+      return false
     }
-
-    override func isEqual(_ object: Any?) -> Bool {
-
-        // MARK: - LEAVE this as is
-        if let _ = object as? MessagesCollectionViewLayoutAttributes {
-            return super.isEqual(object)
-        } else {
-            return false
-        }
-    }
+  }
 }

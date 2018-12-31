@@ -24,7 +24,7 @@
 
 import AppKit
 
-open class TextMessageItem: MessageCollectionViewItem {
+open class TextMessageItem: MessageContentItem {
   
   open override class func reuseIdentifier() -> NSUserInterfaceItemIdentifier {
     return NSUserInterfaceItemIdentifier("messagekit.cell.text")
@@ -45,9 +45,7 @@ open class TextMessageItem: MessageCollectionViewItem {
   open override func apply(_ layoutAttributes: NSCollectionViewLayoutAttributes) {
     super.apply(layoutAttributes)
     if let attributes = layoutAttributes as? MessagesCollectionViewLayoutAttributes {
-      if let font = attributes.messageLabelFont {
-        messageLabel.font = font
-      }
+      messageLabel.font = attributes.messageLabelFont
       messageLabel.frame = messageContainerView.bounds.insetBy(attributes.messageLabelInsets)
     }
   }
@@ -77,7 +75,7 @@ open class TextMessageItem: MessageCollectionViewItem {
         let attributes = displayDelegate.detectorAttributes(for: detector, and: message, at: indexPath)
         messageLabel.setAttributes(attributes, detector: detector)
       }
-      switch message.data {
+      switch message.kind {
       case .text(let text), .emoji(let text):
         messageLabel.string = text
       case .attributedText(let text):

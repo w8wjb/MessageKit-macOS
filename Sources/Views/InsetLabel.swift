@@ -24,10 +24,17 @@
 
 import AppKit
 
-open class MessageCollectionViewItem: NSCollectionViewItem, CollectionViewReusable {
+open class InsetLabel: CATextLayer {
   
-  open class func reuseIdentifier() -> NSUserInterfaceItemIdentifier {
-    return NSUserInterfaceItemIdentifier("messagekit.cell.base-cell")
-  }
+//  open var textInsets: NSEdgeInsets = NSEdgeInsetsZero {
+//    didSet {
+//      needsDisplay = true
+//    }
+//  }
   
+//  open override func drawText(in rect: CGRect) {
+//    let insetRect = rect.inset(by: textInsets)
+//    super.drawText(in: insetRect)
+//  }
+//
 }

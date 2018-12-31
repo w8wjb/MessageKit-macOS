@@ -22,12 +22,25 @@
  SOFTWARE.
  */
 
-import AppKit
+import Foundation
 
-open class MessageCollectionViewItem: NSCollectionViewItem, CollectionViewReusable {
+extension NSEdgeInsets {
   
-  open class func reuseIdentifier() -> NSUserInterfaceItemIdentifier {
-    return NSUserInterfaceItemIdentifier("messagekit.cell.base-cell")
+  internal var vertical: CGFloat {
+    return top + bottom
   }
   
+  internal var horizontal: CGFloat {
+    return left + right
+  }
+  
+  init(top: CGFloat = 0, bottom: CGFloat = 0, left: CGFloat = 0, right: CGFloat = 0) {
+    self.init(top: top, left: left, bottom: bottom, right: right)
+  }
+}
+
+extension NSEdgeInsets: Equatable {
+  public static func ==(lhs: NSEdgeInsets, rhs: NSEdgeInsets) -> Bool {
+    return NSEdgeInsetsEqual(lhs, rhs)
+  }
 }

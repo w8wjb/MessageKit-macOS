@@ -22,12 +22,15 @@
  SOFTWARE.
  */
 
-import AppKit
+import class CoreLocation.CLLocation
 
-open class MessageCollectionViewItem: NSCollectionViewItem, CollectionViewReusable {
+/// A protocol used to represent the data for a location message.
+public protocol LocationItem {
   
-  open class func reuseIdentifier() -> NSUserInterfaceItemIdentifier {
-    return NSUserInterfaceItemIdentifier("messagekit.cell.base-cell")
-  }
+  /// The location.
+  var location: CLLocation { get }
+  
+  /// The size of the location item.
+  var size: CGSize { get }
   
 }

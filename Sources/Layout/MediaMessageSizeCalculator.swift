@@ -22,12 +22,27 @@
  SOFTWARE.
  */
 
-import AppKit
+import Foundation
 
-open class MessageCollectionViewItem: NSCollectionViewItem, CollectionViewReusable {
+open class MediaMessageSizeCalculator: MessageSizeCalculator {
   
-  open class func reuseIdentifier() -> NSUserInterfaceItemIdentifier {
-    return NSUserInterfaceItemIdentifier("messagekit.cell.base-cell")
+  open override func messageContainerSize(for message: MessageType) -> CGSize {
+    let maxWidth = messageContainerMaxWidth(for: message)
+    let sizeForMediaItem = { (maxWidth: CGFloat, item: MediaItem) -> CGSize in
+      if maxWidth < item.size.width {
+        // Maintain the ratio if width is too great
+        let height = maxWidth * item.size.height / item.size.width
+        return CGSize(width: maxWidth, height: height)
+      }
+      return item.size
+    }
+    switch message.kind {
+    case .photo(let item):
+      return sizeForMediaItem(maxWidth, item)
+    case .video(let item):
+      return sizeForMediaItem(maxWidth, item)
+    default:
+      fatalError("messageContainerSize received unhandled MessageDataType: \(message.kind)")
+    }
   }
-  
 }

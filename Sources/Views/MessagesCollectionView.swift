@@ -44,7 +44,6 @@ open class MessagesCollectionView: NSCollectionView {
     }
   }
 
-  
   // MARK: - Initializers
   
   public override init(frame: CGRect) {

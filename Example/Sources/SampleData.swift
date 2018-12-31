@@ -31,11 +31,11 @@ final class SampleData {
   
   private init() {}
   
-  var showTextMessages = false
-  var showAttributedTextMessages = false
-  var showImageMessages = false
-  var showLocationMessages = false
-  var showEmojiMessages = false
+  var showTextMessages = true
+  var showAttributedTextMessages = true
+  var showImageMessages = true
+  var showLocationMessages = true
+  var showEmojiMessages = true
   
   let messageTextValues = [
     "Ok",
@@ -204,7 +204,7 @@ final class SampleData {
     var messages: [MockMessage] = []
     for i in 0..<count {
       let message = randomMessage()
-      switch message.data {
+      switch message.kind {
       case .attributedText(let attributedText):
         print("Message \(i) is attributedText: \(attributedText)")
       case .emoji(_):
@@ -215,8 +215,10 @@ final class SampleData {
         print("Message \(i) is a photo")
       case .text(let text):
         print("Message \(i) is text: \(text)")
-      case .video(_, _):
+      case .video(_):
         print("Message \(i) is a video")
+      case .custom(_):
+        print("Custom message")
       }
       messages.append(message)
     }

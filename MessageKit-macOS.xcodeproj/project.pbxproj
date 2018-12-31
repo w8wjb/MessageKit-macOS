@@ -61,7 +61,6 @@
 		7C4C970F2024DACA009CEB2C /* MessagesCollectionViewLayoutAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F171F86682C006AEF79 /* MessagesCollectionViewLayoutAttributes.swift */; };
 		7C4C97102024E380009CEB2C /* MessagesLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F541F8669C9006AEF79 /* MessagesLayoutDelegate.swift */; };
 		7C4C97112024E457009CEB2C /* MessagesCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F161F86682C006AEF79 /* MessagesCollectionViewFlowLayout.swift */; };
-		7C4C97122024E484009CEB2C /* MessageIntermediateLayoutAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B006FA011F99DE2100509C46 /* MessageIntermediateLayoutAttributes.swift */; };
 		7C4C97132024EC60009CEB2C /* MessagesViewController+DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF377A520087D20004FD648 /* MessagesViewController+DataSource.swift */; };
 		7C4C97142024ED05009CEB2C /* TextMessageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F361F866946006AEF79 /* TextMessageItem.swift */; };
 		7C4C97152024ED4D009CEB2C /* MediaMessageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F391F866946006AEF79 /* MediaMessageItem.swift */; };
@@ -78,6 +77,19 @@
 		7C4C9766202505CD009CEB2C /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C4C9764202505CC009CEB2C /* Nimble.framework */; };
 		7C4C976720250603009CEB2C /* DetectorTypeSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F066E221FDA3F0200E11013 /* DetectorTypeSpec.swift */; };
 		7C6900FF2027534600FFE247 /* NSRect+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6900FE2027534600FFE247 /* NSRect+Extensions.swift */; };
+		7CAF5D1A21DA6F7300E210D2 /* CellSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAF5D1921DA6F7300E210D2 /* CellSizeCalculator.swift */; };
+		7CAF5D1C21DA6FB100E210D2 /* LocationMessageSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAF5D1B21DA6FB100E210D2 /* LocationMessageSizeCalculator.swift */; };
+		7CAF5D1E21DA6FFF00E210D2 /* MessageSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAF5D1D21DA6FFF00E210D2 /* MessageSizeCalculator.swift */; };
+		7CAF5D2021DA71B900E210D2 /* HorizontalEdgeInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAF5D1F21DA71B900E210D2 /* HorizontalEdgeInsets.swift */; };
+		7CAF5D2221DA733A00E210D2 /* NSEdgeInsets+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAF5D2121DA733A00E210D2 /* NSEdgeInsets+Extensions.swift */; };
+		7CAF5D2421DA78AB00E210D2 /* TextMessageSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAF5D2321DA78AB00E210D2 /* TextMessageSizeCalculator.swift */; };
+		7CAF5D2621DA790000E210D2 /* MessageKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAF5D2521DA790000E210D2 /* MessageKind.swift */; };
+		7CAF5D2821DA793500E210D2 /* MediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAF5D2721DA793500E210D2 /* MediaItem.swift */; };
+		7CAF5D2A21DA796700E210D2 /* LocationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAF5D2921DA796700E210D2 /* LocationItem.swift */; };
+		7CAF5D2C21DA7A8F00E210D2 /* MessageContentItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAF5D2B21DA7A8F00E210D2 /* MessageContentItem.swift */; };
+		7CAF5D2E21DA7BB700E210D2 /* InsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAF5D2D21DA7BB700E210D2 /* InsetLabel.swift */; };
+		7CAF5D3021DA816E00E210D2 /* NSTextAlignment+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAF5D2F21DA816E00E210D2 /* NSTextAlignment+Extensions.swift */; };
+		7CAF5D3221DA82C600E210D2 /* MediaMessageSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAF5D3121DA82C600E210D2 /* MediaMessageSizeCalculator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -130,6 +142,19 @@
 		7C4C9763202505CC009CEB2C /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/Mac/Quick.framework; sourceTree = "<group>"; };
 		7C4C9764202505CC009CEB2C /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/Mac/Nimble.framework; sourceTree = "<group>"; };
 		7C6900FE2027534600FFE247 /* NSRect+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRect+Extensions.swift"; sourceTree = "<group>"; };
+		7CAF5D1921DA6F7300E210D2 /* CellSizeCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellSizeCalculator.swift; sourceTree = "<group>"; };
+		7CAF5D1B21DA6FB100E210D2 /* LocationMessageSizeCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationMessageSizeCalculator.swift; sourceTree = "<group>"; };
+		7CAF5D1D21DA6FFF00E210D2 /* MessageSizeCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSizeCalculator.swift; sourceTree = "<group>"; };
+		7CAF5D1F21DA71B900E210D2 /* HorizontalEdgeInsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalEdgeInsets.swift; sourceTree = "<group>"; };
+		7CAF5D2121DA733A00E210D2 /* NSEdgeInsets+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSEdgeInsets+Extensions.swift"; sourceTree = "<group>"; };
+		7CAF5D2321DA78AB00E210D2 /* TextMessageSizeCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessageSizeCalculator.swift; sourceTree = "<group>"; };
+		7CAF5D2521DA790000E210D2 /* MessageKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageKind.swift; sourceTree = "<group>"; };
+		7CAF5D2721DA793500E210D2 /* MediaItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItem.swift; sourceTree = "<group>"; };
+		7CAF5D2921DA796700E210D2 /* LocationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationItem.swift; sourceTree = "<group>"; };
+		7CAF5D2B21DA7A8F00E210D2 /* MessageContentItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageContentItem.swift; sourceTree = "<group>"; };
+		7CAF5D2D21DA7BB700E210D2 /* InsetLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsetLabel.swift; sourceTree = "<group>"; };
+		7CAF5D2F21DA816E00E210D2 /* NSTextAlignment+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextAlignment+Extensions.swift"; sourceTree = "<group>"; };
+		7CAF5D3121DA82C600E210D2 /* MediaMessageSizeCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaMessageSizeCalculator.swift; sourceTree = "<group>"; };
 		8962AC741F87AB230030B058 /* MessageKitDateFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageKitDateFormatterTests.swift; sourceTree = "<group>"; };
 		8962AC7A1F87AB230030B058 /* MockMessagesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMessagesDataSource.swift; sourceTree = "<group>"; };
 		8962AC7B1F87AB230030B058 /* MockMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMessage.swift; sourceTree = "<group>"; };
@@ -142,7 +167,6 @@
 		8962AC871F87AB230030B058 /* InputTextViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextViewTests.swift; sourceTree = "<group>"; };
 		8962AC881F87AB230030B058 /* MessageInputBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputBarTests.swift; sourceTree = "<group>"; };
 		8962AC891F87AB230030B058 /* MessageDateHeaderViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDateHeaderViewTests.swift; sourceTree = "<group>"; };
-		B006FA011F99DE2100509C46 /* MessageIntermediateLayoutAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageIntermediateLayoutAttributes.swift; sourceTree = "<group>"; };
 		B0C8D99A1F73076B000A86E4 /* MessageKitAssets.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MessageKitAssets.bundle; sourceTree = "<group>"; };
 		B7A03F161F86682C006AEF79 /* MessagesCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		B7A03F171F86682C006AEF79 /* MessagesCollectionViewLayoutAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewLayoutAttributes.swift; sourceTree = "<group>"; };
@@ -227,6 +251,7 @@
 				B7A03F391F866946006AEF79 /* MediaMessageItem.swift */,
 				B7A03F7A1F866B85006AEF79 /* MessageCollectionViewItem.swift */,
 				B7A03F361F866946006AEF79 /* TextMessageItem.swift */,
+				7CAF5D2B21DA7A8F00E210D2 /* MessageContentItem.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -391,6 +416,8 @@
 				B7A03F661F8669EB006AEF79 /* NSView+Extensions.swift */,
 				7C4C970C2024CA6D009CEB2C /* NSFont+Extensions.swift */,
 				7C6900FE2027534600FFE247 /* NSRect+Extensions.swift */,
+				7CAF5D2121DA733A00E210D2 /* NSEdgeInsets+Extensions.swift */,
+				7CAF5D2F21DA816E00E210D2 /* NSTextAlignment+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -409,6 +436,8 @@
 				B7A03F1F1F866895006AEF79 /* MessageStyle.swift */,
 				B7A03F1A1F866895006AEF79 /* NSConstraintLayoutSet.swift */,
 				B7A03F1E1F866895006AEF79 /* Sender.swift */,
+				7CAF5D1F21DA71B900E210D2 /* HorizontalEdgeInsets.swift */,
+				7CAF5D2521DA790000E210D2 /* MessageKind.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -428,6 +457,7 @@
 				B7A03F451F86694F006AEF79 /* MessagesCollectionView.swift */,
 				B7A03F441F86694F006AEF79 /* PlayButtonView.swift */,
 				38C57C781F9AE3E50043CC03 /* SeparatorLine.swift */,
+				7CAF5D2D21DA7BB700E210D2 /* InsetLabel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -442,6 +472,8 @@
 				B7A03F561F8669C9006AEF79 /* MessagesDisplayDelegate.swift */,
 				B7A03F541F8669C9006AEF79 /* MessagesLayoutDelegate.swift */,
 				B7A03F511F8669C9006AEF79 /* MessageType.swift */,
+				7CAF5D2721DA793500E210D2 /* MediaItem.swift */,
+				7CAF5D2921DA796700E210D2 /* LocationItem.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -461,7 +493,11 @@
 			children = (
 				B7A03F161F86682C006AEF79 /* MessagesCollectionViewFlowLayout.swift */,
 				B7A03F171F86682C006AEF79 /* MessagesCollectionViewLayoutAttributes.swift */,
-				B006FA011F99DE2100509C46 /* MessageIntermediateLayoutAttributes.swift */,
+				7CAF5D1921DA6F7300E210D2 /* CellSizeCalculator.swift */,
+				7CAF5D1B21DA6FB100E210D2 /* LocationMessageSizeCalculator.swift */,
+				7CAF5D1D21DA6FFF00E210D2 /* MessageSizeCalculator.swift */,
+				7CAF5D2321DA78AB00E210D2 /* TextMessageSizeCalculator.swift */,
+				7CAF5D3121DA82C600E210D2 /* MediaMessageSizeCalculator.swift */,
 			);
 			path = Layout;
 			sourceTree = "<group>";
@@ -597,15 +633,22 @@
 				7C4C97022024BF35009CEB2C /* MessageCellDelegate.swift in Sources */,
 				7C4C97072024BF96009CEB2C /* MessageCollectionViewItem.swift in Sources */,
 				7C6900FF2027534600FFE247 /* NSRect+Extensions.swift in Sources */,
+				7CAF5D1C21DA6FB100E210D2 /* LocationMessageSizeCalculator.swift in Sources */,
+				7CAF5D2021DA71B900E210D2 /* HorizontalEdgeInsets.swift in Sources */,
+				7CAF5D2821DA793500E210D2 /* MediaItem.swift in Sources */,
+				7CAF5D3221DA82C600E210D2 /* MediaMessageSizeCalculator.swift in Sources */,
+				7CAF5D3021DA816E00E210D2 /* NSTextAlignment+Extensions.swift in Sources */,
 				7C4C971A2024F550009CEB2C /* NSView+Extensions.swift in Sources */,
 				7C4C970E2024D6DF009CEB2C /* NSFont+Extensions.swift in Sources */,
 				7C1424F52028FFF800B4E0D2 /* MessageInputBar.swift in Sources */,
+				7CAF5D2A21DA796700E210D2 /* LocationItem.swift in Sources */,
 				7C4C96F42024BBA6009CEB2C /* MessageKitError.swift in Sources */,
 				7C4C96FA2024BD47009CEB2C /* String+Extensions.swift in Sources */,
 				7C4C97152024ED4D009CEB2C /* MediaMessageItem.swift in Sources */,
 				7C1424F7202900AC00B4E0D2 /* SeparatorLine.swift in Sources */,
 				7C4C97062024BF8A009CEB2C /* MessageType.swift in Sources */,
 				7C4C96F92024BD43009CEB2C /* NSAttributedString+Extensions.swift in Sources */,
+				7CAF5D2C21DA7A8F00E210D2 /* MessageContentItem.swift in Sources */,
 				7C4C96F72024BD38009CEB2C /* Bundle+Extensions.swift in Sources */,
 				7C4C97172024ED96009CEB2C /* MessageLabel.swift in Sources */,
 				7C4C96FC2024BDB6009CEB2C /* Sender.swift in Sources */,
@@ -617,12 +660,14 @@
 				7C4C97142024ED05009CEB2C /* TextMessageItem.swift in Sources */,
 				7C4C96F32024BB94009CEB2C /* MessageData.swift in Sources */,
 				7C4C96FF2024BDF9009CEB2C /* MessageContainerView.swift in Sources */,
+				7CAF5D2621DA790000E210D2 /* MessageKind.swift in Sources */,
+				7CAF5D1A21DA6F7300E210D2 /* CellSizeCalculator.swift in Sources */,
 				7C1424F62029004900B4E0D2 /* MessageInputBarDelegate.swift in Sources */,
 				7C4C96F82024BD3D009CEB2C /* CGRect+Extensions.swift in Sources */,
 				7C4C97162024ED73009CEB2C /* LocationMessageItem.swift in Sources */,
 				7C4C97192024F408009CEB2C /* NSColor+Extensions.swift in Sources */,
 				7C1424FA20290B0600B4E0D2 /* InputBarItem.swift in Sources */,
-				7C4C97122024E484009CEB2C /* MessageIntermediateLayoutAttributes.swift in Sources */,
+				7CAF5D2421DA78AB00E210D2 /* TextMessageSizeCalculator.swift in Sources */,
 				7C4C96EE2024BB3B009CEB2C /* Avatar.swift in Sources */,
 				7C4C97002024BEB9009CEB2C /* MessagesViewController.swift in Sources */,
 				7C4C971C2024F84A009CEB2C /* MessagesViewController+Delegate.swift in Sources */,
@@ -638,10 +683,13 @@
 				7C4C96FB2024BD8D009CEB2C /* NSConstraintLayoutSet.swift in Sources */,
 				7C4C96F52024BBF5009CEB2C /* MessageKitDateFormatter.swift in Sources */,
 				7C4C97102024E380009CEB2C /* MessagesLayoutDelegate.swift in Sources */,
+				7CAF5D1E21DA6FFF00E210D2 /* MessageSizeCalculator.swift in Sources */,
 				7C4C97012024BED5009CEB2C /* MessagesCollectionView.swift in Sources */,
 				7C4C970B2024C97D009CEB2C /* AvatarView.swift in Sources */,
 				7C4C970F2024DACA009CEB2C /* MessagesCollectionViewLayoutAttributes.swift in Sources */,
+				7CAF5D2221DA733A00E210D2 /* NSEdgeInsets+Extensions.swift in Sources */,
 				7C4C97132024EC60009CEB2C /* MessagesViewController+DataSource.swift in Sources */,
+				7CAF5D2E21DA7BB700E210D2 /* InsetLabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

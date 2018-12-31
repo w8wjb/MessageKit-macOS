@@ -25,7 +25,7 @@
 import AppKit
 import MapKit
 
-open class LocationMessageItem: MessageCollectionViewItem {
+open class LocationMessageItem: MessageContentItem {
   
   open override class func reuseIdentifier() -> NSUserInterfaceItemIdentifier {
     return NSUserInterfaceItemIdentifier("messagekit.cell.location")
@@ -86,7 +86,9 @@ open class LocationMessageItem: MessageCollectionViewItem {
     let annotationView = displayDelegate.annotationViewForLocation(message: message, at: indexPath, in: messagesCollectionView)
     let animationBlock = displayDelegate.animationBlockForLocation(message: message, at: indexPath, in: messagesCollectionView)
     
-    guard case let .location(location) = message.data else { fatalError("") }
+    guard case let .location(locationItem) = message.kind else { fatalError("") }
+    
+    let location = locationItem.location
     
     activityIndicator.startAnimation(self)
     
