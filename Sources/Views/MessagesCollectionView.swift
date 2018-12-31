@@ -55,7 +55,7 @@ open class MessagesCollectionView: NSCollectionView {
     
     collectionViewLayout = MessagesCollectionViewFlowLayout()
     
-    autoresizingMask = [.width, .maxXMargin, .minYMargin, .height, .maxXMargin]
+    autoresizingMask = [.width, .height]
   }
   
   required public init?(coder aDecoder: NSCoder) {

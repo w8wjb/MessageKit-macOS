@@ -39,8 +39,6 @@ class ViewController: NSViewController {
     
     conversationViewController.addMessage(message: message)
     
-    print(message)
-    
     messageBox.stringValue = ""
     
   }

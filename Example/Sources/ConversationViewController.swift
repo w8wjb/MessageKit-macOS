@@ -60,6 +60,16 @@ class ConversationViewController: MessagesViewController {
     
   }
   
+  func addMessage(message: String) {
+    
+    let msg = MockMessage(text: message, sender: currentSender(), messageId: UUID().uuidString, date: Date())
+    self.messageList.append(msg)
+    
+    self.messagesCollectionView.insertItemAfterLast()
+    self.messagesCollectionView.scrollToBottom(animated: false)
+
+  }
+  
   @objc func loadMoreMessages() {
     DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: DispatchTime.now() + 4) {
       SampleData.shared.getMessages(count: 10) { messages in
@@ -138,8 +148,6 @@ extension ConversationViewController: MessagesDisplayDelegate {
   func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
     let corner: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
     return .bubbleTail(corner, .curved)
-    //        let configurationClosure = { (view: MessageContainerView) in}
-    //        return .custom(configurationClosure)
   }
   
   func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
@@ -157,17 +165,17 @@ extension ConversationViewController: MessagesDisplayDelegate {
 //    return annotationView
 //  }
   
-  func animationBlockForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> ((NSImageView) -> Void)? {
-    return { view in
-      //            view.layer?.transform = CATransform3DMakeScale(0, 0, 0)
-      //            view.layer?.opacity = 0.0
-      //
-      //            UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: [], animations: {
-      //                view.layer.transform = CATransform3DIdentity
-      //                view.alpha = 1.0
-      //            }, completion: nil)
-    }
-  }
+//  func animationBlockForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> ((NSImageView) -> Void)? {
+//    return { view in
+//      //            view.layer?.transform = CATransform3DMakeScale(0, 0, 0)
+//      //            view.layer?.opacity = 0.0
+//      //
+//      //            UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: [], animations: {
+//      //                view.layer.transform = CATransform3DIdentity
+//      //                view.alpha = 1.0
+//      //            }, completion: nil)
+//    }
+//  }
   
 //  func snapshotOptionsForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LocationMessageSnapshotOptions {
 //
