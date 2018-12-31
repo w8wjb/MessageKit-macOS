@@ -80,9 +80,12 @@ open class AvatarView: NSImageView {
   }
   
   private func setImageFrom(initials: String?) {
+    CATransaction.begin()
+    CATransaction.setDisableActions(true)
     guard let initials = initials else { return }
     image = getImageFrom(initials: initials)
     self.layer?.contents = image
+    CATransaction.commit()
   }
   
   private func getImageFrom(initials: String) -> NSImage {
@@ -173,12 +176,15 @@ open class AvatarView: NSImageView {
   // MARK: - Open setters
   
   open func set(avatar: Avatar) {
+    CATransaction.begin()
+    CATransaction.setDisableActions(true)
     if let image = avatar.image {
       self.image = image
       self.layer?.contents = image
     } else {
       initials = avatar.initials
     }
+    CATransaction.commit()
   }
   
   open func setCorner(radius: CGFloat?) {
@@ -192,6 +198,14 @@ open class AvatarView: NSImageView {
     layer?.cornerRadius = radius
   }
   
+  
+  open override func prepareForReuse() {
+    super.prepareForReuse()
+    CATransaction.begin()
+    CATransaction.setDisableActions(true)
+    layer?.contents = nil
+    CATransaction.commit()
+  }
 }
 
 fileprivate extension FloatingPoint {

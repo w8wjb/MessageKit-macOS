@@ -57,19 +57,23 @@ open class MessageCollectionViewItem: NSCollectionViewItem, CollectionViewReusab
     view.addSubview(avatarView)
     
     // Disable animation for position changes
-    cellTopLabel.actions = ["position": NSNull()]
+    cellTopLabel.actions = ["position": NSNull(), "contents": NSNull()]
     cellTopLabel.contentsScale = NSScreen.main?.backingScaleFactor ?? 1
     view.layer?.addSublayer(cellTopLabel)
     
-    cellBottomLabel.actions = ["position": NSNull()]
+    cellBottomLabel.actions = ["position": NSNull(), "contents": NSNull()]
     cellBottomLabel.contentsScale = NSScreen.main?.backingScaleFactor ?? 1
     view.layer?.addSublayer(cellBottomLabel)
   }
   
   open override func prepareForReuse() {
     super.prepareForReuse()
+    CATransaction.begin()
+    CATransaction.setDisableActions(true)
+    avatarView.prepareForReuse()
     cellTopLabel.string = nil
     cellBottomLabel.string = nil
+    CATransaction.commit()
   }
   
   // MARK: - Configuration
@@ -77,10 +81,13 @@ open class MessageCollectionViewItem: NSCollectionViewItem, CollectionViewReusab
   open override func apply(_ layoutAttributes: NSCollectionViewLayoutAttributes) {
     super.apply(layoutAttributes)
     if let attributes = layoutAttributes as? MessagesCollectionViewLayoutAttributes {
+      CATransaction.begin()
+      CATransaction.setDisableActions(true)
       avatarView.frame = attributes.avatarFrame
       cellTopLabel.frame = attributes.topLabelFrame
       cellBottomLabel.frame = attributes.bottomLabelFrame
       messageContainerView.frame = attributes.messageContainerFrame
+      CATransaction.commit()
     }
   }
   
@@ -105,8 +112,11 @@ open class MessageCollectionViewItem: NSCollectionViewItem, CollectionViewReusab
     let topText = dataSource.cellTopLabelAttributedText(for: message, at: indexPath)
     let bottomText = dataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
     
+    CATransaction.begin()
+    CATransaction.setDisableActions(true)
     cellTopLabel.string = topText ?? NSAttributedString()
     cellBottomLabel.string = bottomText  ?? NSAttributedString()
+    CATransaction.commit()
   }
   
 }

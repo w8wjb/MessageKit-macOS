@@ -31,11 +31,11 @@ final class SampleData {
   
   private init() {}
   
-  var showTextMessages = false
-  var showAttributedTextMessages = false
-  var showImageMessages = false
-  var showLocationMessages = false
-  var showEmojiMessages = false
+  var showTextMessages = true
+  var showAttributedTextMessages = true
+  var showImageMessages = true
+  var showLocationMessages = true
+  var showEmojiMessages = true
   
   let messageTextValues = [
     "Ok",

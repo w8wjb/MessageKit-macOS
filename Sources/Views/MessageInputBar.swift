@@ -489,7 +489,7 @@ open class MessageInputBar: NSView {
                 animations()
             }
         } else {
-            CATransaction.disableActions()
+            CATransaction.setDisableActions(true)
             animations()
         }
         CATransaction.commit()
