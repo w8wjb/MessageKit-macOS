@@ -67,7 +67,7 @@ class ConversationViewController: MessagesViewController {
     
     self.messagesCollectionView.insertItemAfterLast()
     self.messagesCollectionView.scrollToBottom(animated: false)
-
+    
   }
   
   @objc func loadMoreMessages() {
@@ -101,22 +101,40 @@ extension ConversationViewController: MessagesDataSource {
   }
   
   func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+    
+    if isFromCurrentSender(message: message) {
+      return nil
+    }
+    
+    let font = NSFont.systemFont(ofSize: NSFont.systemFontSize(for: .small))
+    let color = NSColor.secondaryLabelColor
+    let attributes: [NSAttributedString.Key : Any] = [.font : font, .foregroundColor: color]
+
     let name = message.sender.displayName
-    return NSAttributedString(string: name, attributes: [NSAttributedString.Key.font: NSFont.userFont(ofSize: 10)!])
+    return NSAttributedString(string: name, attributes: attributes)
   }
   
   func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
     
-    struct ConversationDateFormatter {
-      static let formatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        return formatter
-      }()
+    if isFromCurrentSender(message: message) {
+      
+      let font = NSFont.systemFont(ofSize: NSFont.systemFontSize(for: .small))
+      let color = NSColor.tertiaryLabelColor
+      let attributes: [NSAttributedString.Key : Any] = [.font : font, .foregroundColor: color]
+      return NSAttributedString(string: "Sent", attributes: attributes)
     }
-    let formatter = ConversationDateFormatter.formatter
-    let dateString = formatter.string(from: message.sentDate)
-    return NSAttributedString(string: dateString, attributes: [NSAttributedString.Key.font: NSFont.userFont(ofSize: 10)!])
+    
+    return nil
+    //      struct ConversationDateFormatter {
+    //        static let formatter: DateFormatter = {
+    //          let formatter = DateFormatter()
+    //          formatter.dateStyle = .medium
+    //          return formatter
+    //        }()
+    //      }
+    //      let formatter = ConversationDateFormatter.formatter
+    //      let dateString = formatter.string(from: message.sentDate)
+    //      return NSAttributedString(string: dateString, attributes: [NSAttributedString.Key.font: NSFont.userFont(ofSize: 10)!])
   }
   
 }
@@ -127,9 +145,9 @@ extension ConversationViewController: MessagesDisplayDelegate {
   
   // MARK: - Text Messages
   
-//  func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> NSColor {
-//    return isFromCurrentSender(message: message) ? NSColor.white : NSColor.controlDarkShadowColor
-//  }
+  //  func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> NSColor {
+  //    return isFromCurrentSender(message: message) ? NSColor.white : NSColor.controlDarkShadowColor
+  //  }
   
   func detectorAttributes(for detector: DetectorType, and message: MessageType, at indexPath: IndexPath) -> [NSAttributedString.Key : Any] {
     return MessageLabel.defaultAttributes
@@ -155,35 +173,6 @@ extension ConversationViewController: MessagesDisplayDelegate {
     avatarView.set(avatar: avatar)
   }
   
-  // MARK: - Location Messages
-  
-//  func annotationViewForLocation(message: MessageType, at indexPath: IndexPath, in messageCollectionView: MessagesCollectionView) -> MKAnnotationView? {
-//    let annotationView = MKAnnotationView(annotation: nil, reuseIdentifier: nil)
-//    let pinImage = #imageLiteral(resourceName: "pin")
-//    annotationView.image = pinImage
-//    annotationView.centerOffset = CGPoint(x: 0, y: -pinImage.size.height / 2)
-//    return annotationView
-//  }
-  
-//  func animationBlockForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> ((NSImageView) -> Void)? {
-//    return { view in
-//      //            view.layer?.transform = CATransform3DMakeScale(0, 0, 0)
-//      //            view.layer?.opacity = 0.0
-//      //
-//      //            UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: [], animations: {
-//      //                view.layer.transform = CATransform3DIdentity
-//      //                view.alpha = 1.0
-//      //            }, completion: nil)
-//    }
-//  }
-  
-//  func snapshotOptionsForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LocationMessageSnapshotOptions {
-//
-//    var options = LocationMessageSnapshotOptions()
-//    options.mapType = .hybrid
-//    options.spanRadiusMiles = 0.25
-//    return options
-//  }
 }
 
 // MARK: - MessagesLayoutDelegate
@@ -196,23 +185,18 @@ extension ConversationViewController: MessagesLayoutDelegate {
   
   func cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
     if isFromCurrentSender(message: message) {
-      return .messageTrailing(NSEdgeInsets(top: 0, left: 0, bottom: 0, right: 10))
+      return .messageTrailing(NSEdgeInsets(top: 0, left: 0, bottom: 0, right: 20))
     } else {
-      return .messageLeading(NSEdgeInsets(top: 0, left: 10, bottom: 0, right: 0))
+      return .messageLeading(NSEdgeInsets(top: 0, left: 20, bottom: 0, right: 0))
     }
   }
   
   func cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
     if isFromCurrentSender(message: message) {
-      return .messageLeading(NSEdgeInsets(top: 0, left: 10, bottom: 0, right: 0))
-    } else {
       return .messageTrailing(NSEdgeInsets(top: 0, left: 0, bottom: 0, right: 10))
+    } else {
+      return .messageLeading(NSEdgeInsets(top: 0, left: 10, bottom: 0, right: 0))
     }
-  }
-  
-  func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
-    
-    return CGSize(width: messagesCollectionView.bounds.width, height: 10)
   }
   
   // MARK: - Location Messages

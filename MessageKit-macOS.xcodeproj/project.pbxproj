@@ -78,6 +78,7 @@
 		7C4C9766202505CD009CEB2C /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C4C9764202505CC009CEB2C /* Nimble.framework */; };
 		7C4C976720250603009CEB2C /* DetectorTypeSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F066E221FDA3F0200E11013 /* DetectorTypeSpec.swift */; };
 		7C6900FF2027534600FFE247 /* NSRect+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6900FE2027534600FFE247 /* NSRect+Extensions.swift */; };
+		7CA70C8F21DBCA47003EAB21 /* NSEdgeInsets+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA70C8E21DBCA47003EAB21 /* NSEdgeInsets+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -130,6 +131,7 @@
 		7C4C9763202505CC009CEB2C /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/Mac/Quick.framework; sourceTree = "<group>"; };
 		7C4C9764202505CC009CEB2C /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/Mac/Nimble.framework; sourceTree = "<group>"; };
 		7C6900FE2027534600FFE247 /* NSRect+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRect+Extensions.swift"; sourceTree = "<group>"; };
+		7CA70C8E21DBCA47003EAB21 /* NSEdgeInsets+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSEdgeInsets+Extensions.swift"; sourceTree = "<group>"; };
 		8962AC741F87AB230030B058 /* MessageKitDateFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageKitDateFormatterTests.swift; sourceTree = "<group>"; };
 		8962AC7A1F87AB230030B058 /* MockMessagesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMessagesDataSource.swift; sourceTree = "<group>"; };
 		8962AC7B1F87AB230030B058 /* MockMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMessage.swift; sourceTree = "<group>"; };
@@ -391,6 +393,7 @@
 				B7A03F661F8669EB006AEF79 /* NSView+Extensions.swift */,
 				7C4C970C2024CA6D009CEB2C /* NSFont+Extensions.swift */,
 				7C6900FE2027534600FFE247 /* NSRect+Extensions.swift */,
+				7CA70C8E21DBCA47003EAB21 /* NSEdgeInsets+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -626,6 +629,7 @@
 				7C4C96EE2024BB3B009CEB2C /* Avatar.swift in Sources */,
 				7C4C97002024BEB9009CEB2C /* MessagesViewController.swift in Sources */,
 				7C4C971C2024F84A009CEB2C /* MessagesViewController+Delegate.swift in Sources */,
+				7CA70C8F21DBCA47003EAB21 /* NSEdgeInsets+Extensions.swift in Sources */,
 				7C1424F8202900F600B4E0D2 /* InputStackView.swift in Sources */,
 				7C4C96F02024BB5A009CEB2C /* DetectorType.swift in Sources */,
 				7C4C970A2024C1A1009CEB2C /* MessageFooterView.swift in Sources */,

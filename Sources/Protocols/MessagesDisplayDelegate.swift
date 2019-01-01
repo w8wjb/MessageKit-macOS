@@ -84,6 +84,13 @@ public protocol MessagesDisplayDelegate: AnyObject {
   /// The default value returned by this method is a `MessageFooterView`.
   func messageFooterView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageFooterView
   
+  /// Used by the `MessageLayoutDelegate` method `footerViewSize(_:_:_:)` to determine if a footer should be displayed.
+  /// - Parameters:
+  ///   - message: The `MessageType` that will be displayed for this header.
+  ///   - indexPath: The `IndexPath` of the header.
+  ///   - messagesCollectionView: The `MessagesCollectionView` in which this header will be displayed.
+  func shouldDisplayFooter(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Bool
+  
   /// Configure `AvatarView`‘s image.
   ///
   /// - Parameters:
@@ -203,6 +210,10 @@ public extension MessagesDisplayDelegate {
   
   func messageFooterView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageFooterView {
     return messagesCollectionView.makeFooterView(MessageFooterView.self, for: indexPath)
+  }
+  
+  func shouldDisplayFooter(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Bool {
+    return false
   }
   
   func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {

@@ -40,6 +40,8 @@ open class MessagesCollectionViewFlowLayout: NSCollectionViewFlowLayout {
     }
   }
   
+  open var horizontalMessageFillPercentage: CGFloat = 0.8
+  
   /// Determines the maximum number of `MessageCollectionViewItem` attributes to cache.
   ///
   /// The default value of this property is 500.
@@ -387,9 +389,9 @@ private extension MessagesCollectionViewFlowLayout {
     
     switch attributes.message.data {
     case .text, .attributedText:
-      return itemWidth - attributes.avatarSize.width - attributes.messageHorizontalPadding //- attributes.messageLabelHorizontalInsets
+      return itemWidth - attributes.avatarSize.width - attributes.messageContainerPadding.horizontal
     default:
-      return itemWidth - attributes.avatarSize.width - attributes.messageHorizontalPadding
+      return itemWidth - attributes.avatarSize.width - attributes.messageContainerPadding.horizontal
     }
     
   }
@@ -404,25 +406,25 @@ private extension MessagesCollectionViewFlowLayout {
     
     let message = attributes.message
     let indexPath = attributes.indexPath
-    let maxWidth = attributes.messageContainerMaxWidth
+    let maxWidth = attributes.messageContainerMaxWidth * horizontalMessageFillPercentage
     
     var messageContainerSize: CGSize = .zero
     
     switch attributes.message.data {
     case .text(let text):
-      let maxTextWidth = maxWidth - attributes.messageLabelHorizontalInsets
+      let maxTextWidth = maxWidth - attributes.messageLabelInsets.horizontal
       messageContainerSize = labelSize(for: text, considering: maxTextWidth, and: messageLabelFont)
-      messageContainerSize.width += attributes.messageLabelHorizontalInsets
-      messageContainerSize.height += attributes.messageLabelVerticalInsets
+      messageContainerSize.width += attributes.messageLabelInsets.horizontal
+      messageContainerSize.height += attributes.messageLabelInsets.vertical
     case .attributedText(let text):
-      let maxTextWidth = maxWidth - attributes.messageLabelHorizontalInsets
+      let maxTextWidth = maxWidth - attributes.messageLabelInsets.horizontal
       messageContainerSize = labelSize(for: text, considering: maxTextWidth)
-      messageContainerSize.width += attributes.messageLabelHorizontalInsets
-      messageContainerSize.height += attributes.messageLabelVerticalInsets
+      messageContainerSize.width += attributes.messageLabelInsets.horizontal
+      messageContainerSize.height += attributes.messageLabelInsets.vertical
     case .emoji(let text):
       messageContainerSize = labelSize(for: text, considering: maxWidth, and: emojiLabelFont)
-      messageContainerSize.width += attributes.messageLabelHorizontalInsets
-      messageContainerSize.height += attributes.messageLabelVerticalInsets
+      messageContainerSize.width += attributes.messageLabelInsets.horizontal
+      messageContainerSize.height += attributes.messageLabelInsets.vertical
     case .photo, .video:
       let width = messagesLayoutDelegate.widthForMedia(message: message, at: indexPath, with: maxWidth, in: messagesCollectionView)
       let height = messagesLayoutDelegate.heightForMedia(message: message, at: indexPath, with: maxWidth, in: messagesCollectionView)
@@ -469,26 +471,26 @@ private extension MessagesCollectionViewFlowLayout {
     switch (labelHorizontal, avatarHorizontal) {
       
     case (.cellLeading, _), (.cellTrailing, _):
-      let width = itemWidth - attributes.bottomLabelHorizontalPadding
+      let width = itemWidth - attributes.bottomLabelPadding.horizontal
       return avatarVertical != .cellBottom ? width : width - avatarWidth
       
     case (.cellCenter, _):
-      let width = itemWidth - attributes.bottomLabelHorizontalPadding
+      let width = itemWidth - attributes.bottomLabelPadding.horizontal
       return avatarVertical != .cellBottom ? width : width - (avatarWidth * 2)
       
     case (.messageTrailing, .cellLeading):
-      let width = attributes.messageContainerSize.width + attributes.messageContainerPadding.left - attributes.bottomLabelHorizontalPadding
+      let width = attributes.messageContainerSize.width + attributes.messageContainerPadding.left - attributes.bottomLabelPadding.horizontal
       return avatarVertical == .cellBottom ? width : width + avatarWidth
       
     case (.messageLeading, .cellTrailing):
-      let width = attributes.messageContainerSize.width + attributes.messageContainerPadding.right - attributes.bottomLabelHorizontalPadding
+      let width = attributes.messageContainerSize.width + attributes.messageContainerPadding.right - attributes.bottomLabelPadding.horizontal
       return avatarVertical == .cellBottom ? width : width + avatarWidth
       
     case (.messageLeading, .cellLeading):
-      return itemWidth - avatarWidth - attributes.messageContainerPadding.left - attributes.bottomLabelHorizontalPadding
+      return itemWidth - avatarWidth - attributes.messageContainerPadding.left - attributes.bottomLabelPadding.horizontal
       
     case (.messageTrailing, .cellTrailing):
-      return itemWidth - avatarWidth - attributes.messageContainerPadding.right - attributes.bottomLabelHorizontalPadding
+      return itemWidth - avatarWidth - attributes.messageContainerPadding.right - attributes.bottomLabelPadding.horizontal
       
     case (_, .natural):
       fatalError(MessageKitError.avatarPositionUnresolved)
@@ -542,26 +544,26 @@ private extension MessagesCollectionViewFlowLayout {
     switch (labelHorizontal, avatarHorizontal) {
       
     case (.cellLeading, _), (.cellTrailing, _):
-      let width = itemWidth - attributes.topLabelHorizontalPadding
+      let width = itemWidth - attributes.topLabelPadding.horizontal
       return avatarVertical != .cellTop ? width : width - avatarWidth
       
     case (.cellCenter, _):
-      let width = itemWidth - attributes.topLabelHorizontalPadding
+      let width = itemWidth - attributes.topLabelPadding.horizontal
       return avatarVertical != .cellTop ? width : width - (avatarWidth * 2)
       
     case (.messageTrailing, .cellLeading):
-      let width = attributes.messageContainerSize.width + attributes.messageContainerPadding.left - attributes.topLabelHorizontalPadding
+      let width = attributes.messageContainerSize.width + attributes.messageContainerPadding.left - attributes.topLabelPadding.horizontal
       return avatarVertical == .cellTop ? width : width + avatarWidth
       
     case (.messageLeading, .cellTrailing):
-      let width = attributes.messageContainerSize.width + attributes.messageContainerPadding.right - attributes.topLabelHorizontalPadding
+      let width = attributes.messageContainerSize.width + attributes.messageContainerPadding.right - attributes.topLabelPadding.horizontal
       return avatarVertical == .cellTop ? width : width + avatarWidth
       
     case (.messageLeading, .cellLeading):
-      return itemWidth - avatarWidth - attributes.messageContainerPadding.left - attributes.topLabelHorizontalPadding
+      return itemWidth - avatarWidth - attributes.messageContainerPadding.left - attributes.topLabelPadding.horizontal
       
     case (.messageTrailing, .cellTrailing):
-      return itemWidth - avatarWidth - attributes.messageContainerPadding.right - attributes.topLabelHorizontalPadding
+      return itemWidth - avatarWidth - attributes.messageContainerPadding.right - attributes.topLabelPadding.horizontal
       
     case (_, .natural):
       fatalError(MessageKitError.avatarPositionUnresolved)
@@ -606,17 +608,17 @@ private extension MessagesCollectionViewFlowLayout {
       cellHeight += max(attributes.avatarSize.height, attributes.topLabelSize.height)
       cellHeight += attributes.bottomLabelSize.height
       cellHeight += attributes.messageContainerSize.height
-      cellHeight += attributes.messageVerticalPadding
+      cellHeight += attributes.messageContainerPadding.vertical
     case .cellBottom:
       cellHeight += max(attributes.avatarSize.height, attributes.bottomLabelSize.height)
       cellHeight += attributes.topLabelSize.height
       cellHeight += attributes.messageContainerSize.height
-      cellHeight += attributes.messageVerticalPadding
+      cellHeight += attributes.messageContainerPadding.vertical
     case .messageTop, .messageCenter, .messageBottom:
       cellHeight += max(attributes.avatarSize.height, attributes.messageContainerSize.height)
-      cellHeight += attributes.messageVerticalPadding
-      cellHeight += attributes.topLabelSize.height
-      cellHeight += attributes.bottomLabelSize.height
+      cellHeight += attributes.messageContainerPadding.vertical
+      cellHeight += attributes.topLabelSize.height + attributes.topLabelPadding.vertical
+      cellHeight += attributes.bottomLabelSize.height + attributes.bottomLabelPadding.vertical
     }
     
     return cellHeight

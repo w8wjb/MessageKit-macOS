@@ -83,7 +83,7 @@ final class MessageIntermediateLayoutAttributes {
         guard messageContainerSize != .zero else { return .zero }
         
         var origin: CGPoint = .zero
-        origin.y = bottomLabelSize.height + messageContainerPadding.bottom + bottomLabelVerticalPadding
+        origin.y = bottomLabelSize.height + messageContainerPadding.bottom + bottomLabelPadding.vertical
         
         switch avatarPosition.horizontal {
         case .cellLeading:
@@ -109,7 +109,7 @@ final class MessageIntermediateLayoutAttributes {
         
         var origin = CGPoint.zero
         
-        origin.y = messageContainerFrame.maxY + topLabelPadding.top
+        origin.y = messageContainerFrame.maxY + topLabelPadding.bottom
         
         switch topLabelAlignment {
         case .cellLeading:
@@ -174,41 +174,9 @@ extension MessageIntermediateLayoutAttributes {
     var bottomLabelPadding: NSEdgeInsets {
         return bottomLabelAlignment.insets
     }
-    
-    var bottomLabelVerticalPadding: CGFloat {
-        return bottomLabelPadding.top + bottomLabelPadding.bottom
-    }
-    
-    var bottomLabelHorizontalPadding: CGFloat {
-        return bottomLabelPadding.left + bottomLabelPadding.right
-    }
-    
+
     var topLabelPadding: NSEdgeInsets {
         return topLabelAlignment.insets
-    }
-    
-    var topLabelVerticalPadding: CGFloat {
-        return topLabelPadding.top + topLabelPadding.bottom
-    }
-    
-    var topLabelHorizontalPadding: CGFloat {
-        return topLabelPadding.left + topLabelPadding.right
-    }
-    
-    var messageLabelVerticalInsets: CGFloat {
-        return messageLabelInsets.top + messageLabelInsets.bottom
-    }
-    
-    var messageLabelHorizontalInsets: CGFloat {
-        return messageLabelInsets.left + messageLabelInsets.right
-    }
-    
-    var messageVerticalPadding: CGFloat {
-        return messageContainerPadding.top + messageContainerPadding.bottom
-    }
-    
-    var messageHorizontalPadding: CGFloat {
-        return messageContainerPadding.left + messageContainerPadding.right
     }
 
 }
