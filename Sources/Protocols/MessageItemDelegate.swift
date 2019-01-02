@@ -25,58 +25,35 @@
 import Foundation
 
 /// A protocol used by `MessageCollectionViewCell` subclasses to detect taps in the cell's contents.
-public protocol MessageCellDelegate: MessageLabelDelegate {
+public protocol MessageItemDelegate: MessageLabelDelegate {
 
     /// Triggered when a touch occurs in the `MessageContainerView`.
     ///
     /// - Parameters:
-    ///   - cell: The cell where the touch occurred.
+    ///   - item: The item where the touch occurred.
     ///
     /// You can get a reference to the `MessageType` for the cell by using `UICollectionView`'s
     /// `indexPath(for: cell)` method. Then using the returned `IndexPath` with the `MessagesDataSource`
     /// method `messageForItem(at:indexPath:messagesCollectionView)`.
-    func didTapMessage(in cell: MessageCollectionViewItem)
+    func didClickMessage(in item: MessageCollectionViewItem)
 
     /// Triggered when a touch occurs in the `AvatarView`.
     ///
     /// - Parameters:
-    ///   - cell: The cell where the touch occurred.
+    ///   - item: The item where the touch occurred.
     ///
     /// You can get a reference to the `MessageType` for the cell by using `UICollectionView`'s
     /// `indexPath(for: cell)` method. Then using the returned `IndexPath` with the `MessagesDataSource`
     /// method `messageForItem(at:indexPath:messagesCollectionView)`.
-    func didTapAvatar(in cell: MessageCollectionViewItem)
+    func didClickAvatar(in item: MessageCollectionViewItem)
 
-    /// Triggered when a touch occurs in the cellBottomLabel.
-    ///
-    /// - Parameters:
-    ///   - cell: The cell where the touch occurred.
-    ///
-    /// You can get a reference to the `MessageType` for the cell by using `UICollectionView`'s
-    /// `indexPath(for: cell)` method. Then using the returned `IndexPath` with the `MessagesDataSource`
-    /// method `messageForItem(at:indexPath:messagesCollectionView)`.
-    func didTapBottomLabel(in cell: MessageCollectionViewItem)
-
-    /// Triggered when a touch occurs in the cellTopLabel.
-    ///
-    /// - Parameters:
-    ///   - cell: The cell where the touch occurred.
-    ///
-    /// You can get a reference to the `MessageType` for the cell by using `UICollectionView`'s
-    /// `indexPath(for: cell)` method. Then using the returned `IndexPath` with the `MessagesDataSource`
-    /// method `messageForItem(at:indexPath:messagesCollectionView)`.
-    func didTapTopLabel(in cell: MessageCollectionViewItem)
 
 }
 
-public extension MessageCellDelegate {
+public extension MessageItemDelegate {
 
-    func didTapMessage(in cell: MessageCollectionViewItem) {}
+    func didClickMessage(in cell: MessageCollectionViewItem) {}
 
-    func didTapAvatar(in cell: MessageCollectionViewItem) {}
-
-    func didTapBottomLabel(in cell: MessageCollectionViewItem) {}
-
-    func didTapTopLabel(in cell: MessageCollectionViewItem) {}
-
+    func didClickAvatar(in cell: MessageCollectionViewItem) {}
+  
 }

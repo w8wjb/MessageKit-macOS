@@ -50,6 +50,8 @@ open class AvatarView: NSImageView {
   
   open var adjustsFontSizeToFitWidth = true
   
+  open var cursor: NSCursor?
+  
   private var minimumFontSize: CGFloat {
     return placeholderFont.pointSize * fontMinimumScaleFactor
   }
@@ -198,6 +200,19 @@ open class AvatarView: NSImageView {
     layer?.cornerRadius = radius
   }
   
+  open override func resetCursorRects() {
+    if let cursor = self.cursor {
+      addCursorRect(self.bounds, cursor: cursor)
+    } else {
+      super.resetCursorRects()
+    }
+  }
+  
+  open override func mouseDown(with event: NSEvent) {
+    if let target = self.target as? NSObject, let action = self.action {
+      target.perform(action)
+    }
+  }
   
   open override func prepareForReuse() {
     super.prepareForReuse()

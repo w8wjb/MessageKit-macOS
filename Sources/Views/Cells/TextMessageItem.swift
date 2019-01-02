@@ -32,9 +32,9 @@ open class TextMessageItem: MessageCollectionViewItem {
   
   // MARK: - Properties
   
-  open override weak var delegate: MessageCellDelegate? {
+  open override weak var delegate: MessageItemDelegate? {
     didSet {
-      messageLabel.messageLabelDelegate = delegate
+      messageLabel.labelDelegate = delegate
     }
   }
   

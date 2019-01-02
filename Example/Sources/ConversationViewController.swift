@@ -32,6 +32,12 @@ class ConversationViewController: MessagesViewController {
   
   var isTyping = false
   
+  let formatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateStyle = .medium
+    return formatter
+  }()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -109,7 +115,7 @@ extension ConversationViewController: MessagesDataSource {
     let font = NSFont.systemFont(ofSize: NSFont.systemFontSize(for: .small))
     let color = NSColor.secondaryLabelColor
     let attributes: [NSAttributedString.Key : Any] = [.font : font, .foregroundColor: color]
-
+    
     let name = message.sender.displayName
     return NSAttributedString(string: name, attributes: attributes)
   }
@@ -120,7 +126,11 @@ extension ConversationViewController: MessagesDataSource {
       
       let font = NSFont.systemFont(ofSize: NSFont.systemFontSize(for: .small))
       let color = NSColor.tertiaryLabelColor
-      let attributes: [NSAttributedString.Key : Any] = [.font : font, .foregroundColor: color]
+      var attributes: [NSAttributedString.Key : Any] = [.font : font,
+                                                        .foregroundColor: color]
+      
+      attributes[.toolTip] = formatter.string(from: message.sentDate)
+      
       return NSAttributedString(string: "Sent", attributes: attributes)
     }
     
@@ -171,6 +181,7 @@ extension ConversationViewController: MessagesDisplayDelegate {
   func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
     let avatar = SampleData.shared.getAvatarFor(sender: message.sender)
     avatarView.set(avatar: avatar)
+    avatarView.cursor = NSCursor.pointingHand
   }
   
 }
@@ -209,22 +220,16 @@ extension ConversationViewController: MessagesLayoutDelegate {
 
 // MARK: - MessageCellDelegate
 
-extension ConversationViewController: MessageCellDelegate {
+extension ConversationViewController: MessageItemDelegate {
   
-  func didTapAvatar(in cell: MessageCollectionViewItem) {
-    print("Avatar tapped")
+  func didClickAvatar(in item: MessageCollectionViewItem) {
+    guard let indexPath = messagesCollectionView.indexPath(for: item) else { return }
+    let msg = messageForItem(at: indexPath, in: messagesCollectionView)
+    print("Avatar clicked: \(msg.sender.id)")
   }
   
-  func didTapMessage(in cell: MessageCollectionViewItem) {
-    print("Message tapped")
-  }
-  
-  func didTapTopLabel(in cell: MessageCollectionViewItem) {
-    print("Top label tapped")
-  }
-  
-  func didTapBottomLabel(in cell: MessageCollectionViewItem) {
-    print("Bottom label tapped")
+  func didClickMessage(in item: MessageCollectionViewItem) {
+    print("Message clicked")
   }
   
 }

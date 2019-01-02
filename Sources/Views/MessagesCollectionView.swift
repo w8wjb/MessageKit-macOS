@@ -34,7 +34,7 @@ open class MessagesCollectionView: NSCollectionView {
   
   open weak var messagesLayoutDelegate: MessagesLayoutDelegate?
   
-  open weak var messageCellDelegate: MessageCellDelegate?
+  open weak var messageCellDelegate: MessageItemDelegate?
   
   open var showsDateHeaderAfterTimeInterval: TimeInterval = 3600
   

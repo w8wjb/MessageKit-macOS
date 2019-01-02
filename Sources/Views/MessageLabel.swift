@@ -24,23 +24,15 @@
 
 import AppKit
 
-open class MessageLabel: NSTextView {
+open class MessageLabel: Label {
   
   // MARK: - Private Properties
-  
-  private lazy var rangesForDetectors: [DetectorType: [(NSRange, MessageTextCheckingType)]] = [:]
   
   private var isConfiguring: Bool = false
   
   // MARK: - Public Properties
   
-  open weak var messageLabelDelegate: MessageLabelDelegate?
-  
-  open var enabledDetectors: [DetectorType] = [] {
-    didSet {
-      //            setTextStorage(attributedStringValue, shouldParse: true)
-    }
-  }
+  open var enabledDetectors: [DetectorType] = []
   
   open override var string: String {
     get {
@@ -58,7 +50,7 @@ open class MessageLabel: NSTextView {
     }
   }
   
-  var attributedStringValue: NSAttributedString {
+  public override var attributedStringValue: NSAttributedString {
     get {
       if let textStorage = self.textStorage {
         return textStorage as NSAttributedString
@@ -311,66 +303,7 @@ open class MessageLabel: NSTextView {
     }
     
   }
-  
-  open override func clicked(onLink link: Any, at charIndex: Int) {
-    if link is NSURL {
-      super.clicked(onLink: link, at: charIndex)
-      return
-    }
-    
-    for (detectorType, ranges) in rangesForDetectors {
-      for (range, value) in ranges {
-        if range.contains(charIndex) {
-          handleClicked(for: detectorType, value: value)
-        }
-      }
-    }
-  }
-  
-  private func handleClicked(for detectorType: DetectorType, value: MessageTextCheckingType) {
-    
-    switch value {
-    case let .addressComponents(addressComponents):
-      var transformedAddressComponents = [String: String]()
-      guard let addressComponents = addressComponents else { return }
-      addressComponents.forEach { (key, value) in
-        transformedAddressComponents[key.rawValue] = value
-      }
-      handleAddress(transformedAddressComponents)
-    case let .phoneNumber(phoneNumber):
-      guard let phoneNumber = phoneNumber else { return }
-      handlePhoneNumber(phoneNumber)
-    case let .date(date):
-      guard let date = date else { return }
-      handleDate(date)
-    case let .link(url):
-      guard let url = url else { return }
-      handleURL(url)
-    }
-  }
-  
-  private func handleAddress(_ addressComponents: [String: String]) {
-    messageLabelDelegate?.didSelectAddress(addressComponents)
-  }
-  
-  private func handleDate(_ date: Date) {
-    messageLabelDelegate?.didSelectDate(date)
-  }
-  
-  private func handleURL(_ url: URL) {
-    messageLabelDelegate?.didSelectURL(url)
-  }
-  
-  private func handlePhoneNumber(_ phoneNumber: String) {
-    messageLabelDelegate?.didSelectPhoneNumber(phoneNumber)
-  }
+
 
 }
 
-
-private enum MessageTextCheckingType {
-  case addressComponents([NSTextCheckingKey: String]?)
-  case date(Date?)
-  case phoneNumber(String?)
-  case link(URL?)
-}

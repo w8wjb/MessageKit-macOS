@@ -39,11 +39,11 @@ open class MessageCollectionViewItem: NSCollectionViewItem, CollectionViewReusab
     return view
   }()
   
-  open var cellTopLabel = CATextLayer()
+  open var cellTopLabel = Label()
   
-  open var cellBottomLabel = CATextLayer()
+  open var cellBottomLabel = Label()
   
-  open weak var delegate: MessageCellDelegate?
+  open weak var delegate: MessageItemDelegate?
   
   open override func loadView() {
     view = NSView()
@@ -55,25 +55,15 @@ open class MessageCollectionViewItem: NSCollectionViewItem, CollectionViewReusab
   open func setupSubviews() {
     view.addSubview(messageContainerView)
     view.addSubview(avatarView)
-    
-    // Disable animation for position changes
-    cellTopLabel.actions = ["position": NSNull(), "contents": NSNull()]
-    cellTopLabel.contentsScale = NSScreen.main?.backingScaleFactor ?? 1
-    view.layer?.addSublayer(cellTopLabel)
-    
-    cellBottomLabel.actions = ["position": NSNull(), "contents": NSNull()]
-    cellBottomLabel.contentsScale = NSScreen.main?.backingScaleFactor ?? 1
-    view.layer?.addSublayer(cellBottomLabel)
+    view.addSubview(cellTopLabel)
+    view.addSubview(cellBottomLabel)
   }
   
   open override func prepareForReuse() {
     super.prepareForReuse()
-    CATransaction.begin()
-    CATransaction.setDisableActions(true)
     avatarView.prepareForReuse()
-    cellTopLabel.string = nil
-    cellBottomLabel.string = nil
-    CATransaction.commit()
+    cellTopLabel.string = ""
+    cellBottomLabel.string = ""
   }
   
   // MARK: - Configuration
@@ -81,13 +71,10 @@ open class MessageCollectionViewItem: NSCollectionViewItem, CollectionViewReusab
   open override func apply(_ layoutAttributes: NSCollectionViewLayoutAttributes) {
     super.apply(layoutAttributes)
     if let attributes = layoutAttributes as? MessagesCollectionViewLayoutAttributes {
-      CATransaction.begin()
-      CATransaction.setDisableActions(true)
       avatarView.frame = attributes.avatarFrame
       cellTopLabel.frame = attributes.topLabelFrame
       cellBottomLabel.frame = attributes.bottomLabelFrame
       messageContainerView.frame = attributes.messageContainerFrame
-      CATransaction.commit()
     }
   }
   
@@ -112,11 +99,16 @@ open class MessageCollectionViewItem: NSCollectionViewItem, CollectionViewReusab
     let topText = dataSource.cellTopLabelAttributedText(for: message, at: indexPath)
     let bottomText = dataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
     
-    CATransaction.begin()
-    CATransaction.setDisableActions(true)
-    cellTopLabel.string = topText ?? NSAttributedString()
-    cellBottomLabel.string = bottomText  ?? NSAttributedString()
-    CATransaction.commit()
+    cellTopLabel.attributedStringValue = topText ?? NSAttributedString()
+    cellBottomLabel.attributedStringValue = bottomText  ?? NSAttributedString()
+    
+    avatarView.target = self
+    avatarView.action = #selector(didClickAvatar)
+    
+  }
+  
+  @objc public func didClickAvatar(_ sender: NSButton) {
+    delegate?.didClickAvatar(in: self)
   }
   
 }
