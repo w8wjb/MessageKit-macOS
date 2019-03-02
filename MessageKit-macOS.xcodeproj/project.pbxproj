@@ -79,7 +79,6 @@
 		7C4C976720250603009CEB2C /* DetectorTypeSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F066E221FDA3F0200E11013 /* DetectorTypeSpec.swift */; };
 		7C6900FF2027534600FFE247 /* NSRect+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6900FE2027534600FFE247 /* NSRect+Extensions.swift */; };
 		7CA70C8F21DBCA47003EAB21 /* NSEdgeInsets+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA70C8E21DBCA47003EAB21 /* NSEdgeInsets+Extensions.swift */; };
-		7CA70C9121DCF0ED003EAB21 /* NSTextView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA70C9021DCF0ED003EAB21 /* NSTextView+Extensions.swift */; };
 		7CA70C9321DD18B4003EAB21 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA70C9221DD18B4003EAB21 /* Label.swift */; };
 /* End PBXBuildFile section */
 
@@ -134,7 +133,6 @@
 		7C4C9764202505CC009CEB2C /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/Mac/Nimble.framework; sourceTree = "<group>"; };
 		7C6900FE2027534600FFE247 /* NSRect+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRect+Extensions.swift"; sourceTree = "<group>"; };
 		7CA70C8E21DBCA47003EAB21 /* NSEdgeInsets+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSEdgeInsets+Extensions.swift"; sourceTree = "<group>"; };
-		7CA70C9021DCF0ED003EAB21 /* NSTextView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextView+Extensions.swift"; sourceTree = "<group>"; };
 		7CA70C9221DD18B4003EAB21 /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		8962AC741F87AB230030B058 /* MessageKitDateFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageKitDateFormatterTests.swift; sourceTree = "<group>"; };
 		8962AC7A1F87AB230030B058 /* MockMessagesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMessagesDataSource.swift; sourceTree = "<group>"; };
@@ -398,7 +396,6 @@
 				7C4C970C2024CA6D009CEB2C /* NSFont+Extensions.swift */,
 				7C6900FE2027534600FFE247 /* NSRect+Extensions.swift */,
 				7CA70C8E21DBCA47003EAB21 /* NSEdgeInsets+Extensions.swift */,
-				7CA70C9021DCF0ED003EAB21 /* NSTextView+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -615,7 +612,6 @@
 				7C1424F7202900AC00B4E0D2 /* SeparatorLine.swift in Sources */,
 				7C4C97062024BF8A009CEB2C /* MessageType.swift in Sources */,
 				7C4C96F92024BD43009CEB2C /* NSAttributedString+Extensions.swift in Sources */,
-				7CA70C9121DCF0ED003EAB21 /* NSTextView+Extensions.swift in Sources */,
 				7C4C96F72024BD38009CEB2C /* Bundle+Extensions.swift in Sources */,
 				7C4C97172024ED96009CEB2C /* MessageLabel.swift in Sources */,
 				7C4C96FC2024BDB6009CEB2C /* Sender.swift in Sources */,
