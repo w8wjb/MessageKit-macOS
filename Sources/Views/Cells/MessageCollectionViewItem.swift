@@ -103,7 +103,7 @@ open class MessageCollectionViewItem: NSCollectionViewItem, CollectionViewReusab
     cellBottomLabel.attributedStringValue = bottomText  ?? NSAttributedString()
     
     avatarView.target = self
-    avatarView.action = #selector(didClickAvatar)
+    avatarView.action = #selector(didClickAvatar(_:))
     
   }
   
