@@ -35,12 +35,8 @@ extension MessagesViewController: NSCollectionViewDataSource {
     }
 
     open func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let collectionView = collectionView as? MessagesCollectionView else {
-            fatalError(MessageKitError.notMessagesCollectionView)
-        }
-        let messageCount = collectionView.messagesDataSource?.numberOfMessages(in: collectionView) ?? 0
-        // There will only ever be 1 message per section
-        return messageCount > 0 ? 1 : 0
+      // There will only ever be 1 message per section
+      return 1
     }
 
     public func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {

@@ -68,65 +68,47 @@ open class MessagesCollectionView: NSCollectionView {
   
   // MARK: - Methods
 
+  var lastIndexPath: IndexPath {
+    let lastSection = numberOfSections - 1
+    return IndexPath(item: numberOfItems(inSection: lastSection) - 1,
+                     section: lastSection)
+  }
   
-//  private var indexPathForLastItem: IndexPath? {
-//    let lastSection = numberOfSections - 1
-//    guard lastSection >= 0, numberOfItems(inSection: lastSection) > 0 else { return nil }
-//    return IndexPath(item: numberOfItems(inSection: lastSection) - 1, section: lastSection)
-//  }
   
   public func insertItemAfterLast() {
-
-//    let sections = numberOfSections
-    
-//    let afterLastIndex = IndexPath(item: 0, section: sections)
-//    let indexPaths: Set<IndexPath> = [afterLastIndex]
-//    let sectionIndexSet = IndexSet(arrayLiteral: sections)
     insertSections([numberOfSections])
-//    insertItems(at: indexPaths)
-    
-//    reloadData()
-    
   }
   
-  // TODO: - Manage NScrollView
+  func isIndexPathAvailable(_ indexPath: IndexPath) -> Bool {
+    guard dataSource != nil,
+      indexPath.section < numberOfSections,
+      indexPath.item < numberOfItems(inSection: indexPath.section) else {
+        return false
+    }
+    
+    return true
+  }
+  
+  func scrollToItemIfAvailable(at indexPath: IndexPath, at scrollPosition:
+    NSCollectionView.ScrollPosition, animated: Bool) {
+    guard isIndexPathAvailable(indexPath) else { return }
+    
+    scrollToItem(at: indexPath, at: scrollPosition, animated: animated)
+  }
   
   public func scrollToBottom(animated: Bool) {
-    
-    let sections = self.numberOfSections
-    if sections > 0 {
-      
-      let rows = self.numberOfItems(inSection: sections - 1)
-      let last = IndexPath(item: rows - 1, section: sections - 1)
-      
-      let indexes: Set<IndexPath> = [last]
-      
-      DispatchQueue.main.async {
-        
-        if animated {
-          self.animator().scrollToItems(at: indexes, scrollPosition: NSCollectionView.ScrollPosition.bottom)
-        } else {
-          self.scrollToItems(at: indexes, scrollPosition: NSCollectionView.ScrollPosition.bottom)
-        }
-      }
+    scrollToItemIfAvailable(at: lastIndexPath, at: NSCollectionView.ScrollPosition.bottom, animated: animated)
+  }
+  
+  func scrollToItem(at indexPath: IndexPath,
+                    at scrollPosition: NSCollectionView.ScrollPosition,
+                    animated: Bool) {
+    let indexes: Set<IndexPath> = [indexPath]
+    if animated {
+      self.animator().scrollToItems(at: indexes, scrollPosition: scrollPosition)
+    } else {
+      self.scrollToItems(at: indexes, scrollPosition: scrollPosition)
     }
   }
-  //
-  //    public func reloadDataAndKeepOffset() {
-  //        // stop scrolling
-  //        setContentOffset(contentOffset, animated: false)
-  //
-  //        // calculate the offset and reloadData
-  //        let beforeContentSize = contentSize
-  //        reloadData()
-  //        layoutIfNeeded()
-  //        let afterContentSize = contentSize
-  //
-  //        // reset the contentOffset after data is updated
-  //        let newOffset = CGPoint(
-  //            x: contentOffset.x + (afterContentSize.width - beforeContentSize.width),
-  //            y: contentOffset.y + (afterContentSize.height - beforeContentSize.height))
-  //        setContentOffset(newOffset, animated: false)
-  //    }
-  
+
 }
