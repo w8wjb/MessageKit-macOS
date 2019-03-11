@@ -41,6 +41,7 @@ open class Label: NSTextView {
     self.drawsBackground = false
     self.isEditable = false
     self.isSelectable = true
+    self.postsBoundsChangedNotifications = false
     
     if let textContainer = self.textContainer {
       textContainer.maximumNumberOfLines = 0

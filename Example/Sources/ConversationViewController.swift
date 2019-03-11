@@ -44,7 +44,7 @@ class ConversationViewController: MessagesViewController {
     let messagesToFetch = UserDefaults.standard.mockMessagesCount()
     
     DispatchQueue.global(qos: .userInitiated).async {
-      SampleData.shared.getMessages() { messages in
+      SampleData.shared.getMessages(count: 500) { messages in
         DispatchQueue.main.async {
           self.messageList = messages
           self.messagesCollectionView.reloadData()

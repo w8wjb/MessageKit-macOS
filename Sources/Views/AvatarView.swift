@@ -166,6 +166,9 @@ open class AvatarView: NSImageView {
   // MARK: - Internal methods
   
   internal func prepareView() {
+    self.postsFrameChangedNotifications = false
+    self.postsBoundsChangedNotifications = false
+
     self.layer = CALayer()
     self.layer?.contentsGravity = CALayerContentsGravity.resizeAspectFill
     wantsLayer = true

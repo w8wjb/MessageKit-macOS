@@ -47,6 +47,8 @@ open class MessageCollectionViewItem: NSCollectionViewItem, CollectionViewReusab
   
   open override func loadView() {
     view = NSView()
+    view.postsFrameChangedNotifications = false
+    view.postsBoundsChangedNotifications = false
     view.autoresizingMask = [.width, .height]
     view.wantsLayer = true
     setupSubviews()
