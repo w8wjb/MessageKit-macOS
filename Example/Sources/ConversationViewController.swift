@@ -184,6 +184,16 @@ extension ConversationViewController: MessagesDisplayDelegate {
     avatarView.cursor = NSCursor.pointingHand
   }
   
+  func menu(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> NSMenu? {
+    
+    let menu = NSMenu(title: "Menu")
+    
+    let menuItem = NSMenuItem(title: "Do Something", action: nil, keyEquivalent: "")
+    menu.addItem(menuItem)
+    
+    return menu
+  }
+  
 }
 
 // MARK: - MessagesLayoutDelegate

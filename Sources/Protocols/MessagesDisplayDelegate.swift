@@ -102,6 +102,14 @@ public protocol MessagesDisplayDelegate: AnyObject {
   /// The default image configured by this method is `?`.
   func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView)
   
+  /// Provide a menu when right clicking a message item
+  ///
+  /// - Parameters:
+  ///   - message: The `MessageType` that will be displayed by this cell.
+  ///   - indexPath: The `IndexPath` of the cell.
+  ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+  func menu(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> NSMenu?
+  
   // MARK: - Text Messages
   
   /// Specifies the color of the text for a `TextMessageCell`.
@@ -218,6 +226,10 @@ public extension MessagesDisplayDelegate {
   
   func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
     avatarView.initials = "?"
+  }
+  
+  func menu(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> NSMenu? {
+    return nil
   }
   
   // MARK: - Text Messages Defaults

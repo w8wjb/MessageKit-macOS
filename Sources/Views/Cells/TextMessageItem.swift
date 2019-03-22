@@ -72,6 +72,11 @@ open class TextMessageItem: MessageCollectionViewItem {
     let enabledDetectors = displayDelegate.enabledDetectors(for: message, at: indexPath, in: messagesCollectionView)
     
     messageLabel.configure {
+      
+      if let menu = displayDelegate.menu(for: message, at: indexPath, in: messagesCollectionView) {
+        messageLabel.menu = menu
+      }
+      
       messageLabel.enabledDetectors = enabledDetectors
       for detector in enabledDetectors {
         let attributes = displayDelegate.detectorAttributes(for: detector, and: message, at: indexPath)
