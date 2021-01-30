@@ -69,9 +69,16 @@ open class MessagesCollectionView: NSCollectionView {
   // MARK: - Methods
 
   var lastIndexPath: IndexPath {
+    guard numberOfSections > 0 else {
+        return IndexPath(item: 0, section: 0)
+    }
     let lastSection = numberOfSections - 1
-    return IndexPath(item: numberOfItems(inSection: lastSection) - 1,
-                     section: lastSection)
+    let numItems = numberOfItems(inSection: lastSection)
+    guard numItems > 0 else {
+        return IndexPath(item: 0, section: lastSection)
+    }
+    
+    return IndexPath(item: numItems - 1, section: lastSection)
   }
   
   
